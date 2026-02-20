@@ -1,0 +1,41 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+.placeholder-page {
+  padding: 60px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.placeholder-page h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.placeholder-page p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,52 @@
+/* Styles pour PersonnagesListe avec cartes cliquables */
+.personnage-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.personnage-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
+  border-left-width: 5px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.personnage-card:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.card-footer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: center;
+}
+
+.card-click-hint {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.personnage-card:hover .card-click-hint {
+  opacity: 1;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.main-content.fullscreen {
+  margin-left: 0;
+  width: 100%;
+}

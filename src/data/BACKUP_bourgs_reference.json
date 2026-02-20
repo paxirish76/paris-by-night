@@ -1,0 +1,643 @@
+{
+  "meta": {
+    "version": "1.0",
+    "date": "2026-02-15",
+    "description": "BACKUP des bourgs - Structure ORIGINALE du fichier de référence",
+    "warning": "Ce fichier NE CONTIENT PAS les territoire_codes (codes INSEE). Ces données sont dans BACKUP_bourgs_territoire_codes.sql"
+  },
+  "bourgs": [
+    {
+      "id": "artistique",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "intra-muros",
+        "importance": "majeure"
+      },
+      "territoire": {
+        "arrondissements": [
+          9,
+          18
+        ]
+      },
+      "bourgmestre": {
+        "id": "jean-valentin",
+        "nom": "Jean-Valentin de la Couronne",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Mode contemporaine, studios photo, modernité créative.",
+        "richesse": 4,
+        "activites": [
+          "Haute couture",
+          "Photographie",
+          "Influence sociale"
+        ]
+      }
+    },
+    {
+      "id": "belleville",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "intra-muros",
+        "importance": "moyenne"
+      },
+      "territoire": {
+        "arrondissements": [
+          20
+        ]
+      },
+      "bourgmestre": {
+        "id": "silas-sterling",
+        "nom": "Silas Sterling",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Éclectique, multiculturalité, street‑art raffiné.",
+        "richesse": 3,
+        "activites": [
+          "Art urbain",
+          "Musique alternative"
+        ]
+      }
+    },
+    {
+      "id": "boucle-sud-ouest",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Boulogne",
+          "Issy-les-Moulineaux"
+        ]
+      },
+      "bourgmestre": {
+        "id": "blanche-daulnay",
+        "nom": "Blanche d'Aulnay",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Mode, tech, médias modernes.",
+        "richesse": 4,
+        "activites": [
+          "Studios TV",
+          "Startups",
+          "Mode"
+        ]
+      }
+    },
+    {
+      "id": "central",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "intra-muros",
+        "importance": "majeure"
+      },
+      "territoire": {
+        "arrondissements": [
+          1,
+          3,
+          4,
+          6
+        ]
+      },
+      "bourgmestre": {
+        "id": "alienor",
+        "nom": "Aliénor de Valois",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Haute Cour Toreador, salons, politique culturelle, grande influence sociale.",
+        "richesse": 5,
+        "activites": [
+          "Salons d'art",
+          "Gouvernance Toreador",
+          "Mécénat",
+          "Événements culturels majeurs"
+        ]
+      }
+    },
+    {
+      "id": "dessous-rive-droite",
+      "nom": "Le Dessous - Rive Droite",
+      "meta": {
+        "clan_dominant": "Nosferatu",
+        "type": "souterrain",
+        "importance": "majeure"
+      },
+      "territoire": {
+        "zones": [
+          "Catacombes Nord",
+          "Égouts Rive Droite",
+          "Tunnels abandonnés",
+          "Anciennes carrières"
+        ]
+      },
+      "bourgmestre": {
+        "id": "etienne-le-manchot",
+        "nom": "Etienne le manchot",
+        "clan": "Nosferatu"
+      },
+      "description": {
+        "ambiance": "Labyrinthique, humide, réseau d'information.",
+        "richesse": 1,
+        "activites": [
+          "Collecte d'informations",
+          "Trafics souterrains",
+          "Archives secrètes"
+        ]
+      }
+    },
+    {
+      "id": "dessous-rive-gauche",
+      "nom": "Le Dessous - Rive Gauche",
+      "meta": {
+        "clan_dominant": "Nosferatu",
+        "type": "souterrain",
+        "importance": "majeure"
+      },
+      "territoire": {
+        "zones": [
+          "Catacombes Sud",
+          "Égouts Rive Gauche",
+          "Ossuaires",
+          "Passages interdits"
+        ]
+      },
+      "bourgmestre": {
+        "id": "louise-francoise-la-repentie",
+        "nom": "Louise-Françoise de la Vallière",
+        "clan": "Nosferatu"
+      },
+      "description": {
+        "ambiance": "Silencieux, mortuaire, archives des morts.",
+        "richesse": 1,
+        "activites": [
+          "Gardiennage des secrets",
+          "Surveillance",
+          "Nécromancie"
+        ]
+      }
+    },
+    {
+      "id": "deuxieme",
+      "nom": "Bourg de la Bourse",
+      "meta": {
+        "clan_dominant": "Lasombra",
+        "type": "intra-muros",
+        "importance": "stratégique"
+      },
+      "territoire": {
+        "arrondissements": [
+          2
+        ]
+      },
+      "bourgmestre": {
+        "id": "marcus-delacroix",
+        "nom": "marcus-delacroix",
+        "clan": "Lasombra"
+      },
+      "description": {
+        "ambiance": "Quartier d'affaires historique, passages couverts sombres et finance feutrée.",
+        "richesse": 5,
+        "activites": [
+          "Gestion de fonds",
+          "Renseignement financier",
+          "Diplomatie inter-clans"
+        ]
+      }
+    },
+    {
+      "id": "forets-peripheriques",
+      "meta": {
+        "clan_dominant": "Gangrel",
+        "type": "grand-paris",
+        "importance": "naturelle"
+      },
+      "territoire": {
+        "zones": [
+          "Bois de Boulogne",
+          "Bois de Vincennes"
+        ]
+      },
+      "bourgmestre": {
+        "id": "marc-andre-ferrand",
+        "nom": "Marc-André Ferrand",
+        "clan": "Gangrel"
+      },
+      "description": {
+        "ambiance": "Sauvage, nocturne, rituelle.",
+        "richesse": 1,
+        "activites": [
+          "Chasses",
+          "Rituels"
+        ]
+      }
+    },
+    {
+      "id": "grand-paris-sud",
+      "meta": {
+        "clan_dominant": "Ventrue",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Evry",
+          "Corbeil",
+          "Grigny"
+        ]
+      },
+      "bourgmestre": {
+        "id": "jaures",
+        "nom": "Jean Jaurès",
+        "clan": "Ventrue"
+      },
+      "description": {
+        "ambiance": "Sociale, résidentielle, influence sur les masses.",
+        "richesse": 2,
+        "activites": [
+          "Médiation",
+          "Logistique Sud"
+        ]
+      }
+    },
+    {
+      "id": "la-defense",
+      "meta": {
+        "clan_dominant": "Ventrue",
+        "type": "grand-paris",
+        "importance": "critique"
+      },
+      "territoire": {
+        "zones": [
+          "La Défense",
+          "Courbevoie"
+        ]
+      },
+      "bourgmestre": {
+        "id": "balthazar-porte-st-louis",
+        "nom": "Balthazar de la Porte-Saint-Louis",
+        "clan": "Ventrue"
+      },
+      "description": {
+        "ambiance": "Tour de verre, anonymat, pouvoir corporate.",
+        "richesse": 5,
+        "activites": [
+          "Finance",
+          "Audit",
+          "Systèmes Tremere"
+        ]
+      }
+    },
+    {
+      "id": "latin",
+      "meta": {
+        "clan_dominant": "Tremere",
+        "type": "intra-muros",
+        "importance": "majeure"
+      },
+      "territoire": {
+        "arrondissements": [
+          5
+        ]
+      },
+      "bourgmestre": {
+        "id": "caldus_vermeren",
+        "nom": "caldus_vermeren",
+        "clan": "Tremere"
+      },
+      "description": {
+        "ambiance": "Universitaire, rituel, calme, étudié.",
+        "richesse": 4,
+        "activites": [
+          "Rituels Tremere",
+          "Érudition",
+          "Bibliothèques occultes"
+        ]
+      }
+    },
+    {
+      "id": "marne-la-vallee",
+      "meta": {
+        "clan_dominant": "Malkavian",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Chessy",
+          "Noisy-le-Grand"
+        ]
+      },
+      "bourgmestre": {
+        "id": "baptiste-lombre-blanche",
+        "nom": "Baptiste **L'Ombre Blanche** Deburau",
+        "clan": "Malkavian"
+      },
+      "description": {
+        "ambiance": "Illusion, façade permanente, théâtre en continu.",
+        "richesse": 4,
+        "activites": [
+          "Parcs d'attraction",
+          "Spectacles"
+        ]
+      }
+    },
+    {
+      "id": "montparnasse",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "intra-muros",
+        "importance": "forte"
+      },
+      "territoire": {
+        "arrondissements": [
+          14
+        ]
+      },
+      "bourgmestre": {
+        "id": "julien-roche-noire",
+        "nom": "Julien de la Roche-Noire",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Artistes classiques, élégance feutrée, héritage littéraire.",
+        "richesse": 4,
+        "activites": [
+          "Ateliers d'artistes",
+          "Salles d'exposition",
+          "Poésie urbaine"
+        ]
+      }
+    },
+    {
+      "id": "nord-est",
+      "meta": {
+        "clan_dominant": "Nosferatu",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Pantin",
+          "Aubervilliers",
+          "Pré-St-Gervais"
+        ]
+      },
+      "bourgmestre": {
+        "id": "aristide-lecoq",
+        "nom": "Aristide \"Gueule d'Acier\" Lecoq",
+        "clan": "Nosferatu"
+      },
+      "description": {
+        "ambiance": "Labyrinthique, industrielle, en mutation.",
+        "richesse": 2,
+        "activites": [
+          "Réseaux souterrains",
+          "Marchés d'information"
+        ]
+      }
+    },
+    {
+      "id": "ouest",
+      "nom": "Ouest",
+      "meta": {
+        "clan_dominant": "Ventrue",
+        "type": "intra-muros",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "15e arr.",
+          "16e arr.",
+          "17e arr.",
+          "Clichy",
+          "Levallois",
+          "Neuilly"
+        ]
+      },
+      "bourgmestre": {
+        "id": "colbert",
+        "nom": "Jean-Baptiste Colbert",
+        "clan": "Ventrue"
+      },
+      "description": {
+        "ambiance": "Résidentiel aisé, influence politique discrète.",
+        "richesse": 5,
+        "activites": [
+          "Réseaux d’élite",
+          "Contrats économiques"
+        ]
+      }
+    },
+    {
+      "id": "pouvoir",
+      "meta": {
+        "clan_dominant": "Ventrue",
+        "type": "intra-muros",
+        "importance": "critique"
+      },
+      "territoire": {
+        "arrondissements": [
+          7,
+          8
+        ]
+      },
+      "bourgmestre": {
+        "id": "armand",
+        "nom": "armand",
+        "clan": "Ventrue"
+      },
+      "description": {
+        "ambiance": "Politique institutionnelle, élites, ministères.",
+        "richesse": 5,
+        "activites": [
+          "Affaires publiques",
+          "Lobbying",
+          "Diplomatie"
+        ]
+      }
+    },
+    {
+      "id": "revolutionnaire",
+      "meta": {
+        "clan_dominant": "Brujah",
+        "type": "intra-muros",
+        "importance": "forte"
+      },
+      "territoire": {
+        "arrondissements": [
+          10,
+          11,
+          12,
+          19
+        ]
+      },
+      "bourgmestre": {
+        "id": "vallier",
+        "clan": "Brujah",
+        "titres": [
+          "Primogène Brujah",
+          "Bourgmestre des territoires Brujah intra muros"
+        ]
+      },
+      "description": {
+        "ambiance": "Bouillonnant, anarchiste, intellectuel et conflictuel.",
+        "richesse": 2,
+        "activites": [
+          "Débats publics",
+          "Militantisme",
+          "Contre‑culture"
+        ]
+      }
+    },
+    {
+      "id": "saint-denis",
+      "nom": "Saint-Denis",
+      "meta": {
+        "clan_dominant": "Brujah",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Saint-Denis",
+          "Aubervilliers",
+          "La Plaine",
+          "Montreuil",
+          "Bagnolet",
+          "Noisy-le-Sec"
+        ]
+      },
+      "bourgmestre": {
+        "id": "marat",
+        "nom": "Jean-Paul Marat",
+        "clan": "Brujah"
+      },
+      "description": {
+        "ambiance": "Industriel brut, tensions sociales, underground.",
+        "richesse": 2,
+        "activites": [
+          "Industrie",
+          "TV/Studios",
+          "Militantisme"
+        ]
+      }
+    },
+    {
+      "id": "triangle",
+      "meta": {
+        "clan_dominant": "Malkavian",
+        "type": "intra-muros",
+        "importance": "moyenne"
+      },
+      "territoire": {
+        "arrondissements": [
+          13
+        ]
+      },
+      "bourgmestre": {
+        "id": "louis-xvii",
+        "nom": "Louis-Charles de France (Louis XVII)",
+        "clan": "Malkavian"
+      },
+      "description": {
+        "ambiance": "Visionnaire, dérangeant, symboliste.",
+        "richesse": 3,
+        "activites": [
+          "Arts étranges",
+          "Oracles",
+          "Rituels mentaux"
+        ]
+      }
+    },
+    {
+      "id": "val-de-marne-est",
+      "meta": {
+        "clan_dominant": "Brujah savants",
+        "type": "grand-paris",
+        "importance": "forte"
+      },
+      "territoire": {
+        "zones": [
+          "Créteil",
+          "Saint-Maur",
+          "Maisons-Alfort"
+        ]
+      },
+      "bourgmestre": {
+        "id": "etienne-louis-mallet",
+        "nom": "Etienne-Louis Mallet",
+        "clan": "Brujah"
+      },
+      "description": {
+        "ambiance": "Laboratoires, universités, rationalisme Brujah.",
+        "richesse": 3,
+        "activites": [
+          "Académie",
+          "Débats",
+          "Sciences sociales"
+        ]
+      }
+    },
+    {
+      "id": "versailles",
+      "meta": {
+        "clan_dominant": "Toreador",
+        "type": "prestige",
+        "importance": "critique"
+      },
+      "territoire": {
+        "zones": [
+          "Château",
+          "Domaine Royal",
+          "Jardins"
+        ]
+      },
+      "bourgmestre": {
+        "id": "agnes_sorel",
+        "nom": "agnes_sorel",
+        "clan": "Toreador"
+      },
+      "description": {
+        "ambiance": "Baroque, cérémonielle, hors du temps.",
+        "richesse": 5,
+        "activites": [
+          "Fêtes majeures",
+          "Diplomatie",
+          "Assemblées d’Anciens"
+        ]
+      }
+    },
+    {
+      "id": "yvelines-essonne",
+      "meta": {
+        "clan_dominant": "Gangrel",
+        "type": "grand-paris",
+        "importance": "mineure"
+      },
+      "territoire": {
+        "zones": [
+          "Forêts",
+          "Villages isolés"
+        ]
+      },
+      "bourgmestre": {
+        "id": "sylvain-roche",
+        "nom": "Sylvain Roche",
+        "clan": "Gangrel"
+      },
+      "description": {
+        "ambiance": "Nature, calme, refuges secrets.",
+        "richesse": 1,
+        "activites": [
+          "Repli",
+          "Veille nocturne"
+        ]
+      }
+    }
+  ]
+}

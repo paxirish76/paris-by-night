@@ -1,0 +1,324 @@
+/* LieuxTable.css — style vampirique, cohérent avec PersonnagesTable */
+
+.lt-container {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(135deg, #0d0a0b 0%, #1a1517 100%);
+  color: #c0c0c0;
+  font-family: 'Cormorant Garamond', serif;
+  animation: ltFadeIn 0.5s ease;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.lt-header {
+  background: linear-gradient(90deg, #8b0000 0%, #dc143c 100%);
+  padding: 1.8rem 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(139,0,0,0.4);
+  animation: ltSlideDown 0.4s ease-out;
+}
+
+.lt-header h1 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  color: #d4af37;
+  text-shadow: 0 0 20px rgba(212,175,55,0.4);
+  letter-spacing: 2px;
+}
+
+.lt-header p {
+  margin: 0.3rem 0 0;
+  font-size: 1.1rem;
+  color: #f4e4c1;
+  font-style: italic;
+}
+
+.lt-counter {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  color: #d4af37;
+  text-align: right;
+  line-height: 1;
+}
+
+.lt-counter span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f4e4c1;
+  margin-top: 2px;
+}
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+.lt-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.2rem 2rem;
+  background: #140f10;
+  border-bottom: 1px solid rgba(139,0,0,0.3);
+  flex-wrap: wrap;
+}
+
+.lt-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.lt-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.lt-search {
+  width: 100%;
+  background: #0d0a0b;
+  border: 1px solid #8b0000;
+  border-radius: 4px;
+  color: #c0c0c0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  padding: 0.55rem 2.2rem 0.55rem 2.2rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.lt-search:focus {
+  border-color: #dc143c;
+  box-shadow: 0 0 8px rgba(220,20,60,0.2);
+}
+
+.lt-search::placeholder { color: #444; font-style: italic; }
+
+.lt-clear-search {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  transition: color 0.2s;
+}
+.lt-clear-search:hover { color: #dc143c; }
+
+.lt-select {
+  background: #0d0a0b;
+  border: 1px solid #8b0000;
+  border-radius: 4px;
+  color: #c0c0c0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  min-width: 160px;
+}
+.lt-select:focus { border-color: #dc143c; }
+.lt-select option { background: #1a1215; }
+
+.lt-reset {
+  background: transparent;
+  border: 1px solid #8b0000;
+  border-radius: 4px;
+  color: #c0c0c0;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.lt-reset:hover {
+  background: rgba(139,0,0,0.2);
+  border-color: #dc143c;
+  color: #f4e4c1;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.lt-table-wrap {
+  padding: 1.5rem 2rem 2rem;
+  overflow-x: auto;
+}
+
+.lt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+/* Header row */
+.lt-th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4af37;
+  border-bottom: 2px solid #8b0000;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.lt-th:hover { color: #f4e4b7; }
+.lt-th-icon { width: 36px; cursor: default; }
+.lt-th-nom    { width: 35%; }
+.lt-th-statut { width: 28%; }
+.lt-th-bourg  { width: 18%; }
+.lt-th-clan   { width: 14%; }
+
+.lt-sort-icon { margin-left: 4px; font-size: 0.75rem; }
+.lt-sort-icon.neutral { color: #444; }
+.lt-sort-icon.active  { color: #dc143c; }
+
+/* Data rows */
+.lt-row {
+  border-bottom: 1px solid rgba(139,0,0,0.15);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.lt-row:hover {
+  background: rgba(212,175,55,0.04);
+  transform: translateX(3px);
+}
+
+.lt-row:hover .lt-nom { text-shadow: 0 0 8px currentColor; }
+
+.lt-td {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+}
+
+/* Icon cell */
+.lt-td-icon { width: 36px; padding-right: 0; }
+
+.lt-shape {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+.lt-shape.circle  { border-radius: 50%; }
+.lt-shape.diamond { border-radius: 0; transform: rotate(45deg); width: 8px; height: 8px; }
+
+/* Nom cell */
+.lt-nom {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: text-shadow 0.2s;
+}
+
+.lt-adresse {
+  display: block;
+  font-size: 0.78rem;
+  color: #555;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* Statut cell */
+.lt-statut-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+  background: rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+
+/* Bourg cell */
+.lt-bourg {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Clan cell */
+.lt-clan-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border: 1px solid;
+  border-radius: 2px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* Empty states */
+.lt-empty-cell { color: #444; }
+
+.lt-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #555;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Loading */
+.lt-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1.5rem;
+}
+
+.lt-spinner {
+  width: 44px; height: 44px;
+  border: 4px solid #1a1517;
+  border-top: 4px solid #dc143c;
+  border-radius: 50%;
+  animation: ltSpin 1s linear infinite;
+}
+
+.lt-loading p {
+  font-size: 1.1rem;
+  color: #d4af37;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes ltFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ltSlideDown {
+  from { transform: translateY(-40px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes ltSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lt-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .lt-controls { padding: 1rem; }
+  .lt-table-wrap { padding: 1rem; }
+  .lt-th-statut, .lt-td-statut { display: none; }
+  .lt-th-bourg, .lt-td-bourg   { display: none; }
+}

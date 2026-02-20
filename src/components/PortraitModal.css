@@ -1,0 +1,207 @@
+/* ================================================================
+   PortraitModal.css - Affichage portrait plein écran
+   Pour montrer les portraits aux joueurs sans infos
+   ================================================================ */
+
+.portrait-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bouton fermer */
+.portrait-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(139, 0, 0, 0.8);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.portrait-close:hover {
+  background: var(--crimson);
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+/* Container du portrait */
+.portrait-container {
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  animation: zoomIn 0.4s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Image */
+.portrait-image {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 3px solid var(--gold);
+  box-shadow: 
+    0 0 30px rgba(212, 175, 55, 0.4),
+    0 0 60px rgba(139, 0, 0, 0.3);
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* Placeholder si pas d'image */
+.portrait-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 80px;
+  background: rgba(139, 0, 0, 0.2);
+  border: 2px dashed var(--gold);
+  border-radius: 4px;
+}
+
+.placeholder-icon {
+  font-size: 120px;
+  opacity: 0.3;
+}
+
+.placeholder-text {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+/* Footer avec hint */
+.portrait-footer {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.portrait-hint {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin: 0;
+  opacity: 0.8;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 768px) {
+  .portrait-close {
+    top: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+
+  .portrait-container {
+    max-height: 80vh;
+  }
+
+  .portrait-image {
+    max-height: 80vh;
+    border-width: 2px;
+  }
+
+  .portrait-footer {
+    bottom: 20px;
+    padding: 10px 20px;
+  }
+
+  .portrait-hint {
+    font-size: 11px;
+  }
+
+  .placeholder-icon {
+    font-size: 80px;
+  }
+
+  .placeholder-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portrait-close {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .portrait-image {
+    max-height: 75vh;
+  }
+
+  .portrait-hint {
+    font-size: 10px;
+  }
+}

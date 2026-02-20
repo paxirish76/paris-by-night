@@ -1,0 +1,437 @@
+/* ═══════════════════════════════════════════════════════
+   ClansTable — préfixes ct- (liste) et cd- (détail)
+   Palette et typographie : design system Paris by Night
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Loading ─────────────────────────────────────────── */
+.ct-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-dim, #9a7c22);
+  text-transform: uppercase;
+}
+
+/* ── Root ────────────────────────────────────────────── */
+.ct-root {
+  padding: 2rem 2.5rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.ct-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  padding-bottom: 1.5rem;
+}
+
+.ct-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.4rem;
+  text-transform: uppercase;
+}
+
+.ct-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: #8a7a6a;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Table ───────────────────────────────────────────── */
+.ct-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ct-th {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a08840;
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+.ct-th-nom,
+.ct-th-pop {
+  cursor: pointer;
+}
+
+.ct-th-nom:hover,
+.ct-th-pop:hover {
+  color: #d4af37;
+}
+
+.ct-th-logo {
+  width: 56px;
+}
+
+.ct-th-pop {
+  width: 200px;
+}
+
+.ct-sort-icon {
+  margin-left: 0.35rem;
+  font-size: 0.7rem;
+  color: #d4af37;
+}
+
+.ct-sort-none {
+  color: #5a4a3a;
+}
+
+/* ── Row ─────────────────────────────────────────────── */
+.ct-row {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.ct-row:hover {
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.ct-row:hover .ct-clan-name {
+  color: var(--clan-color);
+}
+
+/* Left accent bar on hover */
+.ct-row td:first-child {
+  position: relative;
+}
+
+.ct-row:hover td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--clan-color);
+}
+
+/* ── Cells ───────────────────────────────────────────── */
+.ct-td {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+}
+
+.ct-td-logo {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  width: 56px;
+}
+
+/* ── Logo ────────────────────────────────────────────── */
+.ct-logo-wrap {
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px var(--clan-color, rgba(212,175,55,0.3));
+}
+
+.ct-logo-wrap img {
+  display: block;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.ct-logo-placeholder {
+  border-radius: 4px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #8a7a6a;
+  background: #161011;
+  flex-shrink: 0;
+}
+
+/* ── Clan name ───────────────────────────────────────── */
+.ct-clan-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: #e8d9c8;
+  transition: color 0.15s;
+}
+
+/* ── Population bar ──────────────────────────────────── */
+.ct-popbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ct-popbar-fill {
+  height: 4px;
+  border-radius: 2px;
+  min-width: 2px;
+  transition: width 0.3s ease;
+  opacity: 0.85;
+}
+
+.ct-popbar-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: #8a7a6a;
+  min-width: 1.5rem;
+  text-align: right;
+}
+
+/* ── Description preview ─────────────────────────────── */
+.ct-td-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: #8a7a6a;
+  font-style: italic;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.ct-no-desc {
+  color: #5a4a3a;
+}
+
+/* ════════════════════════════════════════════════════════
+   DETAIL VIEW  (cd- prefix)
+   ════════════════════════════════════════════════════════ */
+
+.cd-root {
+  padding: 2rem 2.5rem 5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Back button ─────────────────────────────────────── */
+.cd-back {
+  background: none;
+  border: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #a08840;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 2rem;
+  transition: color 0.15s;
+}
+
+.cd-back:hover {
+  color: #d4af37;
+}
+
+/* ── Hero ────────────────────────────────────────────── */
+.cd-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  position: relative;
+}
+
+.cd-hero-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  opacity: 0.7;
+}
+
+.cd-hero-logo {
+  flex-shrink: 0;
+}
+
+.cd-hero-logo .ct-logo-wrap,
+.cd-hero-logo .ct-logo-placeholder {
+  border-radius: 8px;
+}
+
+.cd-hero-info {
+  flex: 1;
+}
+
+.cd-hero-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a08840;
+  margin: 0 0 0.3rem;
+}
+
+.cd-hero-name {
+  font-family: 'Cinzel', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--clan-color, #d4af37);
+  letter-spacing: 0.06em;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.cd-hero-pop {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.cd-hero-pop-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #5a4a3a;
+}
+
+.cd-hero-pop-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── Sections ────────────────────────────────────────── */
+.cd-section {
+  margin-bottom: 2.5rem;
+}
+
+.cd-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a08840;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.13);
+}
+
+/* ── Description ─────────────────────────────────────── */
+.cd-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #e8d9c8;
+  margin: 0;
+}
+
+/* ── Objectifs ───────────────────────────────────────── */
+.cd-buts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.cd-but-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  color: #c8b99a;
+  line-height: 1.6;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.cd-but-bullet {
+  font-size: 0.55rem;
+  margin-top: 0.45rem;
+  flex-shrink: 0;
+}
+
+/* ── Relations ───────────────────────────────────────── */
+.cd-relations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cd-rel-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-left: 2px solid var(--chip-color, #888);
+  border-radius: 0 4px 4px 0;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  width: 100%;
+}
+
+.cd-rel-chip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(212, 175, 55, 0.25);
+  border-left-color: var(--chip-color, #888);
+}
+
+.cd-rel-chip-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.cd-rel-chip-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cd-rel-chip-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--chip-color, #d4af37);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 80px;
+  padding-top: 2px;
+}
+
+.cd-rel-chip-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: #8a7a6a;
+  font-style: italic;
+  line-height: 1.4;
+}

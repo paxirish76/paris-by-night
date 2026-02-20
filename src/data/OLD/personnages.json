@@ -1,0 +1,752 @@
+{
+  "personnages": [
+    {
+      "id": "villon",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 5,
+        "sire": "Hélène",
+        "roles": [
+          "Prince de Paris"
+        ]
+      },
+      "apparence": "Homme séduisant à la peau hâlée, fin trentaine, cheveux noirs de jais, yeux bruns. Toujours en costume impeccable et cravates flamboyantes. Fume avec un fume-cigarette.",
+      "personnalite": "Dandy frivole en apparence, mais Prince calculateur, patient et redoutable en réalité.",
+      "histoire": "Né Guillaume de Lorris, auteur du 'Roman de la Rose'. Étreint en 1230 par la Mathusalem Hélène. Il a traversé les siècles en naviguant dans les cours royales avant de s'emparer officiellement du trône de Paris en 1799, stabilisant la cité après la Révolution. Il utilise le nom de François Villon pour brouiller les pistes sur sa véritable ancienneté.",
+      "disciplines": [
+        "Présence",
+        "Célérité",
+        "Auspex",
+        "Domination"
+      ],
+      "relations": [
+        "Rivalité feutrée avec Alexandre",
+        "Tolérance surveillée des Lasombra du 2e",
+        "Appui massif de la lignée Toreador"
+      ]
+    },
+    {
+      "id": "alienor",
+      "nom": "Aliénor de Valois",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 6,
+        "sire": "François Villon",
+        "roles": [
+          "Sénéchal de Paris",
+          "Bourgmestre du Bourg Central (1er-4e)",
+          "Infant de Villon"
+        ]
+      },
+      "apparence": "Beauté aristocratique classique, âge apparent de 25 ans. Elle a de longs cheveux châtains et des yeux d'un bleu profond. Elle porte des robes de haute couture moderne aux influences Renaissance française.",
+      "personnalite": "Diplomate née, d'une patience redoutable et extrêmement calculatrice. Elle ne montre jamais ses émotions, agissant comme le filtre nécessaire entre le Prince et les tracas quotidiens du Domaine.",
+      "histoire": "Issue de la maison royale des Valois, elle fut étreinte vers 1460 par François Villon pour devenir l'architecte de son administration. Depuis lors, elle occupe la fonction de Sénéchal de Paris, assurant la stabilité de la cité à travers les révolutions et les guerres.",
+      "disciplines": [
+        "Présence",
+        "Célérité",
+        "Auspex"
+      ],
+      "relations": [
+        "Dévotion absolue envers Villon",
+        "Précautions et surveillance discrète envers Alexandre",
+        "Surveillance accrue des Lasombra du 2e arrondissement (quartier de la Bourse/Sentier)",
+        "Lien de travail étroit avec Colbert pour la logistique du centre"
+      ],
+      "secrets_mj": {
+        "la_sentinelle": "Elle utilise l'Auspex pour surveiller les résonances émotionnelles du Bourg Central, cherchant des signes de corruption liés à l'Anomalie qui pourraient affecter le Prince.",
+        "gestion_lasombra": "Elle maintient un équilibre fragile avec les Lasombra, leur laissant une certaine autonomie financière contre une loyauté stricte à la Mascarade dans le centre."
+      }
+    },
+    {
+      "id": "agnes_sorel",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 6,
+        "sire": "François Villon",
+        "roles": [
+          "Bourgmestre de Versailles",
+          "La Dame de Beauté",
+          "Ambassadrice de la Cour"
+        ]
+      },
+      "apparence": "Beauté légendaire, âge apparent de 25 ans. Peau d'albâtre, cheveux blonds vénitiens et yeux vert émeraude. Porte des tenues mêlant le style du XVe siècle et la haute couture.",
+      "personnalite": "Diplomate de génie, maîtresse de l'étiquette et du protocole. Elle est le 'gant de velours' de Villon. Loyaliste absolue, elle préfère la séduction et la négociation à la force brute.",
+      "histoire": "Favorite du roi Charles VII, elle fut étreinte étreinte vers 1450 par Villon qui vit en elle la quintessence de la grâce politique. Elle gère Versailles comme une extension de la cour de Villon, recevant les dignitaires étrangers dans un cadre où chaque geste est codifié.",
+      "disciplines": [
+        "Présence",
+        "Auspex",
+        "Célérité"
+      ],
+      "relations": [
+        "Infant préférée de Villon",
+        "Canal de communication discret avec Alexandre",
+        "Respectée (et crainte) par les autres Bourgmestres pour son influence"
+      ],
+      "secrets_mj": {
+        "le_refuge_royal": "Versailles est préparé pour servir de base de repli à Villon en cas de soulèvement Anarch massif ou de crise majeure de l'Anomalie à Paris.",
+        "correspondance_secrete": "Elle informe discrètement Alexandre des décisions du Conseil, agissant comme un pivot de stabilité entre l'ancien et le nouveau Prince."
+      }
+    },
+    {
+      "id": "edith_piaf",
+      "nom": "Édith Piaf",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 11,
+        "sire": "Inconnu (Lignée de François Villon)",
+        "roles": [
+          "La Môme",
+          "Icône du Paris Populaire",
+          "La Voix de la Rue"
+        ]
+      },
+      "apparence": "Silhouette frêle, âge apparent de 45-50 ans. Front haut, grands yeux sombres et cheveux bruns courts et frisés. Porte toujours une robe noire simple de scène. Son visage marqué exprime une intensité dramatique. Quand elle chante, elle semble grandir de deux têtes.",
+      "personnalite": "Passionnée, tragique et entière. Elle déteste les manières de la haute cour et préfère la compagnie des bas-fonds. Elle vit chaque nuit comme si c'était la dernière.",
+      "histoire": "Étreinte en 1963 au moment de sa mort clinique, elle est devenue l'icône des bas-fonds Toreador. Elle règne sur les cabarets de Montmartre et sert de lien entre la haute société de Villon et la rue, capable d'apaiser ou d'enrager les foules.",
+      "disciplines": {
+        "Presence": "Élevé (Spécialité : Charisme de scène)",
+        "Melpominee": 3,
+        "Celerite": "Faible",
+        "Auspex": "Moyen"
+      },
+      "relations": [
+        "Protégée par le Prince Villon (son Sire de lignée)",
+        "Appréciée des Brujah pour ses racines populaires",
+        "Lien spirituel avec Modigliani"
+      ],
+      "secrets_mj": {
+        "frequence_de_sang": "Son niveau 3 de Melpominée lui permet de briser les liens de sang de ceux qui l'écoutent pendant une nuit entière, ou au contraire, de plonger un auditeur dans une mélancolie suicidaire."
+      }
+    },
+    {
+      "id": "christian_dior",
+      "nom": "Christian Dior",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 11,
+        "sire": "Inconnu (Lignée de François Villon)",
+        "roles": [
+          "Le Maître des Apparences",
+          "Architecte de la Mascarade Visuelle"
+        ]
+      },
+      "apparence": "Élégance bourgeoise, âge apparent de 50-55 ans (traits marqués et fatigués). Crâne dégarni, yeux gris-bleu vifs et petites mains soignées. Porte des costumes de flanelle grise. Il dégage une aura de calme et de luxe discret.",
+      "personnalite": "Perfectionniste, sensible et superstitieux. Il est obsédé par la structure et la forme. Pour lui, la société vampirique est une robe qui doit tomber parfaitement sans jamais révéler les coutures.",
+      "histoire": "Couturier célèbre, il fut étreint en 1957 pour préserver son génie. Il est aujourd'hui le gardien de l'élégance et de la Mascarade vestimentaire à la cour de Paris, s'assurant que les anciens ne paraissent pas anachroniques dans le monde moderne.",
+      "disciplines": {
+        "Auspex": "Élevé (Perception du détail et des auras)",
+        "Presence": "Moyen",
+        "Celerite": "Moyen"
+      },
+      "relations": [
+        "Conseiller esthétique d'Aliénor de Valois",
+        "Allié logistique d'Armand de Saint-Clair pour les hautes sphères",
+        "Fournisseur de parures rituelles pour Agnès Sorel"
+      ],
+      "secrets_mj": {
+        "talisman_textile": "Ses créations les plus prestigieuses agissent comme des focales pour la Présence de ceux qui les portent, augmentant le charisme du porteur de manière subtile mais indéniable."
+      }
+    },
+    {
+      "id": "modigliani",
+      "nom": "Amedeo Modigliani",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 12,
+        "sire": "Inconnu (Lignée de François Villon)",
+        "roles": [
+          "Le Peintre des Âmes",
+          "L'Observateur de la Bête"
+        ]
+      },
+      "apparence": "Beauté mélancolique et fiévreuse, âge apparent de 35 ans. Silhouette très mince, cheveux noirs bouclés en désordre et yeux sombres profonds. Visage émacié, regard fiévreux et lointain. Teint très pâle, il porte souvent des vêtements tachés de peinture avec un foulard rouge, et dégage une aura de mélancolie bohème. Ses mains sont perpétuellement agitées.",
+      "personnalite": "Obsessionnel et visionnaire. Il ne s'intéresse pas à la politique du sang, seulement à la vérité cachée derrière le regard. Il est souvent en état de transe créatrice.",
+      "histoire": "Peintre maudit de Montparnasse, il fut étreint en 1920 sur son lit de mort. Il continue de peindre dans l'ombre, cherchant à capturer l'essence divine à travers des portraits aux formes étirées.",
+      "disciplines": {
+        "Auspex": "Élevé (Spécialité : Vision de l'Aura)",
+        "Presence": "Faible",
+        "Celerite": "Moyen"
+      },
+      "relations": [
+        "Protégé de Villon qui collectionne ses toiles 'interdites'",
+        "Lien étrange avec La Voisin (il s'intéresse à ses poisons pour altérer sa vision)",
+        "Ami de beuverie de sang avec Jim Morrison"
+      ],
+      "secrets_mj": {
+        "le_regard_vide": "Ses tableaux ont une propriété surnaturelle : quiconque fixe les yeux d'un de ses portraits peut voir, pendant un instant, la forme monstrueuse de la Bête du modèle."
+      }
+    },
+    {
+      "id": "jim_morrison",
+      "nom": "Jim Morrison",
+      "meta": {
+        "clan": "Toreador",
+        "generation": 13,
+        "sire": "Inconnu (Lignée de François Villon)",
+        "roles": [
+          "Le Roi Lézard",
+          "Chaman du Père Lachaise",
+          "Poète de l'Obscur"
+        ]
+      },
+      "apparence": "Charisme magnétique et allure christique, âge apparent de 27 ans. Barbe épaisse, cheveux longs bouclés en bataille et yeux bleu-gris voilés. Porte souvent du cuir noir.",
+      "personnalite": "Eratique, mystique et provocateur. Il explore les limites de l'existence vampirique à travers la poésie et les rituels de sang improvisés. Il refuse de se plier à l'étiquette.",
+      "history": "Icône du rock étreinte en 1971 à Paris pour préserver son aura de chamane. Il évite la cour de Villon, préférant l'errance nocturne et la poésie mystique dans les bas-fonds de la ville. Il a choisi de rester au Père Lachaise, transformant son propre tombeau en un lieu de pèlerinage où il observe les mortels depuis l'ombre.",
+      "disciplines": {
+        "Presence": "Élevé (Spécialité : Transe hypnotique)",
+        "Auspex": "Moyen",
+        "Celerite": "Faible",
+        "Occultation": 2
+      },
+      "relations": [
+        "Source d'agacement pour Aliénor (il est ingérable)",
+        "Adulé par les jeunes Toreador et les Anarchs pour son aura de rébellion",
+        "Interlocuteur privilégié des esprits du cimetière"
+      ],
+      "secrets_mj": {
+        "les_portes_de_la_perception": "Jim a développé une capacité unique à percevoir les fluctuations de l'Anomalie de la Tour Eiffel à travers la musique et les vibrations urbaines. Il prétend entendre 'le chant de la structure'.",
+        "Addiction": "Morrison cherche souvent à se nourrir de sang de personnes ayant ingéré des drogues, surtout allucinogènes, ou de l'alcool."
+      }
+    },
+    {
+      "id": "alexandre",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 4,
+        "sire": "Ventrue",
+        "roles": [
+          "Ancien Prince de Paris"
+        ]
+      },
+      "apparence": "Jeune Grec de seize ans, beauté classique, cheveux dorés et visage imberbe. Malgré son air adolescent, il dégage une autorité glaciale.",
+      "personnalite": "Froid, méthodique, manipulateur.",
+      "histoire": "Ancien Prince de Paris déchu, étreint durant l'Antiquité au debut du Ier siècle ap.J.C, par le patriarche Ventrue. Il observe la cour de Villon depuis l'ombre, convaincu que son retour au pouvoir est inévitable.",
+      "disciplines": [
+        "Domination",
+        "Présence",
+        "Robustesse",
+        "Puissance"
+      ],
+      "relations": [
+        "Respect prudent envers Villon",
+        "Contrôle discret de la lignée Ventrue"
+      ]
+    },
+    {
+      "id": "armand",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 7,
+        "sire": "Valérius de Montjoie",
+        "roles": [
+          "Bourgmestre du 7e-8e (Cœur Institutionnel)",
+          "Figure publique du Clan Ventrue",
+          "Liaison avec l'État Français"
+        ]
+      },
+      "apparence": "Aristocrate impeccable, âge apparent de 35-40 ans. Visage de marbre, cheveux châtain clair lissés et yeux gris acier. Porte des costumes trois pièces de tailleur.",
+      "personnalite": "Diplomate calculateur. Il parle peu mais chaque mot est une négociation. Il incarne la stabilité et la tradition du clan.",
+      "histoire": "Ancien Missus Dominicus sous Charlemagne, étreint vers 810 pour sa rigueur administrative. Il est aujourd'hui le Bourgmestre du cœur institutionnel (7e-8e) et assure le lien avec l'État Français. Il est le visage que la Camarilla montre aux hauts fonctionnaires mortels.",
+      "disciplines": [
+        "Domination",
+        "Présence",
+        "Robustesse"
+      ],
+      "relations": [
+        "Loyauté secrète envers Alexandre (il attend son retour)",
+        "Coordination avec Aliénor (pour la gestion des élites)",
+        "Respect mutuel mais méfiance avec Colbert (gestionnaire vs diplomate)"
+      ],
+      "secrets_mj": {
+        "le_gardien_des_ministeres": "Il contrôle les réseaux d'influence au sein du Ministère de l'Intérieur et des Affaires Étrangères. C'est lui qui 'efface' les incidents de la Mascarade au niveau gouvernemental.",
+        "agent_double": "Bien qu'il serve Villon, il transmet des rapports réguliers à Alexandre sur l'état de décomposition (selon lui) de la cour Toreador."
+      }
+    },
+    {
+      "id": "colbert",
+      "nom": "Jean-Baptiste Colbert",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 7,
+        "roles": [
+          "Bourgmestre de Levallois et zone Nord-Ouest",
+          "Intendant des Finances du Domaine",
+          "Primogène Ventrue"
+        ]
+      },
+      "apparence": "Allure sévère, âge apparent de 50-55 ans. Visage long et austère, front haut, yeux gris scrutateurs sous des sourcils épais qui semblent calculer le coût de chaque mot prononcé. Porte des costumes sombres impeccables.",
+      "personnalite": "Bourreau de travail, pragmatique et impitoyable sur l'efficacité. Il déteste le gaspillage et l'improvisation. S'il sert Villon avec une loyauté de fer, c'est parce qu'il considère le Prince comme une 'marque' nécessaire au prestige de la France, bien qu'il méprise ses dépenses.",
+      "histoire": "Ministre de Louis XIV et Contrôleur général des finances, il fut étreint en 1683. Il gère désormais le trésor et la logistique de la Camarilla, appliquant son mercantilisme à l'économie de la nuit. Il a fait de Levallois le centre névralgique de la gestion des ressources du Domaine de Paris.",
+      "disciplines": [
+        "Domination",
+        "Présence",
+        "Endurance"
+      ],
+      "relations": [
+        "L'Intendant de Villon : Gère les fonds occultes et la logistique du Prince.",
+        "Supérieur hiérarchique de Jaurès et Mandel (8e) : Dirige son 'Conseil des Rois' avec une poigne de fer.",
+        "Respect distant pour Vallier (7e) : Apprécie la stabilité qu'il apporte chez les Brujah, mais surveille ses idéaux."
+      ],
+      "secrets_mj": {
+        "le_tresor_de_levallois": "Il contrôle les flux financiers des plus grandes entreprises du CAC 40 basées dans son fief. Rien ne se dépense à Paris sans qu'il n'ait une trace comptable.",
+        "neutralite_technocratique": "Il considère l'Anomalie de la Tour Eiffel d'abord comme un risque structurel pour la valeur immobilière et la stabilité des marchés avant de la voir comme un danger mystique."
+      }
+    },
+    {
+      "id": "jaures",
+      "nom": "Jean Jaurès",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 9,
+        "roles": [
+          "Bourgmestre du Grand Paris Sud",
+          "Médiateur Social",
+          "Tribun de la Camarilla"
+        ]
+      },
+      "apparence": "Stature trapue, âge apparent de 54 ans. Barbe grise fournie, cheveux poivre et sel en bataille et regard brun chaleureux. Porte des vêtements de la Belle Époque un peu usés. Il dégage une humanité rare pour un Ventrue, ce qui est sa plus grande arme de persuasion.",
+      "personnalite": "Orateur brillant, humaniste. Il croit que la survie des vampires passe par une coexistence stable et ordonnée avec les masses humaines.",
+      "histoire": "Tribun socialiste étreint en 1914 au Café du Croissant pour préserver son génie de médiateur. Il est devenu le Bourgmestre du Grand Paris Sud et le principal médiateur social du Domaine.",
+      "disciplines": [
+        "Présence (Spécialité : Eloquence)",
+        "Domination",
+        "Endurance"
+      ],
+      "secrets_mj": "Il est hanté par l'idée que l'Anomalie est liée aux grandes souffrances collectives du XXe siècle qu'il n'a pu empêcher."
+    },
+    {
+      "id": "mandel",
+      "nom": "Georges Mandel",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 10,
+        "roles": [
+          "Préfet de l'Ombre",
+          "Garde des Sceaux de Colbert",
+          "Maître des Archives"
+        ]
+      },
+      "apparence": "Allure austère et tranchante, âge apparent de 59 ans. Visage anguleux et émacié, lunettes sévères, nez aquilin et yeux noirs fixes. Cheveux gris rares et plaqués. Porte des costumes sombres de style années 40. Il semble toujours être en train de lire un rapport invisible.",
+      "personnalite": "D'une efficacité clinique. Il ne cherche pas la gloire, seulement le contrôle total de l'information. Il est craint car il sait tout sur tout le monde.",
+      "histoire": "Bras droit de Clemenceau et figure de la Résistance, il fut étreint en 1944 après son assassinat par la Milice. Préfet de l'ombre, il dirige aujourd'hui le renseignement et la sécurité du Domaine.",
+      "disciplines": [
+        "Domination",
+        "Auspex",
+        "Endurance"
+      ],
+      "secrets_mj": "Il collabore secrètement avec le Projet Argos des Nosferatu pour croiser ses dossiers politiques avec leurs flux vidéo."
+    },
+    {
+      "id": "marcus-delacroix",
+      "meta": {
+        "clan": "Lasombra",
+        "generation": 7,
+        "roles": [
+          "Bourgmestre du 2e arrondissement",
+          "Allié des Toreador"
+        ]
+      },
+      "apparence": "Élégance ténébreuse, âge apparent de 30 ans. Cheveux noir corbeau, barbe courte, yeux noir d'encre et teint d'une pâleur de marbre. Porte exclusivement des vêtements de luxe italiens sombres. Son ombre semble trop dense.",
+      "personnalite": "Laconique, patient, méthodique. Cherche à rivaliser avec les Ventrue en influence.",
+      "histoire": "Noble marchand génois étreint vers 1650 lors de conflits commerciaux. Il s'est établi à Paris après 1945 et règne désormais sur le 2e arrondissement, contrôlant la finance occulte du Domaine.",
+      "disciplines": [
+        "Ténèbres",
+        "Domination",
+        "Puissance"
+      ],
+      "relations": [
+        "Méfiance polie envers les Ventrue",
+        "Relations solides avec Aliénor",
+        "Sent que l'Anomalie influence ses ombres"
+      ]
+    },
+    {
+      "id": "monseigneur-jean-eudes",
+      "nom": "Monseigneur Jean-Eudes de La Motte-Houdancourt",
+      "meta": {
+        "clan": "Lasombra",
+        "generation": 8,
+        "sire": "Marcus Delacroix"
+      },
+      "roles": [
+        "Infant Lasombra",
+        "Eminence grise du Clergé"
+      ],
+      "apparence": "Présence écrasante, âge apparent de 45 ans. Visage émacié, yeux bleu délavé et peau très pâle. Porte une soutane noire, une écharpe violette et une croix en améthyste.",
+      "personnalite": "Pieux d'une manière terrifiante, calme, discipliné. Voit sa condition comme une pénitence.",
+      "histoire": "Prélat sous Louis XIV, étreint en 1675 par Marcus Delacroix. Il perçoit sa condition comme une pénitence. Il contrôle aujourd'hui les archives du diocèse et surveille la Société de Léopold pour le compte du Domaine.",
+      "disciplines": [
+        "Ténèbres",
+        "Domination",
+        "Auspex"
+      ],
+      "influence": "Contrôle les archives du diocèse et surveille la Société de Léopold.",
+      "statut": "Ebauche - A développer"
+    },
+    {
+      "id": "luciano-Bacigalupo",
+      "nom": "Luciano Bacigalupo dit Le Loup",
+      "meta": {
+        "clan": "Lasombra",
+        "generation": 8,
+        "sire": "Marcus Delacroix"
+      },
+      "roles": [
+        "Infant Lasombra",
+        "Lien avec la Criminalité"
+      ],
+      "apparence": "Carrure athlétique, âge apparent de 32 ans. Cheveux noirs très courts, yeux d'un brun noir masqués par des lunettes de soleil. Style italien moderne, élégance stricte et sombre.",
+      "personnalite": "Ancien intermédiaire de la pègre marseillaise. Brutal mais discipliné, déteste le manque de respect, qui tends à faire payer, soit de façon violente, soit de façon plus subtile.",
+      "histoire": "Ancien intermédiaire de la pègre marseillaise, étreint en 1985 par Marcus Delacroix. Surnommé 'Le Loup', il dirige les opérations de terrain, la sécurité du clan et les réseaux criminels de Paris.",
+      "disciplines": [
+        "Ténèbres",
+        "Puissance",
+        "Célérité"
+      ],
+      "influence": "Gestion des réseaux criminels de Paris et sécurité du clan.",
+      "statut": "Ebauche - A développer"
+    },
+    {
+      "id": "louis-xvii",
+      "nom": "Louis-Charles de France (Louis XVII)",
+      "meta": {
+        "clan": "Malkavian",
+        "generation": 7,
+        "roles": [
+          "Primogène Malkavian",
+          "Bourgmestre du 13e"
+        ]
+      },
+      "apparence": "Enfant de 10 ans, écharpe et vêtements de haute facture. Regard d'une sagesse troublante, presque surnaturelle.",
+      "personnalite": "Poli et poétique, il utilise l'étiquette royale comme une armure contre son PTSD sévère. Malgré sa sagesse apparente, il est hanté par la Terreur. Il s'exprime souvent à la trisième personne, de manière cryptique, et voit la société des vampires comme une cour perpétuelle où le moindre faux pas peut mener à l'échafaud.",
+      "histoire": "Le Dauphin étreint au Temple en 1795 par un Malkavien. Il cache un traumatisme immense derrière une étiquette royale rigide. Bourgmestre du 13e, il contrôle la Pitié-Salpêtrière et surveille la folie de la ville.",
+      "derangement": "Visions de lames et de foules sans têtes. Il entend le sifflement de la guillotine dans le silence et panique face aux mouvements de foule ou aux bruits métalliques brusques.",
+      "disciplines": [
+        "Auspex",
+        "Domination",
+        "Démentation 3",
+        "Obscurcie"
+      ],
+      "influence": "Contrôle de la Pitié-Salpêtrière via le directeur (Goule). Réseau d'informateurs via les Nosferatu.",
+      "note": [
+        "Développe Démentation passivement à cause de sa génération basse (7e).",
+        "Quand il intéragit avec les mortels, il est le plus souvent accompagné par Claire Valade, sa _mère_."
+      ]
+    },
+    {
+      "id": "ludovic-l-ancien",
+      "meta": {
+        "clan": "Malkavian",
+        "generation": 6,
+        "roles": [
+          "Ancien du Clan",
+          "Mémoire du Clan"
+        ]
+      },
+      "apparence": "Environ 40 ans, bossu et ingrat. Traits asymétriques, yeux noisette et cheveux rades et jamais coiffés, allure de patient ou de médecin négligé à Sainte-Anne selon les besoins.",
+      "personnalite": "Langue aiguisée, sarcastique et provocateur. Adore semer la discorde par le verbe, héritage de son passé de bouffon. Érudit terrifiant. Ne participe pas à la politique active mais a une influence massive sur son clan. Aime le Chaos et le provoque (comme un tueur en série contrôlé): tant que il peut il resiste ou canalise, mais quand il arrive à la limite peut exploser et créer de scène de chaos absolumment folles (décharges involontaires de Alienation).",
+      "histoire": "Ancien bouffon du Comte Robert, étreint dans sa cellule alors qu'il attendait l'échafaud. En torpeur de 1794 à 1880. Il utilise aujourd'hui l'hôpital Sainte-Anne comme terrain de jeu pour ses pulsions chaotiques.",
+      "derangement": "Manifestations erratiques de elans chaotiques, de plus en plus fréquentes depuis 1880, qu'il projette pour la plupart sur les patients et le personnel médical de Sainte-Anne.",
+      "disciplines": [
+        "Démentation 5",
+        "Auspex",
+        "Obscurcie",
+        "Domination"
+      ],
+      "secrets_mj": {
+        "perception": "Sent que l'Anomalie 'digère' Paris de l'intérieur.",
+        "influence": "Conseille Louis XVII via des énigmes."
+      }
+    },
+    {
+      "id": "claire-valade",
+      "meta": {
+        "clan": "Malkavian",
+        "generation": 12,
+        "roles": [
+          "Mère de Louis XVII (façade)",
+          "Interface sociale"
+        ]
+      },
+      "apparence": "Blonde superbe d'une trentaine d'années, formes généreuses, yeux bleus. Aura solaire. Porte des robes fantaisies modernes et colorées.",
+      "personnalite": "Douceur maternelle constante. Consciente de sa nature vampirique, elle a délibérément choisi de voir en Louis son propre fils décédé. Elle gère leur quotidien avec une normalité domestique déconcertante.",
+      "histoire": "Étreinte dans les années 50. Après avoir perdu son fils Louis, elle a projeté son besoin de maternité sur Louis XVII. Elle sert d'interface sociale et de pilier émotionnel au Prince, qui accepte cette mascarade privée.",
+      "derangement": "Substitution affective : elle fusionne l'identité de son fils mort avec celle de Louis XVII, traitant les horreurs de leur condition comme des nécessités médicales familiales.",
+      "disciplines": [
+        "Présence",
+        "Démentation 1",
+        "Auspex",
+        "Obscurcie"
+      ],
+      "secrets_mj": {
+        "lien_de_sang": "Lien partiel avec Louis XVII qui cimente son délire."
+      },
+      "note": "Étreinte après 1945 : ne possède pas Domination."
+    },
+    {
+      "id": "vincent-van-gogh",
+      "meta": {
+        "clan": "Malkavian",
+        "generation": 10,
+        "roles": [
+          "Peintre du Réseau",
+          "Prophète Visuel"
+        ]
+      },
+      "apparence": "Âge apparent 37 ans, barbe rousse taillée, oreille gauche mutilée. Regard vert fiévreux. Porte une veste de peintre tachée, souvent sous Occultation à Montmartre.",
+      "personnalite": "Intense, mélancolique et hyper-créatif. S'exprime uniquement par métaphores. Voit le monde comme un champ de bataille de couleurs et d'émotions.",
+      "histoire": "Étreint en 1890 à Auvers-sur-Oise sur ordre de Louis XVII. Il sert de prophète visuel au Prince, traduisant les flux occultes de Paris en œuvres d'art prophétiques.",
+      "derangement": "Synesthésie prophétique : perception des auras et de l'avenir sous forme de tourbillons colorés, provoquant des surcharges sensorielles violentes.",
+      "disciplines": [
+        "Auspex",
+        "Obscurcie",
+        "Démentation 2"
+      ],
+      "secrets_mj": {
+        "obsession": "Peint obsessionnellement la Tour Eiffel et 'Le Jaune d'En-Bas'."
+      },
+      "note": "Étreint en 1890 sur ordre de Louis XVII."
+    },
+    {
+      "id": "l-ermite",
+      "meta": {
+        "clan": "Nosferatu",
+        "generation": 4,
+        "roles": [
+          "Maître de l'Information",
+          "Gardien du Statu Quo"
+        ]
+      },
+      "apparence": "Présence millénaire fusionnée avec la pierre des catacombes. Peau parcheminée couleur calcaire, membres noueux comme des racines. Yeux perles de nacre dépolies.",
+      "personnalite": "Patience géologique, observateur silencieux des siècles. Ne s'implique pas dans les querelles politiques, sauf si l'équilibre de la cité est menacé.",
+      "histoire": "4e génération. Étreint au Moyen-Orient après le Déluge. Diablérisa son Sire (un Infant de l'Antédiluvien) en voyant son reflet. Hante le sous-sol de Paris depuis l'époque Celte.",
+      "disciplines": [
+        "Occultation",
+        "Animalité",
+        "Auspex",
+        "Puissance"
+      ],
+      "secrets_mj": {
+        "puissance_absolue": "Vampire le plus puissant de Paris (Malkav exclu). Diaboliste de 4e génération.",
+        "la_grande_inconnue": "Traquer la source des vibrations anormales dans le tréfonds de Paris, suggérant un éveil ancien sous la ville."
+      },
+      "note": "Sa présence est connue seulement par Villon, Alexandre et les anciens Nosferatu"
+    },
+    {
+      "id": "gerard-le-muet",
+      "meta": {
+        "clan": "Nosferatu",
+        "generation": 5,
+        "roles": [
+          "Primogène Nosferatu",
+          "Roi de la Cour des Miracles"
+        ]
+      },
+      "apparence": "Visage sans bouche (peau soudée), masqué ou occulté. Silhouette élégante mais sombre. Ses yeux trahissent une intelligence et une humanité hors du commun.",
+      "personnalite": "Humanité très haute, d'une sagesse et d'une perspicacité rares. S'exprime par gestes ou télépathie. Fidèle serviteur de l'équilibre de la cité.",
+      "histoire": "Le 'Roi de la Cour des Miracles'. Fossoyeur doté d'une grande humanité lors de la Grande Peste, il a été étreint au XIVe siècle, il est le garant de la neutralité Nosferatu. Bien que capable de renverser la Cour, il préfère le rôle d'observateur et de gardien.",
+      "disciplines": [
+        "Occultation",
+        "Puissance",
+        "Auspex"
+      ],
+      "note": "Aussi appelé 'le Prince Noir'. Expert en Auspex, il perçoit les secrets de la surface sans jamais quitter l'ombre."
+    },
+    {
+      "id": "virginia-oldoini",
+      "meta": {
+        "clan": "Nosferatu",
+        "generation": 9,
+        "roles": [
+          "Comtesse de Castiglione",
+          "Mémoire esthétique"
+        ]
+      },
+      "apparence": "Porte des voiles de soie complexes masquant une déformation asymétrique. Garde un port de reine et une élégance aristocratique. Mains toujours gantées, regard d'une dignité absolue.",
+      "personnalite": "Mélancolique, résiliente et d'une grande sagesse. Elle a transcendé la perte de sa beauté physique pour cultiver une noblesse d'âme. Très respectée par ses pairs et par certains Toreadors.",
+      "histoire": "Ancienne icône du Second Empire, étreinte en 1899. Elle a transformé sa réclusion mortelle en une existence nocturne d'influence. Elle est la gardienne de l'élégance et de l'étiquette au sein du clan Nosferatu.",
+      "disciplines": [
+        "Occultation",
+        "Présence",
+        "Auspex"
+      ],
+      "note": "Sa maîtrise de 'Présence' lui permet de maintenir une aura de respectabilité qui subjugue ceux qui osent la regarder."
+    },
+    {
+      "id": "bourgmestre-nord",
+      "meta": {
+        "clan": "Nosferatu",
+        "generation": 6,
+        "roles": [
+          "Bourgmestre du Dessous - Rive Droite"
+        ]
+      },
+      "statut": "Ebauche - "
+    },
+    {
+      "id": "bourgmestre-sud",
+      "meta": {
+        "clan": "Nosferatu",
+        "generation": 6,
+        "roles": [
+          "Bourgmestre du Dessous - Rive Gauche"
+        ]
+      },
+      "statut": "Ebauche - Gardien des tunnels et de la logistique souterraine."
+    },
+    {
+      "id": "caldus_vermeren",
+      "meta": {
+        "clan": "Tremere",
+        "generation": 8,
+        "sire": "Magister Helena von Rotschild",
+        "roles": [
+          "Bourgmestre du 5e arrondissement",
+          "Représentant du Clan Tremere au Conseil",
+          "Liaison avec Vienne"
+        ]
+      },
+      "apparence": "Caldus dégage une élégance froide et clinique. Il possède des cheveux poivre et sel, toujours parfaitement peignés en arrière, et des yeux bleu acier dont le regard semble scanner l'âme de son interlocuteur avec une précision chirurgicale. Son visage, d'un âge apparent de 40-45 ans, est marqué par des traits fins et des lunettes à monture métallique minimaliste. Il arbore un style 'corporate-chic' composé de costumes sombres de haute facture, le faisant passer pour un consultant de haut vol ou un doyen d'université moderne, dissimulant parfaitement sa nature millénaire derrière un masque de professionnalisme absolu.",
+      "personnalite": "D'un calme désarmant, d'une précision chirurgicale dans ses propos. Hyper-professionnel, il ne laisse jamais transparaître ses ambitions personnelles, se présentant comme un pur serviteur de la Pyramide.",
+      "histoire": "Avant son Étreinte, Caldus était un alchimiste et un astrologue érudit de renom à la cour de Vienne. Son génie pour décrypter les flux ésotériques et sa rigueur intellectuelle attirèrent l'attention de la Pyramide, et il fut transformé vers le milieu du XVIIe siècle, sous le règne de Ferdinand III, par la Magister Helena von Rotschild. Formé pendant des siècles au Chantry de Vienne, il est devenu un pur produit de la hiérarchie Tremere : patient, méthodique et loyal. Il a été envoyé à Paris dans les années 1850, pour stabiliser les relations du clan après une période de repli stratégique. En tant que Bourgmestre du 5e arrondissement, il a transformé le Quartier Latin en un bastion intellectuel où il surveille les manuscrits anciens de la Sorbonne, cherchant à cartographier l'influence de l'Anomalie sur le savoir humain.",
+      "disciplines": {
+        "Auspex": "Elevé (Expert en interception de secrets)",
+        "Domination": "Elevé (Maîtrise la bureaucratie et les esprits)",
+        "Thaumaturgie": "Moyen (Voie du Sang, Voie de l'Esprit)",
+        "Presence": "Faible (Charisme fonctionnel)"
+      },
+      "relations": [
+        "Dévotion hiérarchique envers Helena von Rotschild",
+        "Allié tactique d'Aliénor (partagent un goût pour l'ordre)",
+        "Méfiance polie envers Valérius et les anciens Ventrue",
+        "Surveille discrètement La Voisin (sa 'spécialiste' peu orthodoxe)"
+      ],
+      "secrets_mj": {
+        "audit_occulte": "Il utilise ses ressources pour cartographier l'influence de l'Anomalie sur les flux de connaissances à la Sorbonne.",
+        "le_pacte_de_verre": "Il a passé un accord tacite avec Colbert pour s'assurer que les fonds du Chantry restent intraçables, même pour le fisc français."
+      }
+    },
+    {
+      "id": "la_voisin",
+      "nom": "Catherine Deshayes (La Voisin)",
+      "meta": {
+        "clan": "Tremere",
+        "generation": 9,
+        "sire": "Balthazar de Grancey (absent de Paris)",
+        "roles": [
+          "Maîtresse des Poisons",
+          "Alchimiste de la Fondation",
+          "Spécialiste des Mort-Suns"
+        ]
+      },
+      "apparence": "Une femme d'âge mûr, imposante, à l'élégance sombre et surannée. Yeux d'un noir profond, souvent vêtue de velours sombre et de bijoux anciens en argent. Dégage une odeur d'herbes séchées et de soufre.",
+      "personnalite": "Macabre, pragmatique et dénuée de remords. Elle voit les autres vampires comme des assemblages de fluides à analyser. Elle est la toxicologue du clan : si un Prince veut une mort lente ou une extase artificielle, c'est à elle qu'il s'adresse.",
+      "histoire": "Figure centrale de l'Affaire des Poisons au XVIIe siècle. Officiellement brûlée vive en 1680, elle fut sauvée par une étreinte Tremere pour ses connaissances alchimiques. Elle est aujourd'hui la main discrète du clan pour les affaires 'impures'.",
+      "disciplines": {
+        "Thaumaturgie": "Elevé (Voie de l'Alchimie, Voie de la Corruption)",
+        "Auspex": "Moyen",
+        "Domination": "Faible"
+      },
+      "relations": [
+        "Outil indispensable de Caldus Vermeren (il la protège mais la surveille)",
+        "Fournisseuse occulte de certains Toreador en quête de sensations fortes",
+        "Méfiance mutuelle avec les Nosferatu (elle convoite leurs secrets biologiques)"
+      ],
+      "secrets_mj": {
+        "le_poison_de_sang": "Elle a développé un sérum capable de paralyser un vampire de plus haute génération, mais elle garde la formule pour elle seule.",
+        "laboratoire_clandestin": "Elle possède un atelier secret dans les carrières sous le Panthéon, où elle mène des expériences sur la réaction de l'Anomalie avec le sang alchimique."
+      }
+    },
+    {
+      "id": "vallier",
+      "meta": {
+        "clan": "Brujah",
+        "generation": 7,
+        "roles": [
+          "Primogène Brujah",
+          "Leader des Idéalistes",
+          "Médiateur du Conseil"
+        ]
+      },
+      "apparence": "Stature imposante (1m85+), homme vigoureux d'environ 45 ans d'apparence. Cheveux poivre et sel attachés en queue de cheval. Regard noir, perçant et intelligent. Port aristocratique hérité de ses origines de noblesse de robe.",
+      "personnalite": "Philosophe érudit, calme et posé. Imbu des idéaux des Lumières (Rousseau, Voltaire, Montesquieu). C'est un réformiste qui croit en une Camarilla éclairée, préférant la diplomatie de Villon à la rigidité d'Alexandre.",
+      "histoire": "Né vers 1710-1715, philosophe mineur sous Louis XV. Étreint vers 1755-1760. Contemporain de Diderot, il a vu mûrir les idées de l'Encyclopédie. Durant la Révolution, il est resté fidèle à la Camarilla tout en poussant pour des réformes internes. Il a pris Marat sous son aile comme goule avant de l'étreindre en catastrophe en 1793 pour le sauver de l'attentat de Charlotte Corday.",
+      "disciplines": [
+        "Présence",
+        "Puissance",
+        "Célérité"
+      ],
+      "relations": [
+        "Sire de Marat (protecteur et mentor)",
+        "Allié stratégique de Villon (soutient sa politique d'écoute)",
+        "Respecté par les anciens pour sa sagesse historique",
+        "Garant de la survie des Anarchs face au Conseil"
+      ],
+      "secrets_mj": {
+        "observation": "Utilise son statut de 'Savant' pour documenter si l'Anomalie influence les cycles de violence urbaine.",
+        "pacte": "Dissimule sciemment l'ampleur de la sédition des Anarchs du 19e pour préserver l'équilibre du clan."
+      }
+    },
+    {
+      "id": "marat",
+      "nom": "Jean-Paul Marat",
+      "meta": {
+        "clan": "Brujah",
+        "generation": 8,
+        "sire": "Vallier",
+        "roles": [
+          "Leader des Anarchs",
+          "La Soupape du Nord-Est",
+          "Stratège Révolutionnaire"
+        ]
+      },
+      "apparence": "Visage livide marqué par les cicatrices de sa maladie de peau humaine. Porte souvent un bandana ou un foulard pour maintenir ses cheveux noirs. Yedux noirs. Regard fiévreux d'une intensité redoutable. Allure de tribun populaire.",
+      "personnalite": "Révolutionnaire dans l'âme, mais rendu patient par les échecs de l'Histoire (1789, 1848, 1871). Il méprise le chaos désordonné et attend le moment de rupture idéal. Eloquence incendiaire mais discipline de fer.",
+      "histoire": "Sauvé de l'attentat de Charlotte Corday en 1793 par le sang de Vallier, puis étreint. A vécu toutes les secousses de Paris. Il tempère aujourd'hui les Anarchs extrémistes non par peur, mais par peur du gâchis. Il veut 'réussir' la prochaine révolution.",
+      "disciplines": [
+        "Puissance",
+        "Célérité",
+        "Présence"
+      ],
+      "relations": [
+        "Infant de Vallier : Respect profond, partage l'idéal mais diffère sur la méthode (Rupture vs Réforme).",
+        "Adversaire de Villon : Se bat pour faire entrer des Brujah extérieurs dans Paris.",
+        "Idole des 'Sans-Culottes' : Protège les Caitiffs et les nouveaux-nés du Nord-Est."
+      ],
+      "secrets_mj": {
+        "conflit_avec_le_prince": "Villon bloque systématiquement ses demandes d'Immigration vampirique, invoquant la surpopulation pour masquer sa peur d'une armée Anarch.",
+        "l_attente": "Marat utilise le 'Projet Argos' des Nosferatu (via des échanges d'infos) pour identifier les failles sécuritaires de la Camarilla en vue d'un futur soulèvement."
+      }
+    },
+    {
+      "id": "lady_d",
+      "nom": "Lady Diana Spencer",
+      "meta": {
+        "clan": "Brujah",
+        "generation": 9,
+        "roles": [
+          "Icône des Anarchs",
+          "Maîtresse de l'Influence Digitale",
+          "La Princesse du Peuple"
+        ]
+      },
+      "apparence": "Cheveux blonds assez courts, yeux verts, une élégance naturelle et mélancolique. Elle porte souvent des vêtements de haute couture vintage mélangés à des éléments modernes. Ses yeux trahissent une tristesse profonde, mais son sourire, quand elle le montre, illumine la pièce.",
+      "personnalite": "Compatissante, rebelle et stratégique. Elle déteste l'hypocrisie de la Cour de Villon. Elle utilise son image pour donner une voix aux sans-voix (Caitiffs, sang-clairs), tout en restant une figure mystérieuse et inaccessible.",
+      "histoire": "Officiellement morte sous le pont de l'Alma en 1997, elle fut sauvée par une étreinte non autorisée. Consciente que sa survie briserait la Mascarade, elle a appris à vivre dans l'ombre. Elle a vite compris que le véritable pouvoir au XXIe siècle n'est pas dans les ministères, mais dans l'opinion publique.",
+      "disciplines": [
+        "Présence",
+        "Occultation",
+        "Célérité"
+      ],
+      "relations": [
+        "Protégée officieusement par Marat (qui admire son potentiel de révolte)",
+        "Rivalité esthétique avec Agnès Sorel (Tradition vs Modernité)",
+        "Contrôle un réseau de 'Suivants' (influenceurs, photographes, ONG)"
+      ],
+      "secrets_mj": {
+        "limite_du_pouvoir": "Elle évite le centre de Paris et les réceptions officielles car elle sait que l'Auspex d'Aliénor ou de Villon la percerait à jour instantanément.",
+        "guerre_des_hashtags": "Elle est capable de saturer les réseaux sociaux de 'bruit' numérique pour masquer une opération Anarch réelle dans la rue."
+      }
+    }
+  ]
+}

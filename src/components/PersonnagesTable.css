@@ -1,0 +1,382 @@
+/* ================================================================
+   PersonnagesTable.css - Tableau des personnages
+   Filtrable par clan, triable par nom/génération/clan
+   ================================================================ */
+
+.personnages-table {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ================================================================
+   HEADER
+   ================================================================ */
+
+.table-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.header-title {
+  display: inline-block;
+}
+
+.table-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.table-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--silver);
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+/* ================================================================
+   CONTRÔLES (Filtres et Tri)
+   ================================================================ */
+
+.table-controls {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.control-label {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.control-select {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+  color: var(--pale-gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-select:hover {
+  border-color: var(--gold);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.control-select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+.control-select option {
+  background: var(--dark-bg);
+  color: var(--pale-gold);
+}
+
+.btn-reset {
+  padding: 10px 20px;
+  background: rgba(139, 0, 0, 0.3);
+  border: 1px solid var(--crimson);
+  border-radius: 4px;
+  color: var(--pale-gold);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.btn-reset:hover {
+  background: rgba(139, 0, 0, 0.5);
+  border-color: var(--gold);
+  transform: scale(1.05);
+}
+
+/* ================================================================
+   TABLEAU
+   ================================================================ */
+
+.table-container {
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+}
+
+.vampires-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* En-têtes */
+.vampires-table thead {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(75, 0, 130, 0.2));
+  border-bottom: 2px solid var(--gold);
+}
+
+.vampires-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+/* Largeurs colonnes */
+.col-nom {
+  width: 35%;
+}
+
+.col-generation {
+  width: 10%;
+  text-align: center;
+}
+
+.col-clan {
+  width: 25%;
+}
+
+.col-role {
+  width: 30%;
+}
+
+/* Lignes */
+.table-row {
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.table-row:hover {
+  background: rgba(212, 175, 55, 0.1);
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.table-row:active {
+  transform: scale(0.99);
+}
+
+.vampires-table td {
+  padding: 10px 16px;
+  color: var(--silver);
+}
+
+/* Nom */
+.nom-text {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--pale-gold);
+}
+
+/* Génération */
+.generation-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pale-gold);
+  text-align: center;
+  min-width: 36px;
+}
+
+/* Clan */
+.clan-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Rôle */
+.role-text {
+  font-size: 15px;
+  color: var(--silver);
+  font-style: italic;
+}
+
+/* Ligne vide */
+.empty-row {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--silver);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+
+.table-footer {
+  margin-top: 20px;
+  text-align: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+}
+
+.footer-hint {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* ================================================================
+   LOADING & ERREURS
+   ================================================================ */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.error-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.error-text {
+  font-size: 18px;
+  color: var(--crimson);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-reset {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .personnages-table {
+    padding: 15px;
+  }
+
+  .table-title {
+    font-size: 36px;
+  }
+
+  .table-subtitle {
+    font-size: 14px;
+  }
+
+  .vampires-table th,
+  .vampires-table td {
+    padding: 10px 12px;
+  }
+
+  .vampires-table th {
+    font-size: 11px;
+  }
+
+  .nom-text {
+    font-size: 15px;
+  }
+
+  .clan-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .role-text {
+    font-size: 13px;
+  }
+
+  /* Masquer la colonne Rôle sur mobile */
+  .col-role {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Sur très petit écran, tableau en mode compact */
+  .col-generation {
+    width: 15%;
+  }
+  
+  .col-nom {
+    width: 45%;
+  }
+  
+  .col-clan {
+    width: 40%;
+  }
+
+  .generation-badge {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}

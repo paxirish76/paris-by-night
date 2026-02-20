@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "version": "1.1",
+    "date": "2026-02-16",
+    "description": "Données complètes de référence - Paris by Night (Enrichi)",
+    "notes": "Section 'lieux' mise à jour avec les 25 entrées et leurs coordonnées géographiques."
+  },
+  "lieux": [
+    {
+      "id": "hotel_matignon",
+      "nom": "L'Hôtel de Matignon",
+      "bourg_id": "pouvoir",
+      "adresse": "57 Rue de Varenne, 75007 Paris",
+      "latitude": 48.8551,
+      "longitude": 2.3203,
+      "clan_id": "ventrue"
+    },
+    {
+      "id": "opera_garnier",
+      "nom": "L'Opéra Garnier",
+      "bourg_id": "artistique",
+      "adresse": "Place de l'Opéra, 75009 Paris",
+      "latitude": 48.8719,
+      "longitude": 2.3316,
+      "clan_id": "toreador"
+    },
+    {
+      "id": "musee_orsay",
+      "nom": "Le Musée d'Orsay",
+      "bourg_id": "pouvoir",
+      "adresse": "1 Rue de la Légion d'Honneur, 75007 Paris",
+      "latitude": 48.8599,
+      "longitude": 2.3265,
+      "clan_id": "ventrue"
+    },
+    {
+      "id": "la_coupole",
+      "nom": "La Coupole",
+      "bourg_id": "montparnasse",
+      "adresse": "102 Boulevard du Montparnasse, 75014 Paris",
+      "latitude": 48.8422,
+      "longitude": 2.3281,
+      "clan_id": "toreador"
+    },
+    {
+      "id": "musee_marmottan",
+      "nom": "Le Musée Marmottan Monet",
+      "bourg_id": "ouest",
+      "adresse": "2 Rue Louis Boilly, 75016 Paris",
+      "latitude": 48.8592,
+      "longitude": 2.2673,
+      "clan_id": "ventrue"
+    },
+    {
+      "id": "la_pagode",
+      "nom": "La Pagode de Paris",
+      "bourg_id": "monceau",
+      "adresse": "48 Rue de Courcelles, 75008 Paris",
+      "latitude": 48.8778,
+      "longitude": 2.3117,
+      "clan_id": "ventrue"
+    },
+    {
+      "id": "centquatre",
+      "nom": "Le Centquatre-Paris",
+      "bourg_id": "revolutionnaire",
+      "adresse": "5 Rue Curial, 75019 Paris",
+      "latitude": 48.8901,
+      "longitude": 2.3704,
+      "clan_id": "brujah"
+    },
+    {
+      "id": "crypte_saint_denis",
+      "nom": "La Crypte de la Basilique Saint-Denis",
+      "bourg_id": "saint-denis",
+      "adresse": "1 Rue de la Légion d'Honneur, 93200 Saint-Denis",
+      "latitude": 48.9355,
+      "longitude": 2.3598,
+      "clan_id": "brujah"
+    },
+    {
+      "id": "exploradome",
+      "nom": "L'Exploradôme",
+      "bourg_id": "val-de-marne-est",
+      "adresse": "18 Avenue Henri Barbusse, 94400 Vitry-sur-Seine",
+      "latitude": 48.7925,
+      "longitude": 2.3941,
+      "clan_id": "brujah"
+    },
+    {
+      "id": "pantheon",
+      "nom": "Le Panthéon",
+      "bourg_id": "latin",
+      "adresse": "Place du Panthéon, 75005 Paris",
+      "latitude": 48.8462,
+      "longitude": 2.3449,
+      "clan_id": "tremere"
+    },
+    {
+      "id": "bnf_triangle",
+      "nom": "La Bibliothèque François-Mitterrand",
+      "bourg_id": "triangle",
+      "adresse": "Quai François Mauriac, 75013 Paris",
+      "latitude": 48.8338,
+      "longitude": 2.3758,
+      "clan_id": "malkavian"
+    },
+    {
+      "id": "palais_brongniart",
+      "nom": "Le Palais Brongniart",
+      "bourg_id": "deuxieme",
+      "adresse": "16 Place de la Bourse, 75002 Paris",
+      "latitude": 48.8691,
+      "longitude": 2.3414,
+      "clan_id": "lasombra"
+    },
+    {
+      "id": "grands_moulins",
+      "nom": "Les Grands Moulins de Pantin",
+      "bourg_id": "nord-est",
+      "adresse": "9 Rue du Débarcadère, 93500 Pantin",
+      "latitude": 48.8929,
+      "longitude": 2.4011,
+      "clan_id": "nosferatu"
+    },
+    {
+      "id": "chateau_vincennes",
+      "nom": "Le Château de Vincennes",
+      "bourg_id": "yvelines-essonne",
+      "adresse": "Avenue de Paris, 94300 Vincennes",
+      "latitude": 48.8433,
+      "longitude": 2.4358,
+      "clan_id": "gangrel"
+    },
+    {
+      "id": "chateau_songes",
+      "nom": "Le Château des Songes (Disneyland)",
+      "bourg_id": "marne-la-vallee",
+      "adresse": "Boulevard de Parc, 77700 Coupvray",
+      "latitude": 48.8722,
+      "longitude": 2.7758,
+      "clan_id": "malkavian"
+    },
+    {
+      "id": "hopital_sainte_anne",
+      "nom": "L'Hôpital Sainte-Anne",
+      "bourg_id": "montparnasse",
+      "adresse": "1 Rue Cabanis, 75014 Paris",
+      "latitude": 48.8291,
+      "longitude": 2.3385,
+      "clan_id": "malkavian"
+    },
+    {
+      "id": "lumen",
+      "nom": "Le Lumen",
+      "bourg_id": "artistique",
+      "adresse": "15 Rue Blanche, 75009 Paris",
+      "latitude": 48.8778,
+      "longitude": 2.3308,
+      "clan_id": "mortel"
+    },
+    {
+      "id": "l_abattoir",
+      "nom": "L'Abattoir",
+      "bourg_id": "saint-denis",
+      "adresse": "16 Rue Denoyez, 75020 Paris",
+      "latitude": 48.87200,
+      "longitude": 2.37842,
+      "clan_id": "mortel"
+    },
+    {
+      "id": "la_grande_arche",
+      "nom": "La Grande Arche de la Défense",
+      "bourg_id": "la_defense",
+      "adresse": "1 Parvis de la Défense, 92800 Puteaux",
+      "latitude": 48.8926,
+      "longitude": 2.2358,
+      "clan_id": "ventrue"
+    },
+    {
+      "id": "le_louvre",
+      "nom": "Le Palais du Louvre",
+      "bourg_id": "central",
+      "adresse": "Rue de Rivoli, 75001 Paris",
+      "latitude": 48.8606,
+      "longitude": 2.3376,
+      "clan_id": "toreador"
+    },
+    {
+      "id": "catacombes",
+      "nom": "Les Catacombes de Paris",
+      "bourg_id": "montparnasse",
+      "adresse": "1 Avenue du Colonel Henri Rol-Tanguy, 75014 Paris",
+      "latitude": 48.8339,
+      "longitude": 2.3324,
+      "clan_id": "nosferatu"
+    },
+    {
+      "id": "pere_lachaise",
+      "nom": "Cimetière du Père-Lachaise",
+      "bourg_id": "est",
+      "adresse": "16 Rue du Repos, 75020 Paris",
+      "latitude": 48.8614,
+      "longitude": 2.3933,
+      "clan_id": "toreador"
+    },
+    {
+      "id": "chateau_versailles",
+      "nom": "Le Château de Versailles",
+      "bourg_id": "versailles",
+      "adresse": "Place d'Armes, 78000 Versailles",
+      "latitude": 48.8049,
+      "longitude": 2.1204,
+      "clan_id": "toreador"
+    },
+    {
+      "id": "sorbonne",
+      "nom": "La Sorbonne",
+      "bourg_id": "latin",
+      "adresse": "47 Rue des Écoles, 75005 Paris",
+      "latitude": 48.8485,
+      "longitude": 2.3434,
+      "clan_id": "tremere"
+    },
+    {
+      "id": "la_ligne_13",
+      "nom": "La Ligne 13",
+      "bourg_id": "saint-denis",
+      "adresse": "Avenue Gabriel Péri, 93200 Saint-Denis",
+      "latitude": 48.9244,
+      "longitude": 2.3444,
+      "clan_id": "brujah"
+    }
+  ]
+}

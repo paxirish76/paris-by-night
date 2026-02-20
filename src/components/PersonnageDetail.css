@@ -1,0 +1,606 @@
+/* ================================================================
+   PersonnageDetail.css - Fiche personnage 3 colonnes
+   Structure: Droite (image/rôles) | Centre (infos) | Gauche (stats)
+   ================================================================ */
+
+.personnage-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 50%, #1a1215 100%);
+  overflow-y: auto;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease-out;
+  padding: 20px;
+}
+
+.btn-close-top {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(139, 0, 0, 0.8);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 12px 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  letter-spacing: 1px;
+}
+
+.btn-close-top:hover {
+  background: var(--crimson);
+  color: var(--pale-gold);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Grid 3 colonnes */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 320px;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 60px auto 10px;
+  animation: slideInUp 0.6s ease-out;
+}
+
+/* ================================================================
+   COLONNE DROITE - Image, ID, Rôles
+   ================================================================ */
+
+.detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  order: 3;
+}
+
+/* Portrait */
+.detail-portrait {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border: 2px solid var(--gold);
+  background: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.detail-portrait:hover {
+  border-color: var(--pale-gold);
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+  transform: scale(1.02);
+}
+
+.detail-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.detail-portrait:hover img {
+  transform: scale(1.05);
+}
+
+/* Overlay au hover */
+.portrait-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.detail-portrait:hover .portrait-overlay {
+  opacity: 1;
+}
+
+.overlay-icon {
+  font-size: 48px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(75, 0, 130, 0.1));
+}
+
+.placeholder-icon {
+  font-size: 80px;
+  opacity: 0.3;
+}
+
+.placeholder-text {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--silver);
+  opacity: 0.5;
+  letter-spacing: 2px;
+}
+
+/* ID */
+.detail-id {
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 2px solid var(--gold);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--silver);
+  opacity: 0.6;
+}
+
+/* Rôles */
+.roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.role-badge {
+  padding: 10px 16px;
+  background: rgba(212, 175, 55, 0.1);
+  border-left: 3px solid var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--pale-gold);
+  letter-spacing: 1px;
+}
+
+/* ================================================================
+   COLONNE CENTRE - Nom, Sire, Apparence, Histoire, etc.
+   ================================================================ */
+
+.detail-center {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  order: 2;
+}
+
+/* Nom (grand) */
+.detail-nom {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--gold);
+  text-align: center;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Sire et Génération */
+.detail-meta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-label {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.meta-value {
+  font-size: 16px;
+  color: var(--pale-gold);
+  font-weight: 600;
+}
+
+.generation-badge {
+  background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+  color: var(--pale-gold);
+  padding: 4px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Sections */
+.detail-section {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.detail-section:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-text {
+  font-size: 14px;
+  color: var(--silver);
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/* Relations */
+.relations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.relation-item {
+  padding: 8px 12px;
+  background: rgba(65, 105, 225, 0.1);
+  border-left: 3px solid #4169e1;
+  font-size: 13px;
+  color: var(--silver);
+  line-height: 1.4;
+}
+
+/* Secrets MJ */
+.secrets-section {
+  background: rgba(139, 0, 0, 0.15);
+  border-color: var(--crimson);
+}
+
+.secrets-title {
+  color: var(--crimson);
+}
+
+.secrets-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.secret-item {
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 3px solid var(--crimson);
+}
+
+.secret-key {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--gold);
+  text-transform: capitalize;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.secret-value {
+  font-size: 13px;
+  color: var(--silver);
+  line-height: 1.4;
+}
+
+/* ================================================================
+   COLONNE GAUCHE - Clan, Attributs, Capacités, Disciplines
+   ================================================================ */
+
+.detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  order: 1;
+}
+
+/* Clan */
+.detail-clan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid;
+  border-radius: 4px;
+}
+
+.clan-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.clan-icon-placeholder {
+  font-size: 48px;
+}
+
+.clan-nom {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Attributs */
+.attributes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.attribute-category {
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--gold);
+}
+
+.category-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.attribute-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.attr-name {
+  color: var(--silver);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.attr-value {
+  color: var(--pale-gold);
+  font-weight: 700;
+  font-size: 15px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.attr-separator {
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+/* Capacités */
+.abilities-content {
+  font-size: 13px;
+  color: var(--silver);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* Disciplines */
+.disciplines-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.discipline-badge {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, var(--blood-red), var(--crimson));
+  color: var(--pale-gold);
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.4);
+}
+
+/* ================================================================
+   NOTES - Pleine largeur au fond
+   ================================================================ */
+
+.detail-notes-bottom {
+  max-width: 1600px;
+  margin: 12px auto 10px;
+  padding: 12px 16px;
+  background: rgba(139, 0, 0, 0.1);
+  border: 1px dashed var(--gold);
+  border-radius: 4px;
+}
+
+.notes-content {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--silver);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Texte vide */
+.empty-text {
+  font-size: 13px;
+  color: var(--silver);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* ================================================================
+   Loading & Erreurs
+   ================================================================ */
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+}
+
+.error-message p {
+  font-size: 18px;
+  color: var(--crimson);
+  margin-bottom: 20px;
+}
+
+.btn-close {
+  background: var(--blood-red);
+  color: var(--pale-gold);
+  border: 1px solid var(--gold);
+  padding: 12px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-close:hover {
+  background: var(--crimson);
+  transform: scale(1.05);
+}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+
+/* Tablette */
+@media (max-width: 1400px) {
+  .detail-grid {
+    grid-template-columns: 250px 1fr 280px;
+    gap: 20px;
+  }
+
+  .detail-nom {
+    font-size: 40px;
+  }
+}
+
+/* Tablette portrait */
+@media (max-width: 1024px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .detail-right {
+    order: 1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .detail-center {
+    order: 2;
+  }
+
+  .detail-left {
+    order: 3;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .detail-nom {
+    font-size: 36px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .personnage-detail {
+    padding: 10px;
+  }
+
+  .detail-grid {
+    margin-top: 50px;
+    gap: 16px;
+  }
+
+  .detail-nom {
+    font-size: 28px;
+  }
+
+  .section-title {
+    font-size: 14px;
+  }
+
+  .btn-close-top {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+
+  .detail-meta {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .attribute-row {
+    font-size: 12px;
+  }
+
+  .attr-value {
+    font-size: 14px;
+  }
+}

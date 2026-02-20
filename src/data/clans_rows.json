@@ -1,0 +1,101 @@
+[
+    {
+        "id": "brujah",
+        "nom": "Brujah",
+        "population": 14,
+        "couleur": "#8b0000",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/brujah.webp",
+        "description": "À Paris, les Brujah sont les héritiers des Lumières et des barricades. Relativement nombreux mais individuellement moins puissants, ils sont menés par des Brujah Savants et des philosophes comme Vallier. C'est un clan divisé entre idéalistes et iconoclastes, animé par la tension permanente entre réforme et révolution.",
+        "buts": "[\"Transformer la Camarilla parisienne en une structure plus juste et éclairée.\", \"Protéger les exploités contre les abus des lignées royales.\", \"Dominer les réseaux d'influence modernes et digitaux pour préparer les révoltes futures.\", \"Maintenir un équilibre fragile entre loyauté envers Villon et soutien aux Anarchs.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Fascination culturelle, mais rejet de leur narcissisme politique.\"}, {\"id\": \"ventrue\", \"text\": \"Hostilité envers leur obsession du contrôle.\"}, {\"id\": \"nosferatu\", \"text\": \"Alliance tactique : force physique contre information.\"}, {\"id\": \"malkavian\", \"text\": \"Méfiance prudente envers leur folie lucide.\"}, {\"id\": \"tremere\", \"text\": \"Rivalité intellectuelle constante.\"}, {\"id\": \"gangrel\", \"text\": \"Respect mutuel entre marginaux.\"}, {\"id\": \"lasombra\", \"text\": \"Perçus comme des Ventrue plus dangereux.\"}]"
+    },
+    {
+        "id": "gangrel",
+        "nom": "Gangrel",
+        "population": 4,
+        "couleur": "#228b22",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/gangrel.webp",
+        "description": "Les Gangrel occupent les marges du Domaine. Gardes-frontières, éclaireurs, survivants, ils incarnent la force brute et le lien avec les espaces sauvages. Peu diplomates, mais essentiels à la défense du Domaine.",
+        "buts": "[\"Surveiller les frontières du Domaine.\", \"Assurer la défense physique contre les menaces.\", \"Protéger les territoires naturels.\", \"Gérer les perturbations de l'Anomalie sur l'instinct animal.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Gardes du corps rustres mais utiles.\"}, {\"id\": \"brujah\", \"text\": \"Camaraderie de terrain.\"}, {\"id\": \"ventrue\", \"text\": \"Méfiance envers les projets urbains.\"}, {\"id\": \"malkavian\", \"text\": \"Malaise face à leur folie imprévisible.\"}, {\"id\": \"nosferatu\", \"text\": \"Respect entre marginaux du Domaine.\"}, {\"id\": \"tremere\", \"text\": \"Rejet instinctif de leurs manipulations du sang.\"}, {\"id\": \"lasombra\", \"text\": \"Méfiance instinctive envers leur ombre prédatrice.\"}]"
+    },
+    {
+        "id": "lasombra",
+        "nom": "Lasombra",
+        "population": 3,
+        "couleur": "#4b0082",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/lasombra.webp",
+        "description": "Les Lasombra, aristocrates de l'ombre, ont intégré la Cour par le haut. Maîtres de la finance occulte et de la manipulation discrète, ils jouent contre les Ventrue tout en séduisant les Toreador.",
+        "buts": "[\"Détourner l'influence ventrue.\", \"Surveiller l'Inquisition et ses réseaux religieux.\", \"Maintenir un statut de partenaires privilégiés.\", \"Comprendre l'interaction entre l'Obténébration et l'Anomalie.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Alliance élégante et financière.\"}, {\"id\": \"brujah\", \"text\": \"Dédain aristocratique envers leurs agitations.\"}, {\"id\": \"ventrue\", \"text\": \"Rivalité pour le titre de véritables maîtres de Paris.\"}, {\"id\": \"malkavian\", \"text\": \"Méfiance envers leurs visions déstabilisantes.\"}, {\"id\": \"nosferatu\", \"text\": \"Respect entre maîtres du secret.\"}, {\"id\": \"tremere\", \"text\": \"Hostilité ouverte envers leurs prétentions mystiques.\"}, {\"id\": \"gangrel\", \"text\": \"Indifférence tant qu'ils restent aux frontières.\"}]"
+    },
+    {
+        "id": "malkavian",
+        "nom": "Malkavian",
+        "population": 13,
+        "couleur": "#FF8C00",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/malkavian.webp",
+        "description": "Les Malkavian sont les Miroirs Brisés de Paris, portant les stigmates des tragédies françaises. Prophètes fracturés, ils agissent comme la conscience occulte du Domaine. Clos aux lieux chargés de souffrance ou de savoir, ils sont les plus sensibles à l'Anomalie.",
+        "buts": "[\"Déchiffrer prophéties et visions stellaires.\", \"Canaliser l'Anomalie perçue comme une résonance de leur folie.\", \"Maintenir leur influence sur les institutions psychiatriques.\", \"Protéger leur mémoire et leurs secrets contre le rationalisme des autres clans.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Admiration esthétique mais critique de leur aveuglement.\"}, {\"id\": \"brujah\", \"text\": \"Amusement face à leur révolutionnisme, perçu comme une folie simple.\"}, {\"id\": \"ventrue\", \"text\": \"Méfiance envers leur obsession du contrôle.\"}, {\"id\": \"nosferatu\", \"text\": \"Alliance profonde entre outsiders porteurs de secrets.\"}, {\"id\": \"tremere\", \"text\": \"Hostilité envers leur volonté de mesurer l'inconnu.\"}, {\"id\": \"gangrel\", \"text\": \"Indifférence respectueuse.\"}, {\"id\": \"lasombra\", \"text\": \"Crainte de leurs ombres imprévisibles.\"}]"
+    },
+    {
+        "id": "mortel",
+        "nom": "Mortel",
+        "population": 0,
+        "couleur": "#A0522D",
+        "created_at": "2026-02-16 11:47:12.4211+00",
+        "icon_url": null,
+        "description": null,
+        "buts": null,
+        "relation": null
+    },
+    {
+        "id": "nosferatu",
+        "nom": "Nosferatu",
+        "population": 11,
+        "couleur": "#2f4f4f",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/nosferatu.webp",
+        "description": "Les Nosferatu sont le système nerveux du Domaine. Maîtres de l'information et des profondeurs, ils gouvernent la Cour des Miracles souterraine. Neutres mais déterminants, ils veillent à l'équilibre de Paris.",
+        "buts": "[\"Maintenir l'équilibre des forces dans Paris.\", \"Conserver le monopole du renseignement.\", \"Développer l'infrastructure numérique souterraine.\", \"Cartographier les profondeurs et surveiller l'Anomalie.\", \"Protéger les parias et maintenir une neutralité stratégique.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Fournisseurs d'informations indispensables.\"}, {\"id\": \"brujah\", \"text\": \"Coopération utilitaire mêlant force et renseignement.\"}, {\"id\": \"ventrue\", \"text\": \"Relation commerciale centrée sur les secrets industriels.\"}, {\"id\": \"malkavian\", \"text\": \"Alliance entre porteurs de vérités cachées.\"}, {\"id\": \"tremere\", \"text\": \"Méfiance mutuelle envers leur arrogance mystique.\"}, {\"id\": \"gangrel\", \"text\": \"Fraternité de l'ombre et du territoire.\"}, {\"id\": \"lasombra\", \"text\": \"Surveillance constante de leurs manipulations obscures.\"}]"
+    },
+    {
+        "id": "toreador",
+        "nom": "Toreador",
+        "population": 29,
+        "couleur": "#d4af37",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/toreador.webp",
+        "description": "Le clan souverain de Paris, de loin le plus nombreux, structuré autour de la figure centrale de François Villon et de ses infants royaux (Agnès Sorel, Aliénor, Godefroy). C'est une aristocratie de l'esprit et de la forme qui gère la cité comme une œuvre d'art totale, mêlant haute politique et mécénat exigeant. L'esthétique y est une loi, et des figures comme Christian Dior y incarnent la renaissance de l'élégance française face à la modernité.",
+        "buts": "[\"Maintenir l'hégémonie politique de la lignée de Villon sur Paris et Versailles.\", \"Codifier et protéger la haute culture (musique, peinture, mode) contre la vulgarité moderne.\", \"Surveiller et neutraliser les menaces ésotériques (l'Anomalie) par le contrôle social et l'Auspex.\", \"Utiliser le mécénat et la gestion des arts pour stabiliser la Mascarade à l'échelle mondiale.\"]",
+        "relation": "[{\"id\": \"brujah\", \"text\": \"Respect pour leur passion martiale mais mépris pour leur partie plus anarch, même si certains jeunes sympathisent avec la cause.\"}, {\"id\": \"lasombra\", \"text\": \"Alliance financière fragile sous haute surveillance dans le quartier de la Bourse.\"}, {\"id\": \"ventrue\", \"text\": \"Alliance pour la stabilité de la ville, teintée d'une méfiance mutuelle.\"}, {\"id\": \"nosferatu\", \"text\": \"Fournisseurs d'informations précieux, mais mieux vaut les avoir comme alliés que comme ennemis.\"}, {\"id\": \"malkavian\", \"text\": \"Admiration pour les plus artistes, mais crainte profonde envers leur folie imprévisible.\"}, {\"id\": \"tremere\", \"text\": \"Utiles mais inquiétants ; les Toreador surveillent leurs ambitions occultes.\"}, {\"id\": \"gangrel\", \"text\": \"Peu d'influence sociale, mais gardiens efficaces et combattants solides.\"}]"
+    },
+    {
+        "id": "tremere",
+        "nom": "Tremere",
+        "population": 10,
+        "couleur": "#9370db",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/tremere.webp",
+        "description": "Les Tremere traitent la Thaumaturgie comme une science exacte. Le Chantry de la Sorbonne est leur laboratoire. Obsessionnels, ambitieux et indispensables, ils cherchent à quantifier l'Anomalie et à transformer son chaos en énergie exploitable.",
+        "buts": "[\"Étudier et contenir l'Anomalie.\", \"Accroître leur influence politique.\", \"Stabiliser les flux occultes de la cité.\", \"Maintenir leur monopole thaumaturgique.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Alliance d'intérêt mutuel en matière occulte.\"}, {\"id\": \"brujah\", \"text\": \"Méfiance envers leur idéalisme dépassé.\"}, {\"id\": \"ventrue\", \"text\": \"Collaboration technocratique étroite.\"}, {\"id\": \"malkavian\", \"text\": \"Mépris envers leur approche intuitive.\"}, {\"id\": \"nosferatu\", \"text\": \"Rivalité pour le contrôle de l'information.\"}, {\"id\": \"lasombra\", \"text\": \"Conflit territorial et mystique.\"}, {\"id\": \"gangrel\", \"text\": \"Désintérêt clinique mutuel.\"}]"
+    },
+    {
+        "id": "ventrue",
+        "nom": "Ventrue",
+        "population": 13,
+        "couleur": "#4169e1",
+        "created_at": "2026-02-13 22:42:22.556144+00",
+        "icon_url": "https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/clan_logo/ventrue.webp",
+        "description": "Guidé par Alexandre et Landry, le clan des Rois forme l'ossature structurelle du Domaine. Administrateurs et bâtisseurs, ils gouvernent depuis les coulisses institutionnelles et financières. Pour eux, Paris est une entreprise dont ils sont les actionnaires légitimes.",
+        "buts": "[\"Contrôler les leviers économiques et étatiques de la France.\", \"Assurer la logistique vitale du Domaine en cas de crise.\", \"Restaurer l'influence de la lignée d'Alexandre tout en servant la Pax Toreador.\", \"Stabiliser la population mortelle via des médiateurs sociaux influents.\"]",
+        "relation": "[{\"id\": \"toreador\", \"text\": \"Alliance de prestige, mais mépris subtil pour leur frivolité.\"}, {\"id\": \"brujah\", \"text\": \"Surveillance constante des tendances révolutionnaires.\"}, {\"id\": \"tremere\", \"text\": \"Partenariat technocratique dans la sécurisation occulte.\"}, {\"id\": \"nosferatu\", \"text\": \"Relation client-fournisseur centrée sur les secrets industriels.\"}, {\"id\": \"malkavian\", \"text\": \"Méfiance profonde envers leur irrationalité.\"}, {\"id\": \"lasombra\", \"text\": \"Rivalité financière féroce.\"}, {\"id\": \"gangrel\", \"text\": \"Indifférence utilitaire.\"}]"
+    }
+]
