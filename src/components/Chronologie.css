@@ -1,0 +1,259 @@
+/* ─── Chronologie – dual timeline ─────────────────────────────────────────── */
+
+.chron-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 5rem;
+}
+
+/* Header */
+.chron-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.chron-title {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 2rem;
+  color: var(--color-accent, #c9a84c);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.6rem;
+}
+
+.chron-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.2rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--color-muted, #888);
+  letter-spacing: 0.04em;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.legend-dot.human   { background: var(--color-human,   #7eb8d4); }
+.legend-dot.vampire { background: var(--color-vampire, #c0392b); }
+.legend-label { color: var(--color-muted, #999); }
+
+/* ─── Sticky detail banner ─────────────────────────────────────────────────── */
+.chron-detail {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface, #1c1c1c);
+  border-bottom: 1px solid var(--color-border, #333);
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  min-height: 3.2rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  flex-wrap: wrap;
+}
+
+.chron-detail.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.chron-detail-badge {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 0.1rem;
+}
+.chron-detail-badge.human   { background: rgba(126,184,212,0.15); color: var(--color-human,   #7eb8d4); }
+.chron-detail-badge.vampire { background: rgba(192, 57, 43, 0.15); color: var(--color-vampire, #e05a4e); }
+
+.chron-detail-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text, #e0e0e0);
+  align-self: center;
+}
+
+.chron-detail-desc {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--color-muted, #999);
+  line-height: 1.5;
+  align-self: center;
+  min-width: 160px;
+}
+
+.chron-detail-close {
+  background: none;
+  border: none;
+  color: var(--color-muted, #666);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0 0.2rem;
+  margin-left: auto;
+  align-self: flex-start;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.chron-detail-close:hover { color: var(--color-text, #e0e0e0); }
+
+/* ─── Grid layout ──────────────────────────────────────────────────────────── */
+.chron-grid {
+  display: grid;
+  grid-template-columns: 1fr 130px 1fr;
+  align-items: start;
+}
+
+/* Column labels */
+.chron-col-label {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem 1.2rem;
+  font-weight: 700;
+}
+.human-label   { text-align: right; color: var(--color-human,   #7eb8d4); }
+.vampire-label { text-align: left;  color: var(--color-vampire, #e05a4e); }
+
+/* Spine top cap */
+.chron-spine-top {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+/* Event cells */
+.chron-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.65rem 0.6rem;
+  min-height: 56px;
+}
+.human-cell   { align-items: flex-end;  text-align: right; }
+.vampire-cell { align-items: flex-start; text-align: left; }
+
+/* Event pills */
+.pill {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+  text-align: inherit;
+  background: none;
+  max-width: 100%;
+}
+
+.pill.human {
+  color: var(--color-human, #7eb8d4);
+  border-color: rgba(126, 184, 212, 0.25);
+  background: rgba(126, 184, 212, 0.06);
+}
+.pill.human:hover,
+.pill.human.active {
+  background: rgba(126, 184, 212, 0.18);
+  border-color: var(--color-human, #7eb8d4);
+}
+
+.pill.vampire {
+  color: var(--color-vampire, #e05a4e);
+  border-color: rgba(192, 57, 43, 0.25);
+  background: rgba(192, 57, 43, 0.06);
+}
+.pill.vampire:hover,
+.pill.vampire.active {
+  background: rgba(192, 57, 43, 0.18);
+  border-color: var(--color-vampire, #e05a4e);
+}
+
+/* ─── Spine ─────────────────────────────────────────────────────────────────── */
+.chron-spine-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.chron-spine-cell.cap {
+  min-height: 40px;
+}
+
+.spine-line {
+  width: 1px;
+  flex: 1;
+  min-height: 20px;
+  background: var(--color-border, #333);
+}
+
+.spine-node {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.2rem 0;
+  position: relative;
+}
+
+/* The dot */
+.spine-node::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.spine-node.human::before   { background: var(--color-human,   #7eb8d4); border: 2px solid var(--color-human,   #7eb8d4); }
+.spine-node.vampire::before { background: var(--color-vampire, #c0392b); border: 2px solid var(--color-vampire, #c0392b); }
+.spine-node.dual::before    { background: var(--color-accent,  #c9a84c); border: 2px solid var(--color-accent,  #c9a84c); }
+
+.spine-year {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.7rem;
+  color: var(--color-muted, #888);
+  letter-spacing: 0.04em;
+  padding-top: 32px; /* push below the dot */
+  text-align: center;
+  line-height: 1.2;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .chron-grid {
+    grid-template-columns: 1fr 80px 1fr;
+  }
+  .chron-col-label { font-size: 0.7rem; padding: 0.5rem 0.4rem 1rem; }
+  .pill { font-size: 0.72rem; padding: 0.25rem 0.5rem; }
+  .spine-year { font-size: 0.6rem; }
+  .chron-detail { flex-direction: column; gap: 0.3rem; }
+}

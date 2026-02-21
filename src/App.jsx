@@ -7,6 +7,7 @@ import Carte from './components/Carte';
 import LieuxTable from './components/LieuxTable';
 import BourgsTable from './components/BourgsTable';
 import ClansTable from './components/ClansTable';
+import Chronologie from './components/Chronologie';
 import './App.css';
 
 function App() {
@@ -27,8 +28,6 @@ function App() {
   };
 
   // Navigate from BourgsTable → Carte
-  // bourgId: fly to bourg polygon (null if souterrain/no polygon)
-  // lieuId:  fly to a specific lieu marker inside that bourg (optional)
   const navigateToCarteFromBourg = (bourgId, lieuId = null) => {
     setTargetBourgId(bourgId);
     setTargetLieuId(lieuId);
@@ -64,7 +63,7 @@ function App() {
 
     switch (currentPage) {
       case 'home':
-        return <Home />;
+        return <Home onNavigate={setCurrentPage} />;
 
       case 'personnages':
         return (
@@ -105,8 +104,11 @@ function App() {
       case 'clans':
         return <ClansTable />;
 
+      case 'chronologie':
+        return <Chronologie />;
+
       default:
-        return <Home />;
+        return <Home onNavigate={setCurrentPage} />;
     }
   };
 

@@ -1,0 +1,90 @@
+{
+  "lore_title": "Chronologie Vampirique de Paris",
+  "timeline": [
+    {
+      "period": "Ancien/Moyen Âge précoce",
+      "events": [
+        {
+          "year": "508",
+          "event": "Prise de pouvoir d’Alexander",
+          "description": "Alexander, Ventrue de 4e génération, devient le premier Prince de Paris."
+        }
+      ]
+    },
+    {
+      "period": "Guerre de Cent Ans & Jacquerie",
+      "events": [
+        {
+          "year": "1250-1400",
+          "event": "Pression inquisitoriale",
+          "description": "L’Inquisition force une Mascarade stricte avant la Camarilla."
+        },
+        {
+          "year": "1337-1453",
+          "event": "Guerre vampirique franco-anglaise",
+          "description": "Conflit entre lignées vampiriques anglaises et Alexander."
+        },
+        {
+          "year": "1358",
+          "event": "Révolte anarch",
+          "description": "Les Anarchs tentent de renverser Alexander, échec brutal."
+        },
+        {
+          "year": "1438",
+          "event": "Attaque de loups-garous",
+          "description": "Une meute est repoussée par les vampires parisiens."
+        }
+      ]
+    },
+    {
+      "period": "Souterrain & Surveillance",
+      "events": [
+        {
+          "year": "1667",
+          "event": "Descente des clans clandestins",
+          "description": "L’éclairage et la police poussent Nosferatu et Malkaviens sous terre."
+        }
+      ]
+    },
+    {
+      "period": "Époque Moderne",
+      "events": [
+        {
+          "year": "1789",
+          "event": "Assaut Anarch/Sabbat",
+          "description": "Alexander disparaît pendant les émeutes révolutionnaires."
+        },
+        {
+          "year": "1799",
+          "event": "Ascension de Villon",
+          "description": "François Villon devient Prince grâce à l’aide de plusieurs clans."
+        },
+        {
+          "year": "1830",
+          "event": "Agitation anarch",
+          "description": "Nouvelle tentative anarch, échec."
+        },
+        {
+          "year": "1848",
+          "event": "Seconde révolte anarch",
+          "description": "Les Anarchs échouent de nouveau."
+        },
+        {
+          "year": "1871",
+          "event": "Commune anarch",
+          "description": "Plus grand soulèvement anarchique, écrasé par Villon."
+        },
+        {
+          "year": "1889",
+          "event": "Conseil de la Camarilla",
+          "description": "Conseil majeur tenu pendant l’Exposition universelle."
+        },
+        {
+          "year": "1914-1945",
+          "event": "Guerres mondiales",
+          "description": "Perturbations mineures, quelques incursions Sabbat."
+        }
+      ]
+    }
+  ]
+}

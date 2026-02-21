@@ -1,0 +1,105 @@
+{
+  "lore_title": "Chronologie Historique de Paris",
+  "timeline": [
+    {
+      "period": "Ancien/Moyen Âge précoce",
+      "events": [
+        {
+          "year": "-52",
+          "event": "Bataille de Lutèce",
+          "description": "Conquête romaine des Parisii."
+        },
+        {
+          "year": "508",
+          "event": "Statut de capitale",
+          "description": "Clovis Ier établit Paris comme capitale franque."
+        },
+        {
+          "year": "1190",
+          "event": "Fortification",
+          "description": "Philippe Auguste commence la grande muraille et le Louvre."
+        }
+      ]
+    },
+    {
+      "period": "Guerre de Cent Ans & Jacquerie",
+      "events": [
+        {
+          "year": "1337",
+          "event": "Début de la guerre de Cent Ans",
+          "description": "Début du conflit entre la France et l’Angleterre."
+        },
+        {
+          "year": "1348",
+          "event": "Peste Noire",
+          "description": "La peste tue un tiers de la population parisienne."
+        },
+        {
+          "year": "1358",
+          "event": "Triple crise",
+          "description": "Révolte d’Étienne Marcel et Jacquerie paysanne."
+        },
+        {
+          "year": "1370",
+          "event": "Bastille",
+          "description": "Construction de la forteresse pour contrôler Paris."
+        },
+        {
+          "year": "1438",
+          "event": "Loups de Paris",
+          "description": "Attaques de loups affamés dans la ville."
+        }
+      ]
+    },
+    {
+      "period": "Souterrain & Surveillance",
+      "events": [
+        {
+          "year": "1450",
+          "event": "Cour des Miracles",
+          "description": "Apogée de la contre-société criminelle organisée."
+        },
+        {
+          "year": "1667",
+          "event": "Réforme de La Reynie",
+          "description": "Invention de la police moderne et éclairage public."
+        },
+        {
+          "year": "1677",
+          "event": "Affaire des Poisons",
+          "description": "Scandale d'empoisonnements impliquant la haute société."
+        }
+      ]
+    },
+    {
+      "period": "Époque Moderne",
+      "events": [
+        {
+          "year": "1789",
+          "event": "Révolution française",
+          "description": "Renversement de l’Ancien Régime."
+        },
+        {
+          "year": "1799",
+          "event": "Napoléon Premier Consul",
+          "description": "Napoléon prend le pouvoir et rétablit l’ordre."
+        },
+        {
+          "year": "1852",
+          "event": "Haussmannisation",
+          "description": "Transformation radicale de Paris."
+        },
+        {
+          "year": "1940",
+          "event": "Occupation allemande",
+          "description": "Paris sous contrôle nazi."
+        },
+        {
+          "year": "1947",
+          "event": "New Look",
+          "description": "Christian Dior redonne du prestige à la mode parisienne."
+        }
+      ]
+    }
+  ]
+}

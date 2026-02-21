@@ -1,0 +1,140 @@
+{
+  "lore_title": "Paris by Night: Historical Chronology",
+  "timeline": [
+    {
+      "period": "Ancient/Early Medieval",
+      "events": [
+        {
+          "year": "-52",
+          "event": "Battle of Lutetia",
+          "description": "Roman conquest of the Parisii."
+        },
+        {
+          "year": "508",
+          "event": "Capital status",
+          "description": "Clovis I establishes Paris as the Frankish capital."
+        },
+        {
+          "year": "1190",
+          "event": "Fortification",
+          "description": "Philippe Auguste begins the first great wall and the Louvre."
+        }
+      ]
+    },
+    {
+      "period": "The 100 Years' War & The Jacquerie",
+      "events": [
+        {
+          "year": "1337",
+          "event": "War Outbreak",
+          "description": "Beginning of the 100 Years' War."
+        },
+        {
+          "year": "1348",
+          "event": "The Black Death",
+          "description": "Plague kills nearly 1/3 of the population."
+        },
+        {
+          "year": "1358",
+          "event": "Triple Crisis",
+          "description": "\u00c9tienne Marcel's revolt and the Jacquerie peasant uprising."
+        },
+        {
+          "year": "1370",
+          "event": "The Bastille",
+          "description": "Construction of the fortress to control the Parisian populace."
+        },
+        {
+          "year": "1438",
+          "event": "The Wolves of Paris",
+          "description": "Famine and wolf attacks within the city walls."
+        }
+      ]
+    },
+    {
+      "period": "Underworld & Surveillance",
+      "events": [
+        {
+          "year": "1450",
+          "event": "Court of Miracles",
+          "description": "The peak of the organized criminal counter-society."
+        },
+        {
+          "year": "1667",
+          "event": "La Reynie's Reign",
+          "description": "Invention of the modern police and street lighting."
+        },
+        {
+          "year": "1677",
+          "event": "Affair of the Poisons",
+          "description": "Scandal involving black masses and alchemy in high society."
+        }
+      ]
+    },
+    {
+      "period": "Modern Era",
+      "events": [
+        {
+          "year": "1852",
+          "event": "Haussmannization",
+          "description": "Destruction of medieval Paris for modern boulevards."
+        },
+        {
+          "year": "1940",
+          "event": "The Occupation",
+          "description": "Paris falls under Nazi control."
+        },
+        {
+          "year": "1947",
+          "event": "The New Look",
+          "description": "Christian Dior (aged 50-55) restores Paris's elegance."
+        },
+        {
+          "year": "1610-1614",
+          "event": "Marais Noble District",
+          "description": "Construction and urbanization of aristocratic Marais district."
+        },
+        {
+          "year": "1789",
+          "event": "Storming of the Bastille",
+          "description": "Revolution begins in Paris."
+        },
+        {
+          "year": "1793",
+          "event": "Execution of Louis XVI",
+          "description": "Revolutionary execution at Place de la R\u00e9volution."
+        },
+        {
+          "year": "1804",
+          "event": "Napoleon crowns himself Emperor",
+          "description": "Notre-Dame coronation consolidates power."
+        },
+        {
+          "year": "1830",
+          "event": "July Revolution",
+          "description": "Overthrow of Charles X in Paris."
+        },
+        {
+          "year": "1848",
+          "event": "February Revolution",
+          "description": "Creation of the Second Republic."
+        },
+        {
+          "year": "1871",
+          "event": "Paris Commune",
+          "description": "Radical socialist government briefly rules Paris."
+        },
+        {
+          "year": "1889",
+          "event": "Eiffel Tower & Exposition",
+          "description": "World's Fair marks technological and cultural showcase."
+        },
+        {
+          "year": "1799",
+          "event": "Napoleon becomes First Consul",
+          "description": "Restores order after the Revolution (per user request)."
+        }
+      ]
+    }
+  ]
+}

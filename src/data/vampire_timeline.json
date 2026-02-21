@@ -1,0 +1,90 @@
+{
+  "lore_title": "Paris by Night: Vampiric Chronology",
+  "timeline": [
+    {
+      "period": "Ancient/Early Medieval",
+      "events": [
+        {
+          "year": "508",
+          "event": "Alexander's Praxis",
+          "description": "Alexander, a 4th generation Ventrue, becomes the first Prince of Paris and establishes early Masquerade."
+        }
+      ]
+    },
+    {
+      "period": "The 100 Years' War & The Jacquerie",
+      "events": [
+        {
+          "year": "1250-1400",
+          "event": "Inquisition Pressure",
+          "description": "Inquisition forces strict proto-Masquerade in Paris."
+        },
+        {
+          "year": "1337-1453",
+          "event": "Hundred Years War Undead Conflict",
+          "description": "Struggle between English vampires and Prince Alexander."
+        },
+        {
+          "year": "1358",
+          "event": "Anarch Revolt",
+          "description": "Anarchs exploit revolt to attack Alexander; he suppresses them harshly."
+        },
+        {
+          "year": "1438",
+          "event": "Werewolf Attack",
+          "description": "A werewolf pack attacks Paris in winter; vampires repel it."
+        }
+      ]
+    },
+    {
+      "period": "Underworld & Surveillance",
+      "events": [
+        {
+          "year": "1667",
+          "event": "Miracle Court Forced Underground",
+          "description": "Street lighting and policing push Nosferatu and Malkavians underground."
+        }
+      ]
+    },
+    {
+      "period": "Modern Era",
+      "events": [
+        {
+          "year": "1789",
+          "event": "Revolution Chaos",
+          "description": "Anarchs and Sabbat nearly take Paris; Alexander hides."
+        },
+        {
+          "year": "1799",
+          "event": "Villon's Rise",
+          "description": "With Napoleon rising, Villon becomes Prince with aide of other clans."
+        },
+        {
+          "year": "1830",
+          "event": "Anarch Agitation",
+          "description": "Failed Anarch uprising against Villon."
+        },
+        {
+          "year": "1848",
+          "event": "Second Anarch Revolt",
+          "description": "Another failed attempt to dethrone Villon."
+        },
+        {
+          "year": "1871",
+          "event": "Paris Commune Uprising",
+          "description": "Largest Anarch insurrection; crushed by Villon."
+        },
+        {
+          "year": "1889",
+          "event": "Camarilla Grand Council",
+          "description": "World Fair hosts major Camarilla council after Anarch unrest."
+        },
+        {
+          "year": "1914-1945",
+          "event": "World Wars",
+          "description": "Wars not caused by vampires; minor Sabbat incursions occur."
+        }
+      ]
+    }
+  ]
+}

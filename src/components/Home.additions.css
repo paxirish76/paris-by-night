@@ -1,0 +1,37 @@
+/* Add these rules to your existing Home.css */
+
+.home-timeline-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border, #333);
+}
+
+.timeline-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: 1px solid var(--color-accent, #c9a84c);
+  color: var(--color-accent, #c9a84c);
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.timeline-button:hover {
+  background: var(--color-accent, #c9a84c);
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+}
+
+.timeline-button-icon {
+  font-size: 1rem;
+}
