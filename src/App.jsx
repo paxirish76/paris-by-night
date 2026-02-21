@@ -7,6 +7,7 @@ import Carte from './components/Carte';
 import LieuxTable from './components/LieuxTable';
 import BourgsTable from './components/BourgsTable';
 import ClansTable from './components/ClansTable';
+import Genealogie from './components/Genealogie';
 import Chronologie from './components/Chronologie';
 import './App.css';
 
@@ -19,7 +20,8 @@ function App() {
 
   // BourgsTable → Carte: highlight a bourg polygon OR a lieu marker
   const [targetBourgId, setTargetBourgId] = useState(null);
-
+  const [genealogieClan, setGenealogieClan] = useState(null); // { id, label }
+  
   // Navigate from LieuxTable row → Carte (existing pattern)
   const navigateToCarteFromLieu = (lieuId) => {
     setTargetLieuId(lieuId);
@@ -46,6 +48,13 @@ function App() {
     setTargetBourgDetailId(bourgId);
     setCurrentPage('bourgs');
   };
+
+// 3. Ajouter la fonction de navigation :
+const navigateToGenealogie = (clanId, clanLabel) => {
+  setGenealogieClan({ id: clanId, label: clanLabel });
+  setCurrentPage('genealogie');
+};
+
 
   // Callbacks to clear consumed targets
   const clearTargetLieu = () => setTargetLieuId(null);
@@ -102,7 +111,22 @@ function App() {
         );
 
       case 'clans':
-        return <ClansTable />;
+        return (
+          <ClansTable
+            onNavigateToGenealogie={navigateToGenealogie}
+          />
+        );
+
+      case 'genealogie':
+        return (
+          <Genealogie
+            clanId={genealogieClan?.id}
+            clanLabel={genealogieClan?.label}
+            onNavigateToPersonnage={(id) => setSelectedPersonnageId(id)}
+            onBack={() => setCurrentPage('clans')}
+          />
+        );
+
 
       case 'chronologie':
         return <Chronologie />;

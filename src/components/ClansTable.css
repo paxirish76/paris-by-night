@@ -435,3 +435,22 @@
   font-style: italic;
   line-height: 1.4;
 }
+
+/* ── Généalogie button ───────────────────────────────── */
+.cd-genealogie-btn {
+  background: none;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #a08840;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.cd-genealogie-btn:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}

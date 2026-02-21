@@ -1,0 +1,31 @@
+    {
+      "id": "de_varennes",
+      "nom": "Marc-Antoine de Varennes",
+      "meta": {
+        "clan": "Ventrue",
+        "generation": 9,
+        "sire": "constance-porte-st-louis",
+        "roles": [
+          "Prévôt des Manufactures et du Commerce Occulte",
+          "Liaison avec le CAC 40 (La Défense)",
+          "Adjoint à l'Intendance des Finances du Domaine"
+        ]
+      },
+      "apparence": "Âge apparent d'environ 30-35 ans. Contrairement à la sévérité monacale de Colbert, Marc-Antoine possède l'élégance plus souple de la Régence. Il porte des costumes de haute couture italienne, mais conserve une posture rigide, presque militaire. Son regard est bleu glacier, dépourvu de toute chaleur émotionnelle.",
+      "personnalite": "D'un calme absolu, il incarne la 'froideur administrative'. Il ne s'énerve jamais, il décrète. Si Colbert est le stratège, de Varennes est l'exécuteur. Il a une sainte horreur du désordre (et donc des Brujah) et considère que chaque individu, mort ou vivant, a une valeur marchande ou utilitaire.",
+      "histoire": "Ancien inspecteur des manufactures royales sous Louis XV, il fut remarqué par Colbert (déjà ancien à l'époque) pour avoir démantelé un réseau de corruption sans verser une goutte de sang, uniquement par l'audit. Étreint en 1745 par son infant Balthazar, il a servi de 'nettoyeur financier' à travers les siècles. Il a survécu à la Terreur en gérant les biens nationaux saisis pour le compte de la Camarilla.",
+      "disciplines": [
+        "Domination",
+        "Présence",
+        "Force d'âme"
+      ],
+      "relations": [
+        "L'Ombre du Ministre : Fidèle serviteur de Colbert, il est ses yeux et ses oreilles dans les conseils d'administration modernes.",
+        "Rivalité feutrée avec Dior : Respecte le talent de Christian Dior (50/55 ans), mais juge ses dépenses somptuaires comme une 'hémorragie de ressources' inutile au Domaine.",
+        "Surveillance des Nosferatu : Entretient un réseau d'informateurs pour s'assurer qu'aucune fuite de données ne déstabilise le marché boursier parisien."
+      ],
+      "secrets_mj": {
+        "le_protocole_de_la_defense": "Il a infiltré des algorithmes de trading haute fréquence pour prélever une 'micro-taxe' sur chaque transaction à La Défense, finançant ainsi les opérations secrètes de la zone Nord-Ouest.",
+        "l_ambition_silencieuse": "Bien qu'il affiche une loyauté parfaite, il commence à trouver que le mercantilisme de Colbert est trop rigide face à la crypto-économie. Il cache un portefeuille d'actifs numériques hors de portée de son Sire."
+      }
+    },

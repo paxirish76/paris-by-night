@@ -4,6 +4,8 @@ import './ClansTable.css';
 
 /* ── helpers ─────────────────────────────────────────── */
 const STORAGE = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public';
+const CLANS_AVEC_ARBRE = ['toreador', 'ventrue', 'brujah', 'nosferatu', 'malkavian'];
+
 
 // Supabase may return JSON columns as already-parsed arrays OR as strings.
 // This handles both cases safely without throwing.
@@ -69,7 +71,7 @@ function RelChip({ rel, clans, onClick }) {
 }
 
 /* ── Detail view ─────────────────────────────────────── */
-function ClanDetail({ clan, clans, onBack, onSelectClan }) {
+function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie }) {
   const buts = safeArray(clan.buts);
   const relations = safeArray(clan.relation);
 
@@ -117,6 +119,17 @@ function ClanDetail({ clan, clans, onBack, onSelectClan }) {
         </section>
       )}
 
+      {CLANS_AVEC_ARBRE.includes(clan.id) && (
+        <section className="cd-section">
+          <button
+            className="cd-genealogie-btn"
+            onClick={() => onNavigateToGenealogie(clan.id, clan.nom)}
+          >
+            Arbre généalogique →
+          </button>
+        </section>
+      )}
+
       {relations.length > 0 && (
         <section className="cd-section">
           <h2 className="cd-section-title">Relations avec les autres clans</h2>
@@ -137,7 +150,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan }) {
 }
 
 /* ── Main component ──────────────────────────────────── */
-export default function ClansTable() {
+export default function ClansTable({ onNavigateToGenealogie }) {
   const [clans, setClans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClan, setSelectedClan] = useState(null);
@@ -189,6 +202,7 @@ export default function ClansTable() {
           const c = clans.find(x => x.id === id);
           if (c) setSelectedClan(c);
         }}
+        onNavigateToGenealogie={onNavigateToGenealogie}
       />
     );
   }
