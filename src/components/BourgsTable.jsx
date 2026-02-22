@@ -44,7 +44,7 @@ function Richesse({ value }) {
 }
 
 // ─── Detail view ──────────────────────────────────────────────────────────────
-const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigateToPersonnage }) => {
+const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigateToPersonnage, currentIndex, total, onGoTo }) => {
   const clan  = clans.find(c => c.id === bourg.clan_dominant_id);
   const color = clan?.couleur || '#d4af37';
 
@@ -69,6 +69,31 @@ const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigat
         <span className="bd-back-arrow">←</span>
         Retour aux Bourgs
       </button>
+
+      {/* Navigation arrows */}
+      {total > 1 && (
+        <div className="pd-clan-nav">
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => onGoTo((currentIndex - 1 + total) % total)}
+            title="Bourg précédent"
+            style={{ '--clan-color': color }}
+          >
+            ←
+          </button>
+          <span className="pd-clan-nav-info" style={{ color }}>
+            Bourg · {currentIndex + 1} / {total}
+          </span>
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => onGoTo((currentIndex + 1) % total)}
+            title="Bourg suivant"
+            style={{ '--clan-color': color }}
+          >
+            →
+          </button>
+        </div>
+      )}
 
       {/* ── Hero ── */}
       <div className="bd-hero">
@@ -311,6 +336,17 @@ const BourgsTable = ({ onNavigateToCarte, onNavigateToPersonnage, initialBourgId
     return r;
   })();
 
+  // ── Roster for navigation: all bourgs sorted by nom ──
+  const bourgRoster = [...bourgs].sort((a, b) =>
+    normStr(a.nom).localeCompare(normStr(b.nom), 'fr')
+  );
+  const currentIndex = bourgRoster.findIndex(b => b.id === selectedBourg?.id);
+
+  const handleGoTo = (index) => {
+    const next = bourgRoster[index];
+    if (next) setSelectedBourg(next);
+  };
+
   // ── Navigate to personnage ──
   const handlePersonnage = (personnageId) => {
     if (onNavigateToPersonnage) onNavigateToPersonnage(personnageId);
@@ -331,6 +367,9 @@ const BourgsTable = ({ onNavigateToCarte, onNavigateToPersonnage, initialBourgId
         onBack={() => setSelectedBourg(null)}
         onNavigateToCarte={handleNavigateToCarte}
         onNavigateToPersonnage={handlePersonnage}
+        currentIndex={currentIndex}
+        total={bourgRoster.length}
+        onGoTo={handleGoTo}
       />
     );
   }

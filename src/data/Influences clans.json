@@ -1,0 +1,623 @@
+{
+  "Ventrue": {
+    "politique_mortelle": {
+      "gouvernement_national": "principal",
+      "ministeres": {
+        "interieur": "principal",
+        "defense": "principal",
+        "justice": "principal",
+        "culture": "secondaire"
+      },
+      "prefecture_police": "principal",
+      "mairies_arrondissements": "selon_bourgs",
+      "conseil_paris": "faible",
+      "syndicats_police": "faible",
+      "renseignement_actif": "principal",
+      "renseignement_passif": "secondaire",
+      "partis_politiques": {
+        "extreme_gauche": "faible",
+        "gauche_moderee": "partage",
+        "centre": "partage",
+        "centre_droit": "partage",
+        "droite": "principal",
+        "extreme_droite": "montante"
+      },
+      "ambassades": "partage",
+      "reseaux_diplomatiques": "partage",
+      "ONG": "selon_type"
+    },
+    "economie": {
+      "CAC40": "dominant",
+      "immobilier_BTP": "dominant",
+      "energie_eau_transport": "dominant",
+      "banques_finance": "dominant",
+      "logistique_ports": "partage",
+      "tourisme_hotellerie": "secondaire",
+      "luxe_mode": "administratif_financier",
+      "medias_traditionnels": "important",
+      "cinema_musique": "faible",
+      "finance_illegale": "secondaire"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "dominant_generalistes",
+      "influence_journalistes": "present",
+      "reseaux_sociaux": "finance_economie_professionnels",
+      "controle_recit_public": "co-dominant",
+      "propagande_desinformation": "present",
+      "cyber_surveillance": "important",
+      "dossiers_administratifs": "constitution",
+      "secrets_etat": "detention_manipulation",
+      "espionnage_mortel": "dominant",
+      "espionnage_vampirique": "institutionnel"
+    },
+    "culture": {
+      "cinema_series": "secondaire",
+      "architecture_urbanisme": "co-dominant",
+      "arts_culture_generale": "faible"
+    },
+    "societe": {
+      "opinion_publique": "co-dominant_recit_officiel",
+      "mode_de_vie": "faible_normes_sociales",
+      "reseaux_associatifs": "fondations_elitaires",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "faible",
+      "lieux_socialisation": "clubs_elitaires"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "secondaire",
+      "tendances_population": "influence_indirecte",
+      "couloirs_mobilite": "faible"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "faible",
+      "reseaux_mafieux": "secondaire",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "dominant",
+      "corruption_infiltration": "important"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "cliniques_privees_dominant",
+      "universites": "economies_politique_management",
+      "musees_bibliotheques": "faible",
+      "grandes_infrastructures": "gestion_surface"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "institutionnel",
+      "think_tanks": "dominant",
+      "recherche_scientifique": "financement"
+    },
+    "technologie_systemes": {
+      "systemes_information": "capacites_institutionnelles",
+      "cybersecurite": "officielle",
+      "cryptographie_occulte": "nulle",
+      "reseaux_speciaux": "administratif",
+      "surveillance_algorithmique": "institutionnel"
+    },
+    "territoire_environnement": {
+      "fleuves_canaux_ports": "gestion",
+      "prostitution": "luxe"
+    }
+  },
+
+  "Toreador": {
+    "politique_mortelle": {
+      "gouvernement_national": "secondaire",
+      "ministeres": {
+        "interieur": "faible",
+        "defense": "faible",
+        "justice": "faible",
+        "culture": "dominant"
+      },
+      "prefecture_police": "faible",
+      "mairies_arrondissements": "selon_bourgs",
+      "conseil_paris": "dominant",
+      "syndicats_police": "partage",
+      "renseignement_actif": "faible",
+      "renseignement_passif": "present",
+      "partis_politiques": {
+        "extreme_gauche": "faible",
+        "gauche_moderee": "dominant",
+        "centre": "partage",
+        "centre_droit": "partage",
+        "droite": "faible",
+        "extreme_droite": "faible"
+      },
+      "ambassades": "partage",
+      "reseaux_diplomatiques": "partage",
+      "ONG": "culturelles_humanitaires"
+    },
+    "economie": {
+      "CAC40": "faible",
+      "immobilier_BTP": "faible",
+      "energie_eau_transport": "secondaire_IDF",
+      "banques_finance": "faible",
+      "logistique_ports": "partage",
+      "tourisme_hotellerie": "dominant",
+      "luxe_mode": "dominant",
+      "medias_traditionnels": "important_selon_ligne",
+      "cinema_musique": "dominant",
+      "finance_illegale": "faible"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "important",
+      "influence_journalistes": "present",
+      "reseaux_sociaux": "entertainment_arts",
+      "controle_recit_public": "co-dominant",
+      "propagande_desinformation": "present",
+      "cyber_surveillance": "sheriff",
+      "dossiers_administratifs": "constitution",
+      "secrets_etat": "diplomatie",
+      "espionnage_mortel": "faible",
+      "espionnage_vampirique": "social"
+    },
+    "culture": {
+      "arts_culture_generale": "dominant",
+      "cinema_series": "principal",
+      "architecture_urbanisme": "co-dominant"
+    },
+    "societe": {
+      "opinion_publique": "co-dominant",
+      "mode_de_vie": "dominant",
+      "reseaux_associatifs": "faible_mecenat",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "moyen_culture",
+      "lieux_socialisation": "clubs_cabarets"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "dominant",
+      "tendances_population": "influence_indirecte",
+      "couloirs_mobilite": "faible"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "faible",
+      "reseaux_mafieux": "faible",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "faible",
+      "corruption_infiltration": "faible"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "acces_sang_mecenat",
+      "universites": "humanites_arts",
+      "musees_bibliotheques": "dominant",
+      "grandes_infrastructures": "faible_surface"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "culturelle",
+      "think_tanks": "culturels",
+      "recherche_scientifique": "faible"
+    },
+    "technologie_systemes": {
+      "systemes_information": "contenu",
+      "cybersecurite": "faible",
+      "cryptographie_occulte": "nulle",
+      "reseaux_speciaux": "artistique",
+      "surveillance_algorithmique": "moderation_sheriff"
+    },
+    "territoire_environnement": {
+      "clubs_cabarets": "dominant",
+      "crypto_culture": "faible"
+    }
+  },
+
+  "Brujah": {
+    "politique_mortelle": {
+      "gouvernement_national": "secondaire",
+      "ministeres": "faible",
+      "prefecture_police": "faible",
+      "conseil_paris": "faible",
+      "syndicats_police": "partage",
+      "renseignement_actif": "faible",
+      "renseignement_passif": "faible",
+      "partis_politiques": {
+        "extreme_gauche": "dominant",
+        "gauche_moderee": "faible",
+        "centre": "faible",
+        "centre_droit": "faible",
+        "droite": "faible",
+        "extreme_droite": "mineur"
+      },
+      "ambassades": "faible",
+      "reseaux_diplomatiques": "faible",
+      "ONG": "militantes_sociales"
+    },
+    "economie": {
+      "tourisme_hotellerie": "variable",
+      "medias_traditionnels": "contestataires",
+      "finance_illegale": "faible"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "militant",
+      "influence_journalistes": "present",
+      "reseaux_sociaux": "politique_gauche",
+      "controle_recit_public": "faible",
+      "propagande_desinformation": "faible",
+      "cyber_surveillance": "faible",
+      "dossiers_administratifs": "faible",
+      "secrets_etat": "faible",
+      "espionnage_mortel": "terrain",
+      "espionnage_vampirique": "faible"
+    },
+    "culture": {
+      "cinema_series": "sociaux_engages",
+      "architecture_urbanisme": "faible",
+      "arts_culture_generale": "faible"
+    },
+    "societe": {
+      "opinion_publique": "detournement_gauche",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "dominant",
+      "syndicats_mouvements": "dominant",
+      "influence_communautaire": "dominant",
+      "lieux_socialisation": "bars_populaires"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "secondaire",
+      "tendances_population": "indirect",
+      "couloirs_mobilite": "peripheries"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "secondaire",
+      "reseaux_mafieux": "faible",
+      "bandes_quartier": "dominant",
+      "police_renseignement_criminel": "faible",
+      "corruption_infiltration": "faible"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "acces_sang_occasionnel",
+      "universites": "creteil_sciences_sociales",
+      "musees_bibliotheques": "faible",
+      "grandes_infrastructures": "peripheries"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "gauche_radicale",
+      "think_tanks": "militants",
+      "recherche_scientifique": "subversion"
+    },
+    "technologie_systemes": {
+      "systemes_information": "hacktivisme",
+      "cybersecurite": "faible",
+      "cryptographie_occulte": "nulle",
+      "reseaux_speciaux": "faible",
+      "surveillance_algorithmique": "faible"
+    },
+    "territoire_environnement": {
+      "fleuves_canaux_ports": "travailleurs_docks",
+      "gares_reseau_ferre": "peripheries",
+      "fetes_clandestines": "dominant",
+      "crypto_culture": "street_art"
+    }
+  },
+
+  "Nosferatu": {
+    "politique_mortelle": {
+      "renseignement_passif": "dominant",
+      "ONG": "transparence_anticorruption"
+    },
+    "economie": {
+      "logistique_ports": "important",
+      "finance_illegale": "observateur"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "invisible_backdoor",
+      "influence_journalistes": "chantage",
+      "reseaux_sociaux": "invisible_infrastructure",
+      "controle_recit_public": "faible",
+      "propagande_desinformation": "faible",
+      "cyber_surveillance": "dominant",
+      "dossiers_administratifs": "acces_total",
+      "secrets_etat": "collecte",
+      "espionnage_mortel": "infiltration",
+      "espionnage_vampirique": "information_brute"
+    },
+    "culture": {
+      "arts_culture_generale": "faible",
+      "cinema_series": "underground",
+      "architecture_urbanisme": "faible"
+    },
+    "societe": {
+      "opinion_publique": "indirect_leaks",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "important_souterrain",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "fort_marges",
+      "lieux_socialisation": "infiltration"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "faible",
+      "tendances_population": "indirect",
+      "couloirs_mobilite": "dominant_souterrain"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "faible",
+      "reseaux_mafieux": "faible",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "renseignement_parallele",
+      "corruption_infiltration": "faible"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "acces_clandestin",
+      "universites": "informatique_cyber",
+      "musees_bibliotheques": "acces_clandestin",
+      "grandes_infrastructures": "dominant_souterrain"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "faible",
+      "think_tanks": "infiltration_rare",
+      "recherche_scientifique": "subversion_data"
+    },
+    "technologie_systemes": {
+      "systemes_information": "infiltration_totale",
+      "cybersecurite": "dominant_intrusions",
+      "cryptographie_occulte": "intermediaire",
+      "reseaux_speciaux": "nosinfiltrable",
+      "surveillance_algorithmique": "dominant"
+    },
+    "territoire_environnement": {
+      "fleuves_canaux_ports": "travailleurs_infiltration",
+      "gares_reseau_ferre": "dominant_urbain",
+      "crypto_culture": "underground_numerique"
+    }
+  },
+
+  "Lasombra": {
+    "politique_mortelle": {
+      "extreme_gauche": "infiltration_minoritaire",
+      "extreme_droite": "historique_decline"
+    },
+    "economie": {
+      "medias_traditionnels": "polarises",
+      "finance_illegale": "dominant"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "polarisation",
+      "influence_journalistes": "manipulation",
+      "reseaux_sociaux": "scams_extreme_droite",
+      "controle_recit_public": "faible",
+      "propagande_desinformation": "fort",
+      "cyber_surveillance": "faible",
+      "dossiers_administratifs": "faible",
+      "secrets_etat": "faible",
+      "espionnage_mortel": "clandestin",
+      "espionnage_vampirique": "manipulation_ombre"
+    },
+    "culture": {
+      "arts_culture_generale": "faible",
+      "cinema_series": "polarisation",
+      "architecture_urbanisme": "faible"
+    },
+    "societe": {
+      "opinion_publique": "polarisation",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "faible",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "faible",
+      "lieux_socialisation": "faible"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "faible",
+      "tendances_population": "faible",
+      "couloirs_mobilite": "faible"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "dominant",
+      "reseaux_mafieux": "dominant",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "faible",
+      "corruption_infiltration": "dominant"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "acces_sang_faible",
+      "universites": "faible",
+      "musees_bibliotheques": "faible",
+      "grandes_infrastructures": "faible"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "autoritaire_radical",
+      "think_tanks": "polarises",
+      "recherche_scientifique": "faible"
+    },
+    "technologie_systemes": {
+      "systemes_information": "hacking_social",
+      "cybersecurite": "moyen",
+      "cryptographie_occulte": "faible",
+      "reseaux_speciaux": "ombre",
+      "surveillance_algorithmique": "subversion"
+    },
+    "territoire_environnement": {
+      "prostitution": "dominant",
+      "fetes_clandestines": "faible",
+      "crypto_culture": "faible"
+    }
+  },
+
+  "Malkavian": {
+    "information_surveillance": {
+      "presse_TV_radio": "rumeurs_absurdes",
+      "influence_journalistes": "accidental",
+      "reseaux_sociaux": "memes_chaos",
+      "controle_recit_public": "chaotique",
+      "propagande_desinformation": "chaotique",
+      "cyber_surveillance": "faible",
+      "dossiers_administratifs": "faible",
+      "secrets_etat": "acces_accidentel",
+      "espionnage_mortel": "chaotique",
+      "espionnage_vampirique": "visions"
+    },
+    "culture": {
+      "cinema_series": "experimental",
+      "arts_culture_generale": "chaotique",
+      "architecture_urbanisme": "faible"
+    },
+    "societe": {
+      "opinion_publique": "chaotique_viral",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "faible",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "faible",
+      "lieux_socialisation": "underground"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "secondaire_chaotique",
+      "tendances_population": "imprevus",
+      "couloirs_mobilite": "faible"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "occasionnel",
+      "reseaux_mafieux": "faible",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "faible",
+      "corruption_infiltration": "faible"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "psychiatrie_controle_absolu_partage_autre",
+      "universites": "faible",
+      "musees_bibliotheques": "faible",
+      "grandes_infrastructures": "tour_eiffel_mystique"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "chaotique",
+      "think_tanks": "rare",
+      "recherche_scientifique": "faible"
+    },
+    "technologie_systemes": {
+      "systemes_information": "memetique",
+      "cybersecurite": "faible",
+      "cryptographie_occulte": "faible",
+      "reseaux_speciaux": "faible",
+      "surveillance_algorithmique": "chaotique"
+    },
+    "territoire_environnement": {
+      "clubs_cabarets": "psy_underground",
+      "fetes_clandestines": "secondaire"
+    }
+  },
+
+  "Gangrel": {
+    "information_surveillance": {
+      "reseaux_sociaux": "faible",
+      "espionnage_mortel": "terrain",
+      "cyber_surveillance": "nulle"
+    },
+    "culture": {
+      "arts_culture_generale": "faible",
+      "architecture_urbanisme": "faible"
+    },
+    "societe": {
+      "opinion_publique": "nulle",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "faible",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "marges",
+      "lieux_socialisation": "faible"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "faible",
+      "tendances_population": "faible",
+      "couloirs_mobilite": "lignes_externes"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "faible",
+      "reseaux_mafieux": "faible",
+      "bandes_quartier": "faible",
+      "police_renseignement_criminel": "faible",
+      "corruption_infiltration": "faible"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "acces_sang_tres_limite",
+      "universites": "nulle",
+      "musees_bibliotheques": "nulle",
+      "grandes_infrastructures": "peripheriques"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "nulle",
+      "think_tanks": "nulle",
+      "recherche_scientifique": "nulle"
+    },
+    "technologie_systemes": {
+      "systemes_information": "nulle",
+      "cybersecurite": "nulle",
+      "cryptographie_occulte": "nulle",
+      "reseaux_speciaux": "nulle",
+      "surveillance_algorithmique": "nulle"
+    },
+    "territoire_environnement": {
+      "gares_reseau_ferre": "lignes_externes",
+      "fetes_clandestines": "nulle",
+      "prostitution": "nulle"
+    }
+  },
+
+  "Tremere": {
+    "politique_mortelle": {
+      "gouvernement_national": "faible",
+      "ministeres": "faible",
+      "renseignement_actif": "faible",
+      "renseignement_passif": "faible",
+      "influence_indirecte": "recherche_technique"
+    },
+    "economie": {
+      "interet": "recherche",
+      "finance_illegale": "faible"
+    },
+    "information_surveillance": {
+      "presse_TV_radio": "faible",
+      "influence_journalistes": "faible",
+      "reseaux_sociaux": "faible",
+      "controle_recit_public": "faible",
+      "propagande_desinformation": "faible",
+      "cyber_surveillance": "rituel_tech",
+      "dossiers_administratifs": "faible",
+      "secrets_etat": "acces_arcane",
+      "espionnage_mortel": "faible",
+      "espionnage_vampirique": "information_arcane"
+    },
+    "culture": {
+      "arts_culture_generale": "faible",
+      "cinema_series": "faible",
+      "architecture_urbanisme": "faible"
+    },
+    "societe": {
+      "opinion_publique": "faible",
+      "mode_de_vie": "faible",
+      "reseaux_associatifs": "faible",
+      "syndicats_mouvements": "faible",
+      "influence_communautaire": "faible",
+      "lieux_socialisation": "faible"
+    },
+    "territoire_mobilite": {
+      "controle_flux_humains": "faible",
+      "tendances_population": "nulle",
+      "couloirs_mobilite": "nulle"
+    },
+    "criminalite": {
+      "trafic_stupefiants": "nulle",
+      "reseaux_mafieux": "nulle",
+      "bandes_quartier": "nulle",
+      "police_renseignement_criminel": "nulle",
+      "corruption_infiltration": "nulle"
+    },
+    "institutions_essentielles": {
+      "hopitaux": "dominant_CHU_medical_general",
+      "universites": "dominant_structurel",
+      "musees_bibliotheques": "important_archives",
+      "grandes_infrastructures": "faible_surface"
+    },
+    "influence_intellectuelle": {
+      "production_ideologies": "scientifique_occultiste",
+      "think_tanks": "cells_recherche",
+      "recherche_scientifique": "dominant"
+    },
+    "technologie_systemes": {
+      "systemes_information": "arcano_technique",
+      "cybersecurite": "rituel_inviolable",
+      "cryptographie_occulte": "dominant",
+      "reseaux_speciaux": "tremere_non_infiltrable",
+      "surveillance_algorithmique": "mix_tech_rituels"
+    },
+    "territoire_environnement": {
+      "fleuves_canaux_ports": "faible",
+      "gares_reseau_ferre": "faible",
+      "crypto_culture": "nulle"
+    }
+  }
+}

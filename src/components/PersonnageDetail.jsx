@@ -10,25 +10,31 @@ function PersonnageDetail({ personnageId, onClose }) {
   const [error, setError] = useState(null);
   const [showPortraitModal, setShowPortraitModal] = useState(false);
 
+  // Clan roster for prev/next navigation
+  const [clanRoster, setClanRoster] = useState([]);
+  const [currentPersonnageId, setCurrentPersonnageId] = useState(personnageId);
+
+  useEffect(() => {
+    setCurrentPersonnageId(personnageId);
+  }, [personnageId]);
+
   useEffect(() => {
     loadPersonnage();
-  }, [personnageId]);
+  }, [currentPersonnageId]);
 
   const loadPersonnage = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // Charger le personnage
       const { data: persoData, error: persoError } = await supabase
         .from('personnages')
         .select('*')
-        .eq('id', personnageId)
+        .eq('id', currentPersonnageId)
         .single();
 
       if (persoError) throw persoError;
 
-      // Charger le clan associé
       const { data: clanData, error: clanError } = await supabase
         .from('clans')
         .select('*')
@@ -39,6 +45,29 @@ function PersonnageDetail({ personnageId, onClose }) {
 
       setPersonnage(persoData);
       setClan(clanData);
+
+      // Fetch clan roster only if clan changed or roster is empty
+      setClanRoster(prev => {
+        const alreadyForThisClan = prev.length > 0 && prev.some(p => p.clan_id === persoData.clan_id);
+        if (alreadyForThisClan) return prev;
+        // Trigger async roster load
+        supabase
+          .from('personnages')
+          .select('id, nom, generation, clan_id')
+          .eq('clan_id', persoData.clan_id)
+          .eq('ghost', false)
+          .order('generation', { ascending: true })
+          .then(({ data }) => {
+            if (!data) return;
+            const sorted = [...data].sort((a, b) => {
+              if (a.generation !== b.generation) return a.generation - b.generation;
+              return a.nom.localeCompare(b.nom, 'fr');
+            });
+            setClanRoster(sorted);
+          });
+        return prev;
+      });
+
     } catch (err) {
       console.error('Erreur chargement personnage:', err);
       setError(err.message);
@@ -47,7 +76,14 @@ function PersonnageDetail({ personnageId, onClose }) {
     }
   };
 
-  // Construire l'URL de l'image depuis Supabase Storage
+  const currentIndex = clanRoster.findIndex(p => p.id === currentPersonnageId);
+  const total = clanRoster.length;
+
+  const goTo = (index) => {
+    const next = clanRoster[(index + total) % total];
+    if (next) setCurrentPersonnageId(next.id);
+  };
+
   const getImageUrl = () => {
     if (personnage?.image_url) {
       return `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/personnages/${personnage.image_url}`;
@@ -55,7 +91,6 @@ function PersonnageDetail({ personnageId, onClose }) {
     return null;
   };
 
-  // Parser les attributes JSON
   const getAttributes = () => {
     if (!personnage?.attributes) {
       return {
@@ -64,8 +99,8 @@ function PersonnageDetail({ personnageId, onClose }) {
         mental: { perception: 0, intelligence: 0, astuce: 0 }
       };
     }
-    return typeof personnage.attributes === 'string' 
-      ? JSON.parse(personnage.attributes) 
+    return typeof personnage.attributes === 'string'
+      ? JSON.parse(personnage.attributes)
       : personnage.attributes;
   };
 
@@ -114,12 +149,36 @@ function PersonnageDetail({ personnageId, onClose }) {
         ✕ Fermer
       </button>
 
+      {/* Clan navigation arrows */}
+      {total > 1 && (
+        <div className="pd-clan-nav">
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => goTo(currentIndex - 1)}
+            title="Personnage précédent"
+            style={{ '--clan-color': clan?.couleur ?? '#888' }}
+          >
+            ←
+          </button>
+          <span className="pd-clan-nav-info" style={{ color: clan?.couleur ?? '#888' }}>
+            {clan?.nom} · {currentIndex + 1} / {total}
+          </span>
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => goTo(currentIndex + 1)}
+            title="Personnage suivant"
+            style={{ '--clan-color': clan?.couleur ?? '#888' }}
+          >
+            →
+          </button>
+        </div>
+      )}
+
       <div className="detail-grid">
         {/* COLONNE DROITE : Image, ID, Rôles */}
         <div className="detail-right">
-          {/* Image Portrait */}
-          <div 
-            className="detail-portrait" 
+          <div
+            className="detail-portrait"
             onClick={() => setShowPortraitModal(true)}
             style={{ cursor: 'pointer' }}
             title="Cliquer pour agrandir le portrait"
@@ -137,21 +196,17 @@ function PersonnageDetail({ personnageId, onClose }) {
             </div>
           </div>
 
-          {/* ID */}
           <div className="detail-field detail-id">
             <span className="field-label">ID</span>
             <span className="field-value">{personnage.id}</span>
           </div>
 
-          {/* Rôles */}
           <div className="detail-section">
             <h3 className="section-title">Rôles</h3>
             <div className="roles-list">
               {roles.length > 0 ? (
                 roles.map((role, index) => (
-                  <div key={index} className="role-badge">
-                    {role}
-                  </div>
+                  <div key={index} className="role-badge">{role}</div>
                 ))
               ) : (
                 <p className="empty-text">Aucun rôle</p>
@@ -162,10 +217,8 @@ function PersonnageDetail({ personnageId, onClose }) {
 
         {/* COLONNE CENTRE : Nom, Sire/Génération, Apparence, etc. */}
         <div className="detail-center">
-          {/* Nom (grand) */}
           <h1 className="detail-nom">{personnage.nom}</h1>
 
-          {/* Sire et Génération */}
           <div className="detail-meta">
             <div className="meta-item">
               <span className="meta-label">Sire</span>
@@ -179,33 +232,27 @@ function PersonnageDetail({ personnageId, onClose }) {
             </div>
           </div>
 
-          {/* Apparence */}
           <div className="detail-section">
             <h3 className="section-title">Apparence</h3>
             <p className="section-text">{personnage.apparence || 'Non décrite'}</p>
           </div>
 
-          {/* Personnalité */}
           <div className="detail-section">
             <h3 className="section-title">Personnalité</h3>
             <p className="section-text">{personnage.personnalite || 'Non décrite'}</p>
           </div>
 
-          {/* Histoire */}
           <div className="detail-section">
             <h3 className="section-title">Histoire</h3>
             <p className="section-text">{personnage.histoire || 'Histoire inconnue'}</p>
           </div>
 
-          {/* Relations */}
           <div className="detail-section">
             <h3 className="section-title">Relations</h3>
             <div className="relations-list">
               {relations.length > 0 ? (
                 relations.map((relation, index) => (
-                  <div key={index} className="relation-item">
-                    • {relation}
-                  </div>
+                  <div key={index} className="relation-item">• {relation}</div>
                 ))
               ) : (
                 <p className="empty-text">Aucune relation</p>
@@ -213,7 +260,6 @@ function PersonnageDetail({ personnageId, onClose }) {
             </div>
           </div>
 
-          {/* Secrets MJ */}
           {Object.keys(secrets).length > 0 && (
             <div className="detail-section secrets-section">
               <h3 className="section-title secrets-title">🔒 Secrets du MJ</h3>
@@ -231,23 +277,18 @@ function PersonnageDetail({ personnageId, onClose }) {
 
         {/* COLONNE GAUCHE : Clan, Attributs, Capacités, Disciplines */}
         <div className="detail-left">
-          {/* Clan (icône + nom) */}
           <div className="detail-clan" style={{ borderColor: clan?.couleur }}>
             {clan?.icon_url ? (
               <img src={clan.icon_url} alt={clan.nom} className="clan-icon" />
             ) : (
               <span className="clan-icon-placeholder" style={{ color: clan?.couleur }}>⚜️</span>
             )}
-            <span className="clan-nom" style={{ color: clan?.couleur }}>
-              {clan?.nom}
-            </span>
+            <span className="clan-nom" style={{ color: clan?.couleur }}>{clan?.nom}</span>
           </div>
 
-          {/* Attributs */}
           <div className="detail-section">
             <h3 className="section-title">Attributs</h3>
             <div className="attributes-grid">
-              {/* Physique */}
               <div className="attribute-category">
                 <div className="category-label">Physique</div>
                 <div className="attribute-row">
@@ -261,8 +302,6 @@ function PersonnageDetail({ personnageId, onClose }) {
                   <span className="attr-value">{attributes.physique?.vigueur || 0}</span>
                 </div>
               </div>
-
-              {/* Social */}
               <div className="attribute-category">
                 <div className="category-label">Social</div>
                 <div className="attribute-row">
@@ -276,8 +315,6 @@ function PersonnageDetail({ personnageId, onClose }) {
                   <span className="attr-value">{attributes.social?.apparence || 0}</span>
                 </div>
               </div>
-
-              {/* Mental */}
               <div className="attribute-category">
                 <div className="category-label">Mental</div>
                 <div className="attribute-row">
@@ -294,7 +331,6 @@ function PersonnageDetail({ personnageId, onClose }) {
             </div>
           </div>
 
-          {/* Capacités */}
           <div className="detail-section">
             <h3 className="section-title">Capacités</h3>
             <div className="abilities-content">
@@ -302,15 +338,12 @@ function PersonnageDetail({ personnageId, onClose }) {
             </div>
           </div>
 
-          {/* Disciplines */}
           <div className="detail-section">
             <h3 className="section-title">Disciplines</h3>
             <div className="disciplines-list">
               {disciplines.length > 0 ? (
                 disciplines.map((disc, index) => (
-                  <div key={index} className="discipline-badge">
-                    {disc}
-                  </div>
+                  <div key={index} className="discipline-badge">{disc}</div>
                 ))
               ) : (
                 <p className="empty-text">Aucune discipline</p>
@@ -320,7 +353,6 @@ function PersonnageDetail({ personnageId, onClose }) {
         </div>
       </div>
 
-      {/* NOTES (Pleine largeur au fond) */}
       <div className="detail-notes-bottom">
         <h3 className="section-title">📝 Notes</h3>
         <div className="notes-content">
@@ -328,7 +360,6 @@ function PersonnageDetail({ personnageId, onClose }) {
         </div>
       </div>
 
-      {/* Modal Portrait */}
       {showPortraitModal && (
         <PortraitModal
           imageUrl={getImageUrl()}

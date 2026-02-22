@@ -3,12 +3,14 @@ import './Navigation.css';
 
 function Navigation({ onNavigate, currentPage }) {
   const menuItems = [
-    { id: 'home', label: 'Accueil', icon: '🏰' },
-    { id: 'personnages', label: 'Personnages', icon: '🦇' },
-    { id: 'clans', label: 'Clans', icon: '⚜️' },
-    { id: 'lieux', label: 'Lieux', icon: '🏛️' },
-    { id: 'bourgs', label: 'Bourgs', icon: '🗺️' },
-    { id: 'carte', label: 'Carte', icon: '📍' },
+    { id: 'home',        label: 'Accueil',      icon: '🏰' },
+    { id: 'personnages', label: 'Personnages',   icon: '🦇' },
+    { id: 'clans',       label: 'Clans',         icon: '⚜️' },
+    { id: 'influences',  label: 'Influences',    icon: '🕸️' },
+    { id: 'chronologie', label: 'Chronologie',   icon: '📜' },
+    { id: 'lieux',       label: 'Lieux',         icon: '🏛️' },
+    { id: 'bourgs',      label: 'Bourgs',        icon: '🗺️' },
+    { id: 'carte',       label: 'Carte',         icon: '📍' },
   ];
 
   return (

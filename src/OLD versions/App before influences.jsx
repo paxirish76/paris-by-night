@@ -9,7 +9,6 @@ import BourgsTable from './components/BourgsTable';
 import ClansTable from './components/ClansTable';
 import Genealogie from './components/Genealogie';
 import Chronologie from './components/Chronologie';
-import Influences from './components/Influences';
 import './App.css';
 
 function App() {
@@ -50,12 +49,10 @@ function App() {
     setCurrentPage('bourgs');
   };
 
-// 3. Ajouter la fonction de navigation :
-const navigateToGenealogie = (clanId, clanLabel) => {
-  setGenealogieClan({ id: clanId, label: clanLabel });
-  setCurrentPage('genealogie');
-};
-
+  const navigateToGenealogie = (clanId, clanLabel) => {
+    setGenealogieClan({ id: clanId, label: clanLabel });
+    setCurrentPage('genealogie');
+  };
 
   // Callbacks to clear consumed targets
   const clearTargetLieu = () => setTargetLieuId(null);
@@ -115,6 +112,7 @@ const navigateToGenealogie = (clanId, clanLabel) => {
         return (
           <ClansTable
             onNavigateToGenealogie={navigateToGenealogie}
+            onNavigateToPersonnage={navigateToPersonnage}
           />
         );
 
@@ -128,12 +126,8 @@ const navigateToGenealogie = (clanId, clanLabel) => {
           />
         );
 
-
       case 'chronologie':
         return <Chronologie />;
-
-      case 'influences':
-        return <Influences />;
 
       default:
         return <Home onNavigate={setCurrentPage} />;

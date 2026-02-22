@@ -6,9 +6,6 @@ import './ClansTable.css';
 const STORAGE = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public';
 const CLANS_AVEC_ARBRE = ['toreador', 'ventrue', 'brujah', 'nosferatu', 'malkavian'];
 
-
-// Supabase may return JSON columns as already-parsed arrays OR as strings.
-// This handles both cases safely without throwing.
 function safeArray(val) {
   if (!val) return [];
   if (Array.isArray(val)) return val;
@@ -70,8 +67,53 @@ function RelChip({ rel, clans, onClick }) {
   );
 }
 
+/* ── Members list (for clans without a genealogy tree) ── */
+function MembresList({ clanId, couleur, onNavigateToPersonnage }) {
+  const [membres, setMembres] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from('personnages')
+      .select('id, nom, generation, roles')
+      .eq('clan_id', clanId)
+      .eq('ghost', false)
+      .order('generation', { ascending: true })
+      .then(({ data }) => {
+        setMembres(data ?? []);
+        setLoading(false);
+      });
+  }, [clanId]);
+
+  if (loading) return <p className="cd-membres-loading">Chargement…</p>;
+  if (membres.length === 0) return <p className="cd-membres-empty">Aucun membre répertorié.</p>;
+
+  return (
+    <ul className="cd-membres-list">
+      {membres.map(p => {
+        const roles = safeArray(p.roles);
+        const roleLabel = roles.length > 0 ? roles[0] : null;
+        return (
+          <li key={p.id} className="cd-membre-item">
+            <button
+              className="cd-membre-btn"
+              style={{ '--clan-color': couleur }}
+              onClick={() => onNavigateToPersonnage(p.id)}
+            >
+              <span className="cd-membre-gen">GÉN. {p.generation ?? '?'}</span>
+              <span className="cd-membre-nom">{p.nom}</span>
+              {roleLabel && <span className="cd-membre-role">{roleLabel}</span>}
+              <span className="cd-membre-arrow">→</span>
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /* ── Detail view ─────────────────────────────────────── */
-function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie }) {
+function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo }) {
   const buts = safeArray(clan.buts);
   const relations = safeArray(clan.relation);
 
@@ -80,6 +122,31 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie 
       <button className="cd-back" onClick={onBack}>
         ← Retour aux clans
       </button>
+
+      {/* Navigation arrows */}
+      {total > 1 && (
+        <div className="pd-clan-nav">
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => onGoTo((currentIndex - 1 + total) % total)}
+            title="Clan précédent"
+            style={{ '--clan-color': clan.couleur ?? '#888' }}
+          >
+            ←
+          </button>
+          <span className="pd-clan-nav-info" style={{ color: clan.couleur ?? '#888' }}>
+            Clan · {currentIndex + 1} / {total}
+          </span>
+          <button
+            className="pd-clan-nav-arrow"
+            onClick={() => onGoTo((currentIndex + 1) % total)}
+            title="Clan suivant"
+            style={{ '--clan-color': clan.couleur ?? '#888' }}
+          >
+            →
+          </button>
+        </div>
+      )}
 
       <div className="cd-hero" style={{ '--clan-color': clan.couleur }}>
         <div className="cd-hero-logo">
@@ -119,7 +186,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie 
         </section>
       )}
 
-      {CLANS_AVEC_ARBRE.includes(clan.id) && (
+      {CLANS_AVEC_ARBRE.includes(clan.id) ? (
         <section className="cd-section">
           <button
             className="cd-genealogie-btn"
@@ -127,6 +194,15 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie 
           >
             Arbre généalogique →
           </button>
+        </section>
+      ) : (
+        <section className="cd-section">
+          <h2 className="cd-section-title">Membres</h2>
+          <MembresList
+            clanId={clan.id}
+            couleur={clan.couleur}
+            onNavigateToPersonnage={onNavigateToPersonnage}
+          />
         </section>
       )}
 
@@ -150,7 +226,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie 
 }
 
 /* ── Main component ──────────────────────────────────── */
-export default function ClansTable({ onNavigateToGenealogie }) {
+export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonnage }) {
   const [clans, setClans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClan, setSelectedClan] = useState(null);
@@ -192,6 +268,16 @@ export default function ClansTable({ onNavigateToGenealogie }) {
     return <div className="ct-loading">Chargement des clans…</div>;
   }
 
+  // Roster for navigation
+  const clanRoster = [...clans].sort((a, b) =>
+    String(a.nom).toLowerCase().localeCompare(String(b.nom).toLowerCase(), 'fr')
+  );
+  const currentIndex = clanRoster.findIndex(c => c.id === selectedClan?.id);
+  const handleGoTo = (index) => {
+    const next = clanRoster[index];
+    if (next) setSelectedClan(next);
+  };
+
   if (selectedClan) {
     return (
       <ClanDetail
@@ -203,6 +289,10 @@ export default function ClansTable({ onNavigateToGenealogie }) {
           if (c) setSelectedClan(c);
         }}
         onNavigateToGenealogie={onNavigateToGenealogie}
+        onNavigateToPersonnage={onNavigateToPersonnage}
+        currentIndex={currentIndex}
+        total={clanRoster.length}
+        onGoTo={handleGoTo}
       />
     );
   }

@@ -1,0 +1,42 @@
+/* ── Clan navigation arrows ──────────────────────────── */
+.pd-clan-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 24px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pd-clan-nav-arrow {
+  background: none;
+  border: 1px solid var(--clan-color, #888);
+  color: var(--clan-color, #888);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.pd-clan-nav-arrow:hover {
+  background: var(--clan-color, #888);
+  color: #1a1410;
+}
+
+.pd-clan-nav-info {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-width: 140px;
+  text-align: center;
+  opacity: 0.9;
+}
