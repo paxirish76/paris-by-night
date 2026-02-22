@@ -10,75 +10,104 @@ import ClansTable from './components/ClansTable';
 import Genealogie from './components/Genealogie';
 import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
+import Organisation from './components/Organisation';
+import LoginScreen from './components/LoginScreen';
+import { AuthProvider, useAuth, isMJ, isPlayer, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+// ─── Inner app (has access to auth context) ───────────────
+function AppInner() {
+  const { mode, logout } = useAuth();
+
+  const [currentPage, setCurrentPage]               = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
+  const [targetLieuId, setTargetLieuId]             = useState(null);
+  const [targetBourgId, setTargetBourgId]           = useState(null);
+  const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
+  const [genealogieClan, setGenealogieClan]         = useState(null);
 
-  // LieuxTable → Carte: highlight a lieu marker
-  const [targetLieuId, setTargetLieuId] = useState(null);
+  // Not logged in → show login screen
+  if (!mode) return <LoginScreen />;
 
-  // BourgsTable → Carte: highlight a bourg polygon OR a lieu marker
-  const [targetBourgId, setTargetBourgId] = useState(null);
-  const [genealogieClan, setGenealogieClan] = useState(null); // { id, label }
-  
-  // Navigate from LieuxTable row → Carte (existing pattern)
+  const viewerClan = isPlayer(mode) ? mode : null;
+
+  // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
     setTargetLieuId(lieuId);
     setTargetBourgId(null);
     setCurrentPage('carte');
   };
 
-  // Navigate from BourgsTable → Carte
   const navigateToCarteFromBourg = (bourgId, lieuId = null) => {
     setTargetBourgId(bourgId);
     setTargetLieuId(lieuId);
     setCurrentPage('carte');
   };
 
-  // BourgsTable → PersonnageDetail
   const navigateToPersonnage = (personnageId) => {
+    // Block globally hidden personnages for all players
+    if (isPlayer(mode) && HIDDEN_PERSONNAGE_IDS.includes(personnageId)) return;
     setSelectedPersonnageId(personnageId);
   };
-
-  // Carte bourg popup → BourgsTable detail page
-  const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
 
   const navigateFromCarteToBourg = (bourgId) => {
     setTargetBourgDetailId(bourgId);
     setCurrentPage('bourgs');
   };
 
-// 3. Ajouter la fonction de navigation :
-const navigateToGenealogie = (clanId, clanLabel) => {
-  setGenealogieClan({ id: clanId, label: clanLabel });
-  setCurrentPage('genealogie');
-};
+  const navigateToGenealogie = (clanId, clanLabel) => {
+    setGenealogieClan({ id: clanId, label: clanLabel });
+    setCurrentPage('genealogie');
+  };
 
-
-  // Callbacks to clear consumed targets
-  const clearTargetLieu = () => setTargetLieuId(null);
+  const clearTargetLieu  = () => setTargetLieuId(null);
   const clearTargetBourg = () => setTargetBourgId(null);
 
+  // ── Page guard: redirect players away from MJ-only pages ─
+  const safePage = (page) => {
+    return page;
+  };
+
+  const navigate = (page) => setCurrentPage(safePage(page));
+
+  // ── PersonnageDetail: props vary by mode ────────────────
+  const renderPersonnageDetail = (id) => (
+    <PersonnageDetail
+      personnageId={id}
+      onClose={() => setSelectedPersonnageId(null)}
+      playerMode={isPlayer(mode)}          // hides all stats, secrets
+      viewerClan={isPlayer(mode) ? mode : null}  // clan of the logged-in player
+    />
+  );
+
+  // ── Page renderer ───────────────────────────────────────
   const renderPage = () => {
     if (selectedPersonnageId) {
-      return (
-        <PersonnageDetail
-          personnageId={selectedPersonnageId}
-          onClose={() => setSelectedPersonnageId(null)}
-        />
-      );
+      return renderPersonnageDetail(selectedPersonnageId);
     }
 
     switch (currentPage) {
       case 'home':
-        return <Home onNavigate={setCurrentPage} />;
+        return <Home onNavigate={navigate} />;
 
+      case 'organisation':
+        return (
+          <Organisation
+            onNavigateToPersonnage={navigateToPersonnage}
+            onNavigateToBourg={(bourgId) => {
+              setTargetBourgDetailId(bourgId);
+              setCurrentPage('bourgs');
+            }}
+          />
+        );
+
+      // Accessible to all — filtered by mode inside the component
       case 'personnages':
         return (
           <PersonnagesTable
-            onSelectPersonnage={(id) => setSelectedPersonnageId(id)}
+            onSelectPersonnage={navigateToPersonnage}
+            mode={mode}
+            viewerClan={viewerClan}
           />
         );
 
@@ -91,6 +120,9 @@ const navigateToGenealogie = (clanId, clanLabel) => {
             targetBourgId={targetBourgId}
             onTargetBourgConsumed={clearTargetBourg}
             onNavigateToBourg={navigateFromCarteToBourg}
+            // Pass mode so Carte can filter restricted markers if needed
+            playerMode={isPlayer(mode)}
+            viewerClan={isPlayer(mode) ? mode : null}
           />
         );
 
@@ -98,6 +130,8 @@ const navigateToGenealogie = (clanId, clanLabel) => {
         return (
           <LieuxTable
             onNavigateToCarte={navigateToCarteFromLieu}
+            playerMode={isPlayer(mode)}
+            viewerClan={isPlayer(mode) ? mode : null}
           />
         );
 
@@ -115,6 +149,7 @@ const navigateToGenealogie = (clanId, clanLabel) => {
         return (
           <ClansTable
             onNavigateToGenealogie={navigateToGenealogie}
+            onNavigateToPersonnage={navigateToPersonnage}
           />
         );
 
@@ -123,32 +158,51 @@ const navigateToGenealogie = (clanId, clanLabel) => {
           <Genealogie
             clanId={genealogieClan?.id}
             clanLabel={genealogieClan?.label}
-            onNavigateToPersonnage={(id) => setSelectedPersonnageId(id)}
+            onNavigateToPersonnage={navigateToPersonnage}
             onBack={() => setCurrentPage('clans')}
+            playerMode={isPlayer(mode)}
           />
         );
-
 
       case 'chronologie':
         return <Chronologie />;
 
       case 'influences':
-        return <Influences />;
+        return (
+          <Influences
+            playerMode={isPlayer(mode)}
+            viewerClan={isPlayer(mode) ? mode : null}
+          />
+        );
 
       default:
-        return <Home onNavigate={setCurrentPage} />;
+        return <Home onNavigate={navigate} />;
     }
   };
 
   return (
     <div className="app">
       {!selectedPersonnageId && (
-        <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+        <Navigation
+          currentPage={currentPage}
+          onNavigate={navigate}
+          mode={mode}
+          onLogout={logout}
+        />
       )}
       <main className={`main-content ${selectedPersonnageId ? 'fullscreen' : ''}`}>
         {renderPage()}
       </main>
     </div>
+  );
+}
+
+// ─── Root: wrap everything in AuthProvider ─────────────
+function App() {
+  return (
+    <AuthProvider>
+      <AppInner />
+    </AuthProvider>
   );
 }
 

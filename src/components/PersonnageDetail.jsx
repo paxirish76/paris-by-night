@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import PortraitModal from './PortraitModal';
 import './PersonnageDetail.css';
 
-function PersonnageDetail({ personnageId, onClose }) {
+function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerClan = null }) {
   const [personnage, setPersonnage] = useState(null);
   const [clan, setClan] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -143,6 +143,14 @@ function PersonnageDetail({ personnageId, onClose }) {
   const relations = personnage.relations || [];
   const secrets = personnage.secrets_mj || {};
 
+  // ── Visibility logic ────────────────────────────────────────────────────
+  // MJ : voit tout
+  // Joueur même clan : voit tout sauf secrets_mj
+  // Joueur autre clan : voit seulement nom, apparence, histoire, personnalité, clan, génération
+  const isOwnClan     = playerMode && viewerClan === personnage.clan_id;
+  const showFullSheet = !playerMode || isOwnClan;  // relations, notes
+  const showMJOnly    = !playerMode;               // attributs, capacités, disciplines, secrets_mj
+
   return (
     <div className="personnage-detail">
       <button className="btn-close-top" onClick={onClose}>
@@ -247,6 +255,7 @@ function PersonnageDetail({ personnageId, onClose }) {
             <p className="section-text">{personnage.histoire || 'Histoire inconnue'}</p>
           </div>
 
+          {showFullSheet && (
           <div className="detail-section">
             <h3 className="section-title">Relations</h3>
             <div className="relations-list">
@@ -259,8 +268,9 @@ function PersonnageDetail({ personnageId, onClose }) {
               )}
             </div>
           </div>
+          )}
 
-          {Object.keys(secrets).length > 0 && (
+          {showMJOnly && Object.keys(secrets).length > 0 && (
             <div className="detail-section secrets-section">
               <h3 className="section-title secrets-title">🔒 Secrets du MJ</h3>
               <div className="secrets-content">
@@ -286,6 +296,7 @@ function PersonnageDetail({ personnageId, onClose }) {
             <span className="clan-nom" style={{ color: clan?.couleur }}>{clan?.nom}</span>
           </div>
 
+          {showMJOnly && (
           <div className="detail-section">
             <h3 className="section-title">Attributs</h3>
             <div className="attributes-grid">
@@ -330,14 +341,18 @@ function PersonnageDetail({ personnageId, onClose }) {
               </div>
             </div>
           </div>
+          )}
 
+          {showMJOnly && (
           <div className="detail-section">
             <h3 className="section-title">Capacités</h3>
             <div className="abilities-content">
               {personnage.abilities || 'Aucune capacité définie'}
             </div>
           </div>
+          )}
 
+          {showMJOnly && (
           <div className="detail-section">
             <h3 className="section-title">Disciplines</h3>
             <div className="disciplines-list">
@@ -350,15 +365,18 @@ function PersonnageDetail({ personnageId, onClose }) {
               )}
             </div>
           </div>
+          )}
         </div>
       </div>
 
+      {showFullSheet && (
       <div className="detail-notes-bottom">
         <h3 className="section-title">📝 Notes</h3>
         <div className="notes-content">
           {personnage.notes || 'Aucune note'}
         </div>
       </div>
+      )}
 
       {showPortraitModal && (
         <PortraitModal

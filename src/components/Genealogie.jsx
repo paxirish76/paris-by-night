@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { HIDDEN_PERSONNAGE_IDS } from './AuthContext';
 import './Genealogie.css';
 
 // ─── TREE BUILDER ─────────────────────────────────────────────────────────────
@@ -64,22 +65,24 @@ function DetailPanel({ node, onClose, onNavigate }) {
 
 // ─── NODE ─────────────────────────────────────────────────────────────────────
 
-function TreeNode({ node, onSelect, selectedId }) {
+function TreeNode({ node, onSelect, selectedId, playerMode }) {
   const isSelected = selectedId === node.id;
   const isGhost = node.ghost;
+  const isHidden = playerMode && HIDDEN_PERSONNAGE_IDS.includes(node.id);
 
   return (
     <div className="tree-node-wrapper">
       {/* Card */}
       <div
-        className={`tree-card ${isGhost ? 'tree-card--ghost' : ''} ${isSelected ? 'tree-card--selected' : ''}`}
-        onClick={() => !isGhost && onSelect(node)}
-        title={node.nom}
+        className={`tree-card ${isGhost ? 'tree-card--ghost' : ''} ${isHidden ? 'tree-card--hidden' : ''} ${isSelected ? 'tree-card--selected' : ''}`}
+        onClick={() => !isGhost && !isHidden && onSelect(node)}
+        title={isHidden ? undefined : node.nom}
       >
         <div className="tree-card-gen">GÉN. {node.generation}</div>
         <div className="tree-card-sep" />
-        <div className="tree-card-nom">{node.nom}</div>
-        {isGhost && <div className="tree-card-detruit">† DÉTRUIT</div>}
+        <div className="tree-card-nom">{isHidden ? '???' : node.nom}</div>
+        {isGhost  && <div className="tree-card-detruit">† DÉTRUIT</div>}
+        {isHidden && <div className="tree-card-detruit">† DISPARU</div>}
       </div>
 
       {/* Children */}
@@ -87,13 +90,14 @@ function TreeNode({ node, onSelect, selectedId }) {
         <div className="tree-children-wrapper">
           <div className="tree-vline-down" />
           <div className="tree-children-row">
-            {node.children.map((child, i) => (
+            {node.children.map((child) => (
               <div key={child.id} className="tree-child-col">
                 <div className={`tree-vline-to-child ${child.ghost ? 'tree-vline--ghost' : ''}`} />
                 <TreeNode
                   node={child}
                   onSelect={onSelect}
                   selectedId={selectedId}
+                  playerMode={playerMode}
                 />
               </div>
             ))}
@@ -106,7 +110,7 @@ function TreeNode({ node, onSelect, selectedId }) {
 
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
-export default function Genealogie({ clanId, clanLabel, onNavigateToPersonnage, onBack }) {
+export default function Genealogie({ clanId, clanLabel, onNavigateToPersonnage, onBack, playerMode = false }) {
   const [nodes, setNodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
@@ -161,6 +165,7 @@ export default function Genealogie({ clanId, clanLabel, onNavigateToPersonnage, 
                 node={root}
                 onSelect={setSelected}
                 selectedId={selected?.id}
+                playerMode={playerMode}
               />
             ))}
           </div>

@@ -1,0 +1,30 @@
+Prince:
+François Villon
+François Villon règne de façon absolue sur Paris. Toute décision passe par lui. Sa force réside dans le nombre de Vampires de son clan à Paris, et sur la puissance qui est la sienne et celle de ses trois infants résidents à Paris. Les conseils ne sont que consultatifs.
+
+Sénéchal:
+Aliénor de Valois
+Elle prend la place du prince quand celui ci n'est pas présent, surtout lors des conseils. Sa parole est aussi finale que celle de Villon, mais elle sait qu'il ne serait pas judicieux d'en abuser, et en use seulement si Villon n'est pas en ville ou s'elle croit connaitre la décision de ce dernier.
+
+Bourgmestres:
+[liste bourgmestres]
+Les bourgmestres ont l'autorité d'un Prince, mais sans en avoir les pouvoirs, sur les affaires courantes qui ne regardent que leur bourg. Ils sont les Vampires qui expédient les affaires normale et qui supervisent la vie mortelle et la non vie vampirique de leur bourg. Ils doivent en référer au Prince ou au Sénéchal pour toute situation hors de l'ordinaire.
+
+Sheriff:
+Godefroy de Montmirail-Vexin
+Le Sheriff de Paris est celui qui est en charge de l'ordre dans la Ville, et qui exécute les ordres de Villon qui nécessitent de la violence.
+
+Sheriffs adjoints:
+Gustave Lemaire (brujah), Marc André Ferrand (Gangrel), Luciano Bacigalupo dit Le Loup (Lasombra), Frère Malachie (Malkavian), Marc-Antoine Bréguet (Nosferatu), Alessandro di Cavalcanti (Toreador), La Voisin (Tremere), Marc-Antoine de Varennes (Ventrue)
+Ils épaulent le Shériff dans le maintien de l'ordre et en cas d'invéstigation. Le sheriff les utilise mais n'a pas entière confiance en eux.
+
+Gardienne de l'Elysium:
+Agnès Sorel:
+Elle est la gardienne des 2 principaux Elysiums: Le Louvre et le domaine de Versailles. Elle a faculté de déclarer d'autres endroits Elysium, temporaire ou permanent. Il est à noter que les Elysiums de chaque bourg sont sous la responsabilité du bourgmestre, mais Agnès y a un droit de regard.
+
+Les conseils:
+Conseil des Primogènes:
+Conseil des anciens de chaque clan, conseillers de Villon. Influents mais aucun pouvoir effectif.
+
+Conseil des Bourgmestres:
+Il réunit tous les bourgmestres, sous la présidence du Prince ou du Sénéchal, et a lieu tous le trois mois en temps normal, lors des équinoxes et des solstices. Il réunit les bourgmestres qui font leur rapports au Prince, et qui informent des nécessité de chaque bourgs. pour des affaires courantes qui regardent plusieurs bourg, il a pouvoir décisionnel (toujours soumis au veto de la part de Villon ou Agnès). Les Tremere, en considération de leur influence et du fait d'avoir refusé la mainmise sur d'autres bourgs que le Quartier Latin, y siègent avec 2 représentants.
