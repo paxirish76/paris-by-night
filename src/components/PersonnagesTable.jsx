@@ -1,246 +1,288 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
+import { isMJ } from './AuthContext';
 import './PersonnagesTable.css';
 
-function PersonnagesTable({ onSelectPersonnage }) {
-  const [personnages, setPersonnages] = useState([]);
-  const [clans, setClans] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  // États pour filtres et tri
-  const [filterClan, setFilterClan] = useState('tous');
-  const [sortBy, setSortBy] = useState('clan-generation'); // clan-generation | alphabetique | generation
+const SORT_FIELDS = {
+  nom:        (a, b) => a.nom.localeCompare(b.nom, 'fr'),
+  clan:       (a, b) => (a.clan_nom || '').localeCompare(b.clan_nom || '', 'fr'),
+  generation: (a, b) => (a.generation || 99) - (b.generation || 99),
+};
 
+const SortIcon = ({ field, sortField, sortAsc }) => {
+  if (sortField !== field) return <span className="pt-sort-icon neutral">⇅</span>;
+  return <span className="pt-sort-icon active">{sortAsc ? '↑' : '↓'}</span>;
+};
+
+export default function PersonnagesTable({
+  onSelectPersonnage,
+  mode = 'mj',
+  viewerClan = null,
+}) {
+  const [personnages, setPersonnages] = useState([]);
+  const [clans, setClans]             = useState([]);
+  const [loading, setLoading]         = useState(true);
+  const [search, setSearch]           = useState('');
+  const [filterClan, setFilterClan]   = useState('');
+  const [filterConnu, setFilterConnu] = useState('');   // '' | 'connu' | 'inconnu' (MJ only)
+  const [sortField, setSortField]     = useState('clan');
+  const [sortAsc, setSortAsc]         = useState(true);
+  const [toggling, setToggling]       = useState(null); // id being toggled
+
+  const mjMode = isMJ(mode);
+
+  // ── Load ──────────────────────────────────────────────────────────────────
   useEffect(() => {
-    loadData();
+    (async () => {
+      setLoading(true);
+      const [{ data: clansData }, { data: persoData }] = await Promise.all([
+        supabase.from('clans').select('id, nom, couleur').order('nom'),
+        supabase.from('personnages')
+          .select('id, nom, clan_id, generation, roles, ghost, connu, image_url')
+          .eq('ghost', false)
+          .order('generation', { ascending: true }),
+      ]);
+
+      const clansMap = Object.fromEntries((clansData || []).map(c => [c.id, c]));
+      setClans(clansData || []);
+      setPersonnages((persoData || []).map(p => ({
+        ...p,
+        clan_nom:   clansMap[p.clan_id]?.nom    || '',
+        clan_color: clansMap[p.clan_id]?.couleur || '#888',
+      })));
+      setLoading(false);
+    })();
   }, []);
 
-  const loadData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Charger les clans
-      const { data: clansData, error: clansError } = await supabase
-        .from('clans')
-        .select('*')
-        .order('nom');
-
-      if (clansError) throw clansError;
-
-      // Charger les personnages
-      const { data: persoData, error: persoError } = await supabase
-        .from('personnages')
-        .select('*');
-
-      if (persoError) throw persoError;
-
-      setClans(clansData || []);
-      setPersonnages(persoData || []);
-    } catch (err) {
-      console.error('Erreur chargement:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  // ── Toggle connu (MJ only) ─────────────────────────────────────────────────
+  const toggleConnu = useCallback(async (e, personnage) => {
+    e.stopPropagation(); // don't open the detail
+    if (!mjMode) return;
+    const newVal = !personnage.connu;
+    setToggling(personnage.id);
+    const { error } = await supabase
+      .from('personnages')
+      .update({ connu: newVal })
+      .eq('id', personnage.id);
+    if (!error) {
+      setPersonnages(prev =>
+        prev.map(p => p.id === personnage.id ? { ...p, connu: newVal } : p)
+      );
     }
-  };
+    setToggling(null);
+  }, [mjMode]);
 
-  // Fonction de tri
-  const getSortedPersonnages = (persos) => {
-    const filtered = filterClan === 'tous' 
-      ? persos 
-      : persos.filter(p => p.clan_id === filterClan);
-
-    const sorted = [...filtered].sort((a, b) => {
-      switch (sortBy) {
-        case 'clan-generation':
-          // D'abord par clan, puis par génération croissante
-          if (a.clan_id !== b.clan_id) {
-            return (a.clan_id || '').localeCompare(b.clan_id || '');
-          }
-          return (a.generation || 99) - (b.generation || 99);
-        
-        case 'alphabetique':
-          return (a.nom || '').localeCompare(b.nom || '');
-        
-        case 'generation':
-          return (a.generation || 99) - (b.generation || 99);
-        
-        default:
-          return 0;
+  // ── Filter & sort ──────────────────────────────────────────────────────────
+  const filtered = personnages
+    .filter(p => {
+      // Player view: only own clan + connu
+      if (!mjMode) {
+        if (p.clan_id !== viewerClan && !p.connu) return false;
       }
+
+      const q = search.toLowerCase();
+      if (q && !p.nom.toLowerCase().includes(q) &&
+               !(p.clan_nom || '').toLowerCase().includes(q)) return false;
+
+      if (filterClan && p.clan_id !== filterClan) return false;
+
+      // MJ-only filters
+      if (mjMode) {
+        if (filterConnu === 'connu'   && !p.connu)  return false;
+        if (filterConnu === 'inconnu' &&  p.connu)  return false;
+      }
+
+      return true;
+    })
+    .sort((a, b) => {
+      const cmp = SORT_FIELDS[sortField]?.(a, b) ?? 0;
+      return sortAsc ? cmp : -cmp;
     });
 
-    return sorted;
+  const handleSort = (field) => {
+    if (sortField === field) setSortAsc(v => !v);
+    else { setSortField(field); setSortAsc(true); }
   };
 
-  // Obtenir le clan d'un personnage
-  const getClan = (clanId) => {
-    return clans.find(c => c.id === clanId);
+  const handleReset = () => {
+    setSearch('');
+    setFilterClan('');
+    setFilterConnu('');
+    setSortField('clan');
+    setSortAsc(true);
   };
 
-  // Obtenir le premier rôle (ou 'Aucun')
-  const getPrimaryRole = (roles) => {
-    if (!roles || roles.length === 0) return 'Aucun';
-    return roles[0];
-  };
+  const isDirty = search || filterClan || filterConnu || sortField !== 'clan' || !sortAsc;
 
-  if (loading) {
-    return (
-      <div className="personnages-table">
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p className="loading-text">Chargement des vampires...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="personnages-table">
-        <div className="error-container">
-          <p className="error-text">❌ Erreur : {error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  const sortedPersonnages = getSortedPersonnages(personnages);
+  // ── Render ─────────────────────────────────────────────────────────────────
+  if (loading) return (
+    <div className="pt-loading">
+      <div className="pt-spinner" />
+      <p>Chargement des personnages...</p>
+    </div>
+  );
 
   return (
-    <div className="personnages-table">
-      {/* Header avec titre et stats */}
-      <div className="table-header">
-        <div className="header-title">
-          <h1 className="table-title">Les Vampires de Paris</h1>
-          <p className="table-subtitle">
-            {sortedPersonnages.length} / {personnages.length} Caïnites
-          </p>
+    <div className="pt-container">
+      <div className="pt-header">
+        <div className="pt-header-text">
+          <h1>Personnages</h1>
+          <p>{mjMode ? 'Tous les vampires de Paris' : 'Vampires connus'}</p>
+        </div>
+        <div className="pt-counter">
+          {filtered.length} / {personnages.length} <span>Personnages</span>
         </div>
       </div>
 
-      {/* Contrôles : Filtres et Tri */}
-      <div className="table-controls">
-        {/* Filtre par clan */}
-        <div className="control-group">
-          <label className="control-label">Filtrer par Clan</label>
-          <select 
-            className="control-select"
-            value={filterClan}
-            onChange={(e) => setFilterClan(e.target.value)}
-          >
-            <option value="tous">Tous les clans ({personnages.length})</option>
-            {clans.map(clan => {
-              const count = personnages.filter(p => p.clan_id === clan.id).length;
-              return (
-                <option key={clan.id} value={clan.id}>
-                  {clan.nom} ({count})
-                </option>
-              );
-            })}
-          </select>
+      {/* Controls */}
+      <div className="pt-controls">
+        <div className="pt-search-wrap">
+          <span className="pt-search-icon">🔍</span>
+          <input
+            className="pt-search"
+            type="text"
+            placeholder="Rechercher un nom, clan..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          {search && (
+            <button className="pt-clear-search" onClick={() => setSearch('')}>✕</button>
+          )}
         </div>
 
-        {/* Tri */}
-        <div className="control-group">
-          <label className="control-label">Trier par</label>
-          <select 
-            className="control-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="clan-generation">Clan puis Génération</option>
-            <option value="alphabetique">Alphabétique (A-Z)</option>
-            <option value="generation">Génération (croissante)</option>
-          </select>
-        </div>
+        <select
+          className="pt-select"
+          value={filterClan}
+          onChange={e => setFilterClan(e.target.value)}
+        >
+          <option value="">Tous les clans</option>
+          {clans.map(c => (
+            <option key={c.id} value={c.id}>{c.nom}</option>
+          ))}
+        </select>
 
-        {/* Bouton Reset */}
-        {(filterClan !== 'tous' || sortBy !== 'clan-generation') && (
-          <button 
-            className="btn-reset"
-            onClick={() => {
-              setFilterClan('tous');
-              setSortBy('clan-generation');
-            }}
+        {/* MJ only: filter by connu status */}
+        {mjMode && (
+          <select
+            className="pt-select"
+            value={filterConnu}
+            onChange={e => setFilterConnu(e.target.value)}
           >
-            ↺ Réinitialiser
-          </button>
+            <option value="">Tous</option>
+            <option value="connu">✓ Connus des joueurs</option>
+            <option value="inconnu">◌ Inconnus</option>
+          </select>
+        )}
+
+        {isDirty && (
+          <button className="pt-reset" onClick={handleReset}>↺ Réinitialiser</button>
         )}
       </div>
 
-      {/* Tableau */}
-      <div className="table-container">
-        <table className="vampires-table">
+      {/* Table */}
+      <div className="pt-table-wrap">
+        <table className="pt-table">
           <thead>
             <tr>
-              <th className="col-nom">Nom</th>
-              <th className="col-generation">Gén.</th>
-              <th className="col-clan">Clan</th>
-              <th className="col-role">Rôle Principal</th>
+              <th className="pt-th pt-th-icon" />
+              <th className="pt-th pt-th-nom" onClick={() => handleSort('nom')}>
+                Nom <SortIcon field="nom" sortField={sortField} sortAsc={sortAsc} />
+              </th>
+              <th className="pt-th pt-th-clan" onClick={() => handleSort('clan')}>
+                Clan <SortIcon field="clan" sortField={sortField} sortAsc={sortAsc} />
+              </th>
+              <th className="pt-th pt-th-gen" onClick={() => handleSort('generation')}>
+                Gén. <SortIcon field="generation" sortField={sortField} sortAsc={sortAsc} />
+              </th>
+              <th className="pt-th pt-th-roles">Rôles</th>
+              {/* MJ only: connu toggle column */}
+              {mjMode && (
+                <th className="pt-th pt-th-connu" title="Visible par les joueurs">👁</th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {sortedPersonnages.length === 0 ? (
+            {filtered.length === 0 ? (
               <tr>
-                <td colSpan="4" className="empty-row">
-                  Aucun personnage trouvé
+                <td colSpan={mjMode ? 6 : 5} className="pt-empty">
+                  Aucun personnage ne correspond
                 </td>
               </tr>
             ) : (
-              sortedPersonnages.map((perso) => {
-                const clan = getClan(perso.clan_id);
-                const role = getPrimaryRole(perso.roles);
-                
-                return (
-                  <tr 
-                    key={perso.id}
-                    className="table-row"
-                    onClick={() => onSelectPersonnage && onSelectPersonnage(perso.id)}
-                  >
-                    <td className="col-nom">
-                      <span className="nom-text">{perso.nom || 'Sans nom'}</span>
-                    </td>
-                    <td className="col-generation">
-                      <span 
-                        className="generation-badge"
-                        style={{ 
-                          background: `linear-gradient(135deg, ${clan?.couleur || '#666'}, ${clan?.couleur || '#666'}99)` 
-                        }}
+              filtered.map(p => (
+                <tr
+                  key={p.id}
+                  className={`pt-row ${p.connu ? 'pt-row--connu' : ''}`}
+                  onClick={() => onSelectPersonnage(p.id)}
+                >
+                  {/* Portrait thumbnail */}
+                  <td className="pt-td pt-td-icon">
+                    <div
+                      className="pt-avatar"
+                      style={{ borderColor: p.clan_color }}
+                    >
+                      {p.image_url
+                        ? <img
+                            src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/personnages/${p.image_url}`}
+                            alt={p.nom}
+                          />
+                        : <span className="pt-avatar-placeholder">🧛</span>
+                      }
+                    </div>
+                  </td>
+
+                  {/* Nom */}
+                  <td className="pt-td pt-td-nom">
+                    <span className="pt-nom" style={{ color: p.clan_color }}>
+                      {p.nom}
+                    </span>
+                  </td>
+
+                  {/* Clan */}
+                  <td className="pt-td pt-td-clan">
+                    <span
+                      className="pt-clan-badge"
+                      style={{ background: `${p.clan_color}22`, borderColor: `${p.clan_color}66`, color: p.clan_color }}
+                    >
+                      {p.clan_nom}
+                    </span>
+                  </td>
+
+                  {/* Génération */}
+                  <td className="pt-td pt-td-gen">
+                    <span className="pt-gen">{p.generation}ème</span>
+                  </td>
+
+                  {/* Rôles */}
+                  <td className="pt-td pt-td-roles">
+                    <div className="pt-roles">
+                      {(p.roles || []).slice(0, 2).map((r, i) => (
+                        <span key={i} className="pt-role-badge">{r}</span>
+                      ))}
+                      {(p.roles || []).length > 2 && (
+                        <span className="pt-role-more">+{p.roles.length - 2}</span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* MJ toggle connu */}
+                  {mjMode && (
+                    <td className="pt-td pt-td-connu" onClick={e => toggleConnu(e, p)}>
+                      <button
+                        className={`pt-connu-toggle ${p.connu ? 'pt-connu-toggle--on' : ''}`}
+                        disabled={toggling === p.id}
+                        title={p.connu ? 'Masquer aux joueurs' : 'Révéler aux joueurs'}
                       >
-                        {perso.generation || '?'}
-                      </span>
+                        {toggling === p.id ? '…' : p.connu ? '👁' : '◌'}
+                      </button>
                     </td>
-                    <td className="col-clan">
-                      <span 
-                        className="clan-badge"
-                        style={{ 
-                          color: clan?.couleur || '#c0c0c0',
-                          borderColor: clan?.couleur || '#c0c0c0'
-                        }}
-                      >
-                        {clan?.nom || 'Inconnu'}
-                      </span>
-                    </td>
-                    <td className="col-role">
-                      <span className="role-text">{role}</span>
-                    </td>
-                  </tr>
-                );
-              })
+                  )}
+                </tr>
+              ))
             )}
           </tbody>
         </table>
       </div>
-
-      {/* Footer avec légende */}
-      <div className="table-footer">
-        <p className="footer-hint">👁️ Cliquer sur une ligne pour voir la fiche complète</p>
-      </div>
     </div>
   );
 }
-
-export default PersonnagesTable;

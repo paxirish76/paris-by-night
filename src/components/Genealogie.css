@@ -352,3 +352,16 @@
   border-color: #e8d5a3;
   color: #e8d5a3;
 }
+/* Nœud caché aux joueurs (ex: l'Ermite) — apparaît comme "† DISPARU" */
+.tree-card--hidden {
+  opacity: 0.45;
+  cursor: default;
+  border-style: dashed;
+  filter: grayscale(0.6);
+  pointer-events: none;
+}
+
+.tree-card--hidden .tree-card-nom {
+  letter-spacing: 3px;
+  color: #666;
+}

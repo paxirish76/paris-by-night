@@ -1,0 +1,461 @@
+/* ═══════════════════════════════════════════════════
+   Organisation.css — Paris by Night
+   ═══════════════════════════════════════════════════ */
+
+.organisation {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ── Hero ─────────────────────────────────────────── */
+
+.org-hero {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.org-hero-ornament {
+  font-size: 28px;
+  color: var(--gold);
+  opacity: 0.5;
+  letter-spacing: 12px;
+  margin-bottom: 12px;
+}
+
+.org-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  color: var(--gold);
+  margin: 0 0 8px;
+  line-height: 1;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.org-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--silver);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 24px;
+}
+
+.org-divider {
+  width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 24px;
+}
+
+.org-intro {
+  font-size: 15px;
+  color: var(--silver);
+  line-height: 1.8;
+  opacity: 0.75;
+  max-width: 640px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Accordion ────────────────────────────────────── */
+
+.org-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.org-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.org-section.open {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.org-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.org-section-header:hover {
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.org-section.open .org-section-header {
+  background: rgba(212, 175, 55, 0.07);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.org-section-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.org-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  flex: 1;
+}
+
+.org-section-chevron {
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.org-section.open .org-section-chevron {
+  opacity: 1;
+}
+
+/* Accordéon animé */
+.org-section-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.org-section.open .org-section-body {
+  grid-template-rows: 1fr;
+}
+
+.org-section-content {
+  overflow: hidden;
+  padding: 0;
+}
+
+.org-section.open .org-section-content {
+  padding: 28px 28px 32px;
+}
+
+/* ── Figures (Prince, Sénéchal, etc.) ─────────────── */
+
+.org-figure-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.org-figure-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--pale-gold, #e8d5a3);
+}
+
+.org-figure-role {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--silver);
+  opacity: 0.55;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.org-figure-desc {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--silver);
+  opacity: 0.85;
+  margin: 0 0 16px;
+}
+
+.org-person-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--gold);
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 175, 55, 0.35);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+
+.org-person-link:hover {
+  color: #fff;
+  text-decoration-color: var(--gold);
+}
+
+/* ── Elysiums ─────────────────────────────────────── */
+
+.org-elysiums {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.org-elysium-badge {
+  padding: 8px 16px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* ── Shériffs adjoints ────────────────────────────── */
+
+.org-subsection {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.org-subsection-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  opacity: 0.8;
+}
+
+.org-subsection-note {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--silver);
+  opacity: 0.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.org-adjoints-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.org-adjoint-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.2s ease;
+}
+
+.org-adjoint-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.org-adjoint-clan-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.org-adjoint-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.org-adjoint-info .org-person-link {
+  font-size: 14px;
+  font-family: 'Cinzel', serif;
+  color: var(--silver);
+  text-decoration: none;
+}
+
+.org-adjoint-info .org-person-link:hover {
+  color: var(--gold);
+}
+
+.org-adjoint-clan-label {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* ── Bourgmestres ─────────────────────────────────── */
+
+.org-bourgmestres {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.org-bourg-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.org-bourg-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid;
+  opacity: 0.9;
+}
+
+.org-bourg-group-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.org-bourg-group-clan {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.org-bourg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 18px;
+}
+
+.org-bourg-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  transition: background 0.15s ease;
+}
+
+.org-bourg-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.org-bourg-name {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--silver);
+  opacity: 0.8;
+  transition: opacity 0.2s, color 0.2s;
+  padding: 0;
+  min-width: 180px;
+  text-align: left;
+}
+
+.org-bourg-name:hover {
+  color: var(--gold);
+  opacity: 1;
+}
+
+.org-bourg-arrow {
+  color: rgba(212, 175, 55, 0.3);
+  font-size: 12px;
+}
+
+.org-loading {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--silver);
+  opacity: 0.5;
+  text-align: center;
+  padding: 24px;
+}
+
+/* ── Conseils ─────────────────────────────────────── */
+
+.org-conseils {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.org-conseil-block {
+  padding: 0;
+}
+
+.org-conseil-title {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--gold);
+  margin: 0 0 14px;
+  letter-spacing: 1.5px;
+}
+
+.org-conseil-sessions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.org-session-badge {
+  padding: 6px 14px;
+  background: rgba(139, 0, 0, 0.12);
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--silver);
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .organisation {
+    padding: 20px;
+  }
+
+  .org-title {
+    font-size: 38px;
+  }
+
+  .org-section-header {
+    padding: 16px 18px;
+  }
+
+  .org-section.open .org-section-content {
+    padding: 20px 18px 24px;
+  }
+
+  .org-adjoints-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .org-bourg-row {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .org-bourg-name {
+    min-width: unset;
+  }
+
+  .org-figure-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
+import { isMJ } from './AuthContext';
 import './LieuxTable.css';
+import { filterLieux } from '../lieuxRestrictions';
 
 const SORT_FIELDS = {
   nom:    (a, b) => a.nom.localeCompare(b.nom, 'fr'),
@@ -14,7 +16,8 @@ const SortIcon = ({ field, sortField, sortAsc }) => {
   return <span className="lt-sort-icon active">{sortAsc ? '↑' : '↓'}</span>;
 };
 
-const LieuxTable = ({ onNavigateToCarte }) => {
+const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, mode = 'mj' }) => {
+  const mjMode = isMJ(mode);
   const [lieux, setLieux]         = useState([]);
   const [clans, setClans]         = useState([]);
   const [bourgs, setBourgs]       = useState([]);
@@ -24,6 +27,7 @@ const LieuxTable = ({ onNavigateToCarte }) => {
   const [filterStatut, setFilterStatut] = useState('');
   const [sortField, setSortField] = useState('nom');
   const [sortAsc, setSortAsc]     = useState(true);
+  const [toggling, setToggling]   = useState(null);
 
   // ── Load data ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -50,8 +54,26 @@ const LieuxTable = ({ onNavigateToCarte }) => {
     })();
   }, []);
 
+  // ── Toggle connu (MJ only) ─────────────────────────────────────────────────
+  const toggleConnu = useCallback(async (e, lieu) => {
+    e.stopPropagation();
+    if (!mjMode) return;
+    const newVal = !lieu.connu;
+    setToggling(lieu.id);
+    const { error } = await supabase
+      .from('lieux')
+      .update({ connu: newVal })
+      .eq('id', lieu.id);
+    if (!error) {
+      setLieux(prev =>
+        prev.map(l => l.id === lieu.id ? { ...l, connu: newVal } : l)
+      );
+    }
+    setToggling(null);
+  }, [mjMode]);
+
   // ── Filter & sort ─────────────────────────────────────────────────────────
-  const filtered = lieux
+  const filtered = filterLieux(lieux, playerMode ? viewerClan || 'joueur' : 'mj')
     .filter(l => {
       const q = search.toLowerCase();
       if (q && !l.nom.toLowerCase().includes(q) &&
@@ -171,6 +193,9 @@ const LieuxTable = ({ onNavigateToCarte }) => {
               <th className="lt-th lt-th-clan" onClick={() => handleSort('clan')}>
                 Clan <SortIcon field="clan" sortField={sortField} sortAsc={sortAsc} />
               </th>
+              {mjMode && (
+                <th className="lt-th lt-th-connu" title="Visible par les joueurs">👁</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -225,6 +250,19 @@ const LieuxTable = ({ onNavigateToCarte }) => {
                         {lieu.clan_nom || '—'}
                       </span>
                     </td>
+
+                    {/* MJ toggle connu */}
+                    {mjMode && (
+                      <td className="lt-td lt-td-connu" onClick={e => toggleConnu(e, lieu)}>
+                        <button
+                          className={`lt-connu-toggle ${lieu.connu ? 'lt-connu-toggle--on' : ''}`}
+                          disabled={toggling === lieu.id}
+                          title={lieu.connu ? 'Masquer aux joueurs' : 'Révéler aux joueurs'}
+                        >
+                          {toggling === lieu.id ? '…' : lieu.connu ? '👁' : '◌'}
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 );
               })

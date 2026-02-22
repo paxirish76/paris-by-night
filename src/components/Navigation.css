@@ -127,4 +127,54 @@
   .nav-label {
     font-size: 12px;
   }
+.nav-mode-badge {
+  padding: 8px 16px 12px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  margin-bottom: 4px;
+}
+
+.nav-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid;
+  opacity: 0.85;
+}
+
+.nav-badge--mj {
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--gold);
+}
+
+/* nav-badge--clan uses inline style for dynamic clan color */
+.nav-badge--clan {
+  border-color: currentColor;
+}
+
+.nav-logout {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+  opacity: 0.35;
+  text-align: left;
+  transition: opacity 0.2s ease;
+  margin-top: 8px;
+}
+
+.nav-logout:hover {
+  opacity: 0.7;
+}
+
 }

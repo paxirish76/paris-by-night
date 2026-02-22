@@ -1,382 +1,357 @@
-/* ================================================================
-   PersonnagesTable.css - Tableau des personnages
-   Filtrable par clan, triable par nom/génération/clan
-   ================================================================ */
+/* ═══════════════════════════════════════════════════
+   PersonnagesTable.css — Paris by Night
+   ═══════════════════════════════════════════════════ */
 
-.personnages-table {
-  padding: 30px;
-  max-width: 1400px;
+.pt-container {
+  padding: 40px;
+  max-width: 1200px;
   margin: 0 auto;
-  animation: fadeIn 0.6s ease-out;
+  animation: fadeIn 0.5s ease-out;
 }
 
-/* ================================================================
-   HEADER
-   ================================================================ */
+/* ── Header ───────────────────────────────────────── */
 
-.table-header {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.header-title {
-  display: inline-block;
-}
-
-.table-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 48px;
-  color: var(--gold);
-  margin-bottom: 8px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.table-subtitle {
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  color: var(--silver);
-  letter-spacing: 2px;
-  opacity: 0.8;
-}
-
-/* ================================================================
-   CONTRÔLES (Filtres et Tri)
-   ================================================================ */
-
-.table-controls {
+.pt-header {
   display: flex;
-  gap: 20px;
   align-items: flex-end;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 4px;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+.pt-header-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--gold);
+  margin: 0 0 4px;
+  line-height: 1;
 }
 
-.control-label {
+.pt-header-text p {
   font-family: 'Cinzel', serif;
   font-size: 12px;
-  color: var(--gold);
+  color: var(--silver);
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  opacity: 0.5;
+  margin: 0;
 }
 
-.control-select {
-  padding: 10px 14px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 4px;
-  color: var(--pale-gold);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.control-select:hover {
-  border-color: var(--gold);
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.control-select:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
-}
-
-.control-select option {
-  background: var(--dark-bg);
-  color: var(--pale-gold);
-}
-
-.btn-reset {
-  padding: 10px 20px;
-  background: rgba(139, 0, 0, 0.3);
-  border: 1px solid var(--crimson);
-  border-radius: 4px;
-  color: var(--pale-gold);
+.pt-counter {
   font-family: 'Cinzel', serif;
   font-size: 13px;
+  color: var(--silver);
+  opacity: 0.6;
+  text-align: right;
+}
+
+.pt-counter span {
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+/* ── Controls ─────────────────────────────────────── */
+
+.pt-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pt-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.pt-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.pt-search {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.2);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  padding: 10px 36px 10px 36px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.pt-search:focus {
+  border-color: rgba(212,175,55,0.5);
+}
+
+.pt-clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--silver);
+  opacity: 0.4;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 12px;
+  padding: 0;
+}
+
+.pt-select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.2);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  padding: 10px 14px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.pt-select:focus {
+  border-color: rgba(212,175,55,0.5);
+}
+
+.pt-select option {
+  background: #1a1a1a;
+}
+
+.pt-reset {
+  background: none;
+  border: 1px solid rgba(212,175,55,0.2);
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.pt-reset:hover { opacity: 1; }
+
+/* ── Table ────────────────────────────────────────── */
+
+.pt-table-wrap {
+  overflow-x: auto;
+}
+
+.pt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pt-th {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(212,175,55,0.2);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.pt-th:hover { color: #fff; }
+
+.pt-th-icon   { width: 52px; cursor: default; }
+.pt-th-gen    { width: 80px; }
+.pt-th-roles  { cursor: default; }
+.pt-th-connu  { width: 48px; text-align: center; cursor: default; }
+
+.pt-sort-icon { margin-left: 4px; opacity: 0.5; font-size: 10px; }
+.pt-sort-icon.active { opacity: 1; color: var(--gold); }
+
+.pt-row {
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s ease;
+}
+
+.pt-row:hover {
+  background: rgba(212,175,55,0.05);
+}
+
+.pt-row--connu {
+  /* subtle indicator that this row is revealed to players */
+}
+
+.pt-td {
+  padding: 10px 16px;
+  vertical-align: middle;
+}
+
+/* Avatar */
+.pt-td-icon { padding: 8px 8px 8px 16px; }
+
+.pt-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+  flex-shrink: 0;
+}
+
+.pt-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pt-avatar-placeholder {
+  font-size: 18px;
+  opacity: 0.4;
+}
+
+/* Nom */
+.pt-nom {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* Clan badge */
+.pt-clan-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
-.btn-reset:hover {
-  background: rgba(139, 0, 0, 0.5);
-  border-color: var(--gold);
-  transform: scale(1.05);
-}
-
-/* ================================================================
-   TABLEAU
-   ================================================================ */
-
-.table-container {
-  overflow-x: auto;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 4px;
-}
-
-.vampires-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Cormorant Garamond', serif;
-}
-
-/* En-têtes */
-.vampires-table thead {
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(75, 0, 130, 0.2));
-  border-bottom: 2px solid var(--gold);
-}
-
-.vampires-table th {
-  padding: 12px 16px;
-  text-align: left;
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-
-/* Largeurs colonnes */
-.col-nom {
-  width: 35%;
-}
-
-.col-generation {
-  width: 10%;
-  text-align: center;
-}
-
-.col-clan {
-  width: 25%;
-}
-
-.col-role {
-  width: 30%;
-}
-
-/* Lignes */
-.table-row {
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.table-row:hover {
-  background: rgba(212, 175, 55, 0.1);
-  transform: scale(1.01);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
-}
-
-.table-row:active {
-  transform: scale(0.99);
-}
-
-.vampires-table td {
-  padding: 10px 16px;
-  color: var(--silver);
-}
-
-/* Nom */
-.nom-text {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--pale-gold);
-}
-
 /* Génération */
-.generation-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--pale-gold);
-  text-align: center;
-  min-width: 36px;
-}
-
-/* Clan */
-.clan-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border: 1px solid;
-  border-radius: 4px;
+.pt-gen {
   font-family: 'Cinzel', serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-/* Rôle */
-.role-text {
-  font-size: 15px;
+  font-size: 12px;
   color: var(--silver);
-  font-style: italic;
-}
-
-/* Ligne vide */
-.empty-row {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--silver);
-  font-style: italic;
   opacity: 0.6;
 }
 
-/* ================================================================
-   FOOTER
-   ================================================================ */
-
-.table-footer {
-  margin-top: 20px;
-  text-align: center;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 4px;
+/* Rôles */
+.pt-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
-.footer-hint {
+.pt-role-badge {
   font-family: 'Cinzel', serif;
-  font-size: 13px;
-  color: var(--gold);
-  letter-spacing: 1px;
-  margin: 0;
-  opacity: 0.8;
+  font-size: 10px;
+  color: var(--silver);
+  opacity: 0.6;
+  background: rgba(255,255,255,0.04);
+  padding: 2px 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-/* ================================================================
-   LOADING & ERREURS
-   ================================================================ */
+.pt-role-more {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--silver);
+  opacity: 0.4;
+  padding: 2px 4px;
+}
 
-.loading-container {
+/* Connu toggle */
+.pt-td-connu {
+  text-align: center;
+  padding: 8px;
+}
+
+.pt-connu-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--silver);
+  opacity: 0.3;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.pt-connu-toggle:hover {
+  opacity: 0.8;
+  border-color: rgba(212,175,55,0.4);
+}
+
+.pt-connu-toggle--on {
+  opacity: 1;
+  border-color: rgba(212,175,55,0.5);
+  background: rgba(212,175,55,0.08);
+  color: var(--gold);
+}
+
+/* Loading / empty */
+
+.pt-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
-  gap: 20px;
+  padding: 80px;
+  gap: 16px;
+  color: var(--silver);
+  opacity: 0.5;
+  font-family: 'Cinzel', serif;
 }
 
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(212, 175, 55, 0.2);
+.pt-spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(212,175,55,0.2);
   border-top-color: var(--gold);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.loading-text {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 16px;
-  letter-spacing: 2px;
-}
-
-.error-container {
+.pt-empty {
   text-align: center;
   padding: 40px;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--silver);
+  opacity: 0.4;
+  letter-spacing: 1px;
 }
 
-.error-text {
-  font-size: 18px;
-  color: var(--crimson);
-}
-
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-
-@media (max-width: 1024px) {
-  .table-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .btn-reset {
-    width: 100%;
-  }
-}
+/* ── Responsive ───────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .personnages-table {
-    padding: 15px;
-  }
-
-  .table-title {
-    font-size: 36px;
-  }
-
-  .table-subtitle {
-    font-size: 14px;
-  }
-
-  .vampires-table th,
-  .vampires-table td {
-    padding: 10px 12px;
-  }
-
-  .vampires-table th {
-    font-size: 11px;
-  }
-
-  .nom-text {
-    font-size: 15px;
-  }
-
-  .clan-badge {
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-
-  .role-text {
-    font-size: 13px;
-  }
-
-  /* Masquer la colonne Rôle sur mobile */
-  .col-role {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Sur très petit écran, tableau en mode compact */
-  .col-generation {
-    width: 15%;
-  }
-  
-  .col-nom {
-    width: 45%;
-  }
-  
-  .col-clan {
-    width: 40%;
-  }
-
-  .generation-badge {
-    font-size: 12px;
-    padding: 3px 8px;
-  }
+  .pt-container { padding: 20px; }
+  .pt-header-text h1 { font-size: 28px; }
+  .pt-th-roles, .pt-td-roles { display: none; }
 }
