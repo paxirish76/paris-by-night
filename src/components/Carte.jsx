@@ -4,6 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import './Carte.css';
 import { supabase } from '../lib/supabase';
 
+// ─── Supabase storage bucket URL ──────────────────────────────────────────────
+const BUCKET_URL = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/lieux';
+
+const getLieuImageUrl = (lieuId, index) =>
+  `${BUCKET_URL}/${lieuId}${index}.jpg`;
+
 // ─── SVG marker icon ──────────────────────────────────────────────────────────
 const createLieuIcon = (color, statut) => {
   const s = (statut || '').toLowerCase();
@@ -26,7 +32,34 @@ const createLieuIcon = (color, statut) => {
     </svg>`;
 };
 
-// ─── Drawer component ─────────────────────────────────────────────────────────
+// ─── LieuImage: single image with fallback ────────────────────────────────────
+const LieuImage = ({ src, alt, clanColor }) => {
+  const [status, setStatus] = useState('loading'); // loading | loaded | error
+
+  return (
+    <div className="ld-img-wrapper">
+      {status === 'loading' && (
+        <div className="ld-img-placeholder">
+          <div className="ld-img-shimmer" />
+        </div>
+      )}
+      {status === 'error' && (
+        <div className="ld-img-fallback" style={{ '--clan-color': clanColor }}>
+          <span className="ld-img-fallback-icon">🏛️</span>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`ld-img ${status === 'loaded' ? 'ld-img--visible' : ''}`}
+        onLoad={() => setStatus('loaded')}
+        onError={() => setStatus('error')}
+      />
+    </div>
+  );
+};
+
+// ─── Fullscreen LieuDrawer ────────────────────────────────────────────────────
 const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
   const [secretsRevealed, setSecretsRevealed] = useState(false);
   const [openSections, setOpenSections] = useState({ ambiance: true, utilite: true });
@@ -35,6 +68,19 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
     setSecretsRevealed(false);
     setOpenSections({ ambiance: true, utilite: true });
   }, [lieu?.id]);
+
+  // Lock body scroll when open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
 
   if (!lieu) return null;
 
@@ -49,7 +95,6 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
       : (lieu.description || {});
   } catch (e) { desc = {}; }
 
-  // Other lieux in the same bourg
   const lieuxDuBourg = lieux.filter(l => l.bourg_id === lieu.bourg_id && l.id !== lieu.id);
 
   const toggleSection = (key) =>
@@ -68,28 +113,63 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
   );
 
   const protection = lieu.protection || 0;
+  const isElysium  = (lieu.statut || '').toLowerCase().includes('elysium');
 
   return (
-    <>
-      <div className="ld-overlay" onClick={onClose} />
-      <div className="ld-drawer open" style={{ '--clan-color': clanColor }}>
+    <div className="ld-fullscreen" style={{ '--clan-color': clanColor }}>
+      {/* ── Backdrop ── */}
+      <div className="ld-backdrop" onClick={onClose} />
 
-        {/* ── Header ── */}
-        <div className="ld-header">
-          <button className="ld-close" onClick={onClose}>✕</button>
-          <div className="ld-statut">
-            <span className="ld-statut-dot" />
-            {lieu.statut || 'Lieu'}
-          </div>
-          <div className="ld-nom">{lieu.nom}</div>
-          <div className="ld-meta">
-            <span className="ld-clan">{clanNom}</span>
-            {lieu.adresse && <><span className="ld-sep">·</span><span className="ld-adresse">{lieu.adresse}</span></>}
-          </div>
-          <div className="ld-protection">
-            {[1,2,3,4,5,6].map(i => (
-              <span key={i} className={`ld-prot-star${i <= protection ? ' filled' : ''}`}>◆</span>
-            ))}
+      {/* ── Panel ── */}
+      <div className="ld-panel">
+
+        {/* ── Close button ── */}
+        <button className="ld-close-btn" onClick={onClose} aria-label="Fermer">
+          <span>✕</span>
+        </button>
+
+        {/* ── Hero: 2 images ── */}
+        <div className="ld-hero">
+          <LieuImage
+            src={getLieuImageUrl(lieu.id, 1)}
+            alt={`${lieu.nom} — vue 1`}
+            clanColor={clanColor}
+          />
+          <LieuImage
+            src={getLieuImageUrl(lieu.id, 2)}
+            alt={`${lieu.nom} — vue 2`}
+            clanColor={clanColor}
+          />
+
+          {/* Gradient overlay on hero */}
+          <div className="ld-hero-gradient" />
+
+          {/* Title overlay on hero */}
+          <div className="ld-hero-title">
+            <div className="ld-hero-statut">
+              <span className="ld-statut-dot" />
+              {lieu.statut || 'Lieu'}
+              {isElysium && <span className="ld-elysium-badge">◆ Elysium</span>}
+            </div>
+            <h1 className="ld-hero-nom">{lieu.nom}</h1>
+            <div className="ld-hero-meta">
+              <span className="ld-clan-badge" style={{ background: `${clanColor}22`, borderColor: `${clanColor}66`, color: clanColor }}>
+                {clanNom}
+              </span>
+              {lieu.bourg?.nom && (
+                <span className="ld-bourg-badge">🗺️ {lieu.bourg.nom}</span>
+              )}
+              {lieu.adresse && (
+                <span className="ld-adresse-badge">📍 {lieu.adresse}</span>
+              )}
+            </div>
+            {protection > 0 && (
+              <div className="ld-protection">
+                {[1,2,3,4,5,6].map(i => (
+                  <span key={i} className={`ld-prot-star${i <= protection ? ' filled' : ''}`}>◆</span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -136,9 +216,9 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
             <Section id="bourg_lieux" icon="🏛️" label={`Autres lieux du bourg (${lieuxDuBourg.length})`}>
               <div className="ld-lieux-list">
                 {lieuxDuBourg.map(l => {
-                  const lClan    = clans.find(c => c.id === l.clan_id);
-                  const lColor   = lClan?.couleur || '#d4af37';
-                  const isElys   = (l.statut || '').toLowerCase().includes('elysium');
+                  const lClan  = clans.find(c => c.id === l.clan_id);
+                  const lColor = lClan?.couleur || '#d4af37';
+                  const isElys = (l.statut || '').toLowerCase().includes('elysium');
                   return (
                     <button key={l.id} className="ld-lieu-link" onClick={() => onLieuClick(l)}>
                       <span
@@ -174,21 +254,20 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
 
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 // ─── Main Carte ───────────────────────────────────────────────────────────────
 const Carte = ({
-  // Legacy prop (LieuxTable)
   targetLieuId       = null,
   onTargetConsumed   = () => {},
-  // New props (BourgsTable)
   targetBourgId      = null,
   onTargetBourgConsumed = () => {},
-  onTargetLieuConsumed  = null,   // alias — if provided, used instead of onTargetConsumed
-  // Navigate out to BourgsTable detail page
+  onTargetLieuConsumed  = null,
   onNavigateToBourg  = null,
+  playerMode         = false,
+  viewerClan         = null,
 }) => {
   const [bourgs, setBourgs]                         = useState([]);
   const [lieux, setLieux]                           = useState([]);
@@ -206,9 +285,8 @@ const Carte = ({
   const mapInstanceRef      = useRef(null);
   const baseContoursLayerRef = useRef(null);
   const bourgLayersRef      = useRef([]);
-  const markersMapRef       = useRef(new Map()); // lieu.id → Leaflet marker
+  const markersMapRef       = useRef(new Map());
 
-  // Normalise the "lieu consumed" callback to whichever prop was provided
   const clearLieu = onTargetLieuConsumed || onTargetConsumed;
 
   // ── GeoJSON ──────────────────────────────────────────────────────────────
@@ -328,7 +406,7 @@ const Carte = ({
     });
   }, [bourgs, bourgsFusionnesGeoJSON, clans, selectedClan, mapReady]);
 
-  // ── Consume targetLieuId (from LieuxTable or BourgsTable lieu click) ──────
+  // ── Consume targetLieuId ──────────────────────────────────────────────────
   useEffect(() => {
     if (!targetLieuId || !mapReady || !lieux.length || !clans.length) return;
     const lieu = lieux.find(l => l.id === targetLieuId);
@@ -347,11 +425,10 @@ const Carte = ({
     clearLieu();
   }, [targetLieuId, mapReady, lieux, clans]);
 
-  // ── Consume targetBourgId (from BourgsTable bourg name / Carte badge) ─────
+  // ── Consume targetBourgId ─────────────────────────────────────────────────
   useEffect(() => {
     if (!targetBourgId || !mapReady || !bourgsFusionnesGeoJSON) return;
 
-    // Find the merged feature for this bourg
     const feature = bourgsFusionnesGeoJSON.features.find(
       f => f.properties.bourg_id === targetBourgId
     );
@@ -359,7 +436,6 @@ const Carte = ({
 
     const map = mapInstanceRef.current;
 
-    // Compute bounds of the feature and fly there
     try {
       const layer = L.geoJSON(feature);
       const bounds = layer.getBounds();
@@ -368,16 +444,11 @@ const Carte = ({
       }
     } catch (e) { console.warn('flyToBounds failed:', e); }
 
-    // Highlight the bourg polygon briefly
     const clansMap = Object.fromEntries(clans.map(c => [c.id, c]));
     const bourg    = bourgs.find(b => b.id === targetBourgId);
     if (bourg) {
-      const clan    = clansMap[bourg.clan_dominant_id];
-      const couleur = clan?.couleur || '#d4af37';
-      // Pulse: find the layer and flash it
       bourgLayersRef.current.forEach(l => {
         l.eachLayer(sub => {
-          // Each geoJSON layer stores its feature — check bourg_id
           if (sub.feature?.properties?.bourg_id === targetBourgId) {
             sub.setStyle({ fillOpacity: 0.75, weight: 5 });
             setTimeout(() => sub.setStyle({ fillOpacity: 0.35, weight: 3 }), 1800);
@@ -406,7 +477,8 @@ const Carte = ({
     markersMapRef.current.clear();
 
     const clansMap    = Object.fromEntries(clans.map(c => [c.id, c]));
-    const lieuxFiltres = selectedClan ? lieux.filter(l => l.clan_id === selectedClan) : lieux;
+    const lieuxVisiblesParMode = playerMode ? lieux.filter(l => l.connu || (viewerClan && Array.isArray(l.clan_overrides) && l.clan_overrides.includes(viewerClan))) : lieux;
+    const lieuxFiltres = selectedClan ? lieuxVisiblesParMode.filter(l => l.clan_id === selectedClan) : lieuxVisiblesParMode;
 
     lieuxFiltres.forEach(lieu => {
       if (!lieu.latitude || !lieu.longitude) return;
@@ -526,7 +598,7 @@ const Carte = ({
         </div>
       )}
 
-      {/* Drawer — overlays everything */}
+      {/* ── Fullscreen Lieu Detail — overlays everything ── */}
       {selectedLieu && (
         <LieuDrawer
           lieu={selectedLieu}
