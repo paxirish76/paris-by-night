@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { isMJ } from './AuthContext';
 import './LieuxTable.css';
-import { filterLieux } from '../lieuxRestrictions';
 
 const SORT_FIELDS = {
   nom:    (a, b) => a.nom.localeCompare(b.nom, 'fr'),
@@ -73,7 +72,12 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
   }, [mjMode]);
 
   // ── Filter & sort ─────────────────────────────────────────────────────────
-  const filtered = filterLieux(lieux, playerMode ? viewerClan || 'joueur' : 'mj')
+  const filtered = (mjMode ? lieux : lieux.filter(l => {
+    // Clan override: visible if viewer's clan is in the list
+    if (viewerClan && (l.clan_overrides || []).includes(viewerClan)) return true;
+    // Otherwise only connu lieux
+    return l.connu;
+  }))
     .filter(l => {
       const q = search.toLowerCase();
       if (q && !l.nom.toLowerCase().includes(q) &&

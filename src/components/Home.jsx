@@ -1,34 +1,68 @@
 import React from 'react';
 import './Home.css';
 
+const BANNER_URL = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/lieux/paris-by-night.jpg';
+
 function Home({ onNavigate }) {
   return (
     <div className="home">
+
+      {/* ── Cinematic Hero Banner ── */}
       <div className="home-hero">
-        <h1 className="home-title">Paris by Night</h1>
-        <p className="home-tagline">Domaine de François Villon, Prince de Paris</p>
-        <div className="home-divider"></div>
+        <div className="home-hero-bg">
+          <img
+            src={BANNER_URL}
+            alt="Paris by Night — vue panoramique"
+            className="home-hero-img"
+          />
+          {/* Multi-layer atmospheric overlays */}
+          <div className="home-hero-overlay" />
+          <div className="home-hero-vignette" />
+          <div className="home-hero-scanlines" />
+        </div>
+
+        <div className="home-hero-content">
+          {/* Pre-title ornament */}
+          <div className="home-hero-ornament">
+            <span className="ornament-line" />
+            <span className="ornament-diamond">◆</span>
+            <span className="ornament-line" />
+          </div>
+
+          <p className="home-hero-eyebrow">Monde des Ténèbres · Paris · 1875</p>
+          <h1 className="home-title">Paris by Night</h1>
+          <p className="home-tagline">Domaine de François Villon, Prince de Paris</p>
+
+          <div className="home-divider" />
+
+          {/* Stat cards — inside the hero, bottom strip */}
+          <div className="home-stats">
+            <div className="stat-card">
+              <div className="stat-number">100</div>
+              <div className="stat-label">Vampires</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">8</div>
+              <div className="stat-label">Clans</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">22</div>
+              <div className="stat-label">Bourgs</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">1</div>
+              <div className="stat-label">Prince</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll cue */}
+        <div className="home-scroll-cue">
+          <span className="scroll-arrow">▼</span>
+        </div>
       </div>
 
-      <div className="home-stats">
-        <div className="stat-card">
-          <div className="stat-number">100</div>
-          <div className="stat-label">Vampires</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">8</div>
-          <div className="stat-label">Clans</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">22</div>
-          <div className="stat-label">Bourgs</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">1</div>
-          <div className="stat-label">Prince</div>
-        </div>
-      </div>
-
+      {/* ── Lore Content ── */}
       <div className="home-content">
         <section className="home-section">
           <h2 className="section-title">Histoire Mortelle</h2>

@@ -450,213 +450,348 @@
    LIEU DRAWER (ld-*)
    ============================================= */
 
-.ld-overlay {
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIEU DRAWER — FULLSCREEN OVERLAY
+   Ajouter/remplacer les règles .ld-* dans Carte.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Fullscreen container ── */
+.ld-fullscreen {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-  animation: ldFadeIn 0.3s ease;
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: ld-fade-in 0.2s ease;
 }
 
-.ld-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 420px;
-  height: 100vh;
-  background: #1a1215;
-  border-left: 2px solid #8b0000;
-  box-shadow: -8px 0 40px rgba(0,0,0,0.8), -2px 0 20px rgba(139,0,0,0.25);
-  z-index: 1001;
+@keyframes ld-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Backdrop ── */
+.ld-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 2, 8, 0.88);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* ── Panel ── */
+.ld-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  max-height: 92vh;
+  background: #100c14;
+  border: 1px solid var(--clan-color, #d4af37);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 -8px 60px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 40px -10px var(--clan-color, #d4af37);
+  animation: ld-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ld-drawer.open {
-  transform: translateX(0);
+@keyframes ld-slide-up {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Header */
-.ld-header {
-  padding: 1.2rem 1.4rem 1rem;
-  border-bottom: 1px solid rgba(139,0,0,0.4);
-  background: #0d0a0b;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.ld-header::before {
-  content: '';
+/* ── Close button ── */
+.ld-close-btn {
   position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: var(--clan-color, #d4af37);
-}
-
-.ld-close {
-  position: absolute;
-  top: 0.9rem; right: 1rem;
-  width: 26px; height: 26px;
-  background: rgba(139,0,0,0.3);
-  border: 1px solid #8b0000;
-  border-radius: 3px;
-  color: #c0c0c0;
-  cursor: pointer;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
   font-size: 0.9rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.ld-close:hover { background: #8b0000; color: white; transform: rotate(90deg); }
-
-.ld-statut {
-  display: inline-flex;
+  cursor: pointer;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.18rem 0.65rem;
-  border: 1px solid var(--clan-color, #d4af37);
-  border-radius: 2px;
-  font-family: 'Cinzel', serif;
-  font-size: 0.63rem;
-  letter-spacing: 0.08em;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+  backdrop-filter: blur(6px);
+}
+.ld-close-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.4);
+}
+
+/* ── Hero: 2-image gallery ── */
+.ld-hero {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: #080508;
+  overflow: hidden;
+}
+
+/* ── Single image wrapper ── */
+.ld-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #0d0910;
+}
+
+.ld-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+  transform: scale(1.03);
+}
+.ld-img--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.ld-img-wrapper:hover .ld-img--visible {
+  transform: scale(1.04);
+}
+
+/* Shimmer loading state */
+.ld-img-placeholder {
+  position: absolute;
+  inset: 0;
+}
+.ld-img-shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #1a1220 25%, #231830 50%, #1a1220 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* Fallback when image is missing */
+.ld-img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #1e1228 0%, #0d0910 100%);
+  border: 1px dashed rgba(255,255,255,0.08);
+}
+.ld-img-fallback-icon {
+  font-size: 3rem;
+  opacity: 0.25;
+  filter: grayscale(1);
+}
+
+/* ── Hero gradient overlay ── */
+.ld-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(16, 12, 20, 0.98) 0%, rgba(16,12,20,0.5) 35%, transparent 65%),
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 20%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Hero title block (overlays images at bottom) ── */
+.ld-hero-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 0 28px 24px;
+}
+
+.ld-hero-statut {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--clan-color, #d4af37);
-  background: rgba(0,0,0,0.3);
-  margin-bottom: 0.55rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
 }
 
 .ld-statut-dot {
-  width: 5px; height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--clan-color, #d4af37);
+  box-shadow: 0 0 8px var(--clan-color, #d4af37);
+  flex-shrink: 0;
 }
 
-.ld-nom {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  color: #f4e4b7;
-  line-height: 1.3;
-  padding-right: 2rem;
-  margin-bottom: 0.45rem;
+.ld-elysium-badge {
+  color: var(--clan-color, #d4af37);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
 }
 
-.ld-meta {
+.ld-hero-nom {
+  font-family: 'Cinzel', 'Palatino Linotype', serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  line-height: 1.1;
+}
+
+.ld-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.ld-clan-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.ld-bourg-badge,
+.ld-adresse-badge {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  font-size: 0.82rem;
-  margin-bottom: 0.4rem;
-}
-
-.ld-clan {
-  font-family: 'Cinzel', serif;
-  font-size: 0.72rem;
-  color: var(--clan-color, #d4af37);
-}
-
-.ld-sep { color: #444; }
-
-.ld-adresse {
-  font-style: italic;
-  color: #666;
-  font-size: 0.78rem;
+  gap: 4px;
 }
 
 .ld-protection {
   display: flex;
   gap: 3px;
+  margin-top: 10px;
+}
+.ld-prot-star {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.15);
+  transition: color 0.2s;
+}
+.ld-prot-star.filled {
+  color: var(--clan-color, #d4af37);
+  text-shadow: 0 0 6px var(--clan-color, #d4af37);
 }
 
-.ld-prot-star { font-size: 0.65rem; color: #333; }
-.ld-prot-star.filled { color: #dc143c; }
-
-/* Body */
+/* ── Scrollable body ── */
 .ld-body {
   flex: 1;
   overflow-y: auto;
+  padding: 20px 28px 32px;
   scrollbar-width: thin;
-  scrollbar-color: #8b0000 transparent;
+  scrollbar-color: var(--clan-color, #d4af37) #1a1220;
 }
-.ld-body::-webkit-scrollbar { width: 3px; }
-.ld-body::-webkit-scrollbar-thumb { background: #8b0000; border-radius: 2px; }
+.ld-body::-webkit-scrollbar { width: 4px; }
+.ld-body::-webkit-scrollbar-track { background: #1a1220; }
+.ld-body::-webkit-scrollbar-thumb { background: var(--clan-color, #d4af37); border-radius: 4px; }
 
-/* Secrets toggle */
+/* ── Secrets toggle ── */
 .ld-secrets-toggle {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 1.4rem;
+  gap: 10px;
   cursor: pointer;
-  font-family: 'Cinzel', serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #555;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  user-select: none;
-  transition: color 0.2s;
-}
-.ld-secrets-toggle:hover { color: #dc143c; }
-.ld-secrets-toggle.revealed { color: #dc143c; }
-
-.ld-toggle-switch {
-  width: 30px; height: 15px;
-  background: #1a1215;
-  border: 1px solid #333;
+  padding: 8px 14px;
   border-radius: 8px;
-  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 18px;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   transition: all 0.2s;
+  width: fit-content;
+}
+.ld-secrets-toggle.revealed {
+  color: #e53e3e;
+  border-color: rgba(229,62,62,0.3);
+  background: rgba(229,62,62,0.06);
+}
+.ld-toggle-switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+  transition: background 0.3s;
+  flex-shrink: 0;
 }
 .ld-secrets-toggle.revealed .ld-toggle-switch {
-  background: rgba(139,0,0,0.4);
-  border-color: #dc143c;
+  background: #e53e3e;
 }
 .ld-toggle-knob {
-  position: absolute;
-  width: 11px; height: 11px;
-  background: #555;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  top: 1px; left: 1px;
-  transition: all 0.2s;
+  background: #fff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s;
 }
 .ld-secrets-toggle.revealed .ld-toggle-knob {
-  left: 16px;
-  background: #dc143c;
-  box-shadow: 0 0 5px #dc143c;
+  transform: translateX(14px);
 }
 
-/* Sections */
+/* ── Accordion sections ── */
 .ld-section {
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.2s;
 }
+.ld-section:hover { border-color: rgba(255,255,255,0.12); }
 
 .ld-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1.4rem;
+  padding: 12px 16px;
   cursor: pointer;
   user-select: none;
-  transition: background 0.15s;
 }
-.ld-section-header:hover { background: rgba(255,255,255,0.02); }
-
 .ld-section-title {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--clan-color, #d4af37);
 }
-
 .ld-chevron {
-  color: #444;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.3);
   transition: transform 0.25s;
 }
 .ld-section.open .ld-chevron { transform: rotate(180deg); }
@@ -664,133 +799,89 @@
 .ld-section-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: max-height 0.3s ease;
 }
-.ld-section.open .ld-section-body { max-height: 800px; }
+.ld-section.open .ld-section-body { max-height: 600px; }
 
-.ld-section-content { padding: 0 1.4rem 1rem; }
+.ld-section-content {
+  padding: 0 16px 14px;
+}
 
 .ld-text {
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: #bbb;
+  font-size: 0.88rem;
+  color: #c8b89a;
+  line-height: 1.7;
+  margin: 0;
 }
+.ld-gardien { color: #e8b86d; }
 
-.ld-gardien {
-  margin-top: 0.6rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(139,0,0,0.1);
-  border-left: 2px solid #dc143c;
-  border-radius: 2px;
-}
-
-/* Lieux du bourg */
-.ld-lieux-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
+/* ── Autres lieux du bourg ── */
+.ld-lieux-list { display: flex; flex-direction: column; gap: 6px; }
 
 .ld-lieu-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.55rem 0.8rem;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 4px;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
   cursor: pointer;
-  text-align: left;
   transition: all 0.2s;
+  text-align: left;
   width: 100%;
 }
 .ld-lieu-link:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: var(--clan-color, #d4af37);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
   transform: translateX(3px);
 }
 
 .ld-lieu-shape {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 .ld-lieu-shape.diamond {
   border-radius: 0;
   transform: rotate(45deg);
-  width: 8px; height: 8px;
+  width: 9px;
+  height: 9px;
 }
+.ld-lieu-link-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ld-lieu-link-nom { font-size: 0.82rem; font-weight: 600; }
+.ld-lieu-link-statut { font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+.ld-lieu-arrow { color: rgba(255,255,255,0.25); font-size: 0.8rem; }
 
-.ld-lieu-link-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.ld-lieu-link-nom {
-  font-family: 'Cinzel', serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-.ld-lieu-link-statut {
-  font-size: 0.72rem;
-  color: #666;
-  font-style: italic;
-}
-
-.ld-lieu-arrow {
-  color: #444;
-  font-size: 0.8rem;
-  transition: all 0.2s;
-}
-.ld-lieu-link:hover .ld-lieu-arrow { color: var(--clan-color, #d4af37); transform: translateX(2px); }
-
-/* Secrets MJ section */
-.ld-secrets-section .ld-section-title { color: #dc143c; }
-.ld-secrets-section .ld-section-header { background: rgba(139,0,0,0.06); }
-.ld-secrets-section .ld-section-header:hover { background: rgba(139,0,0,0.12); }
-
+/* ── Secrets MJ section ── */
+.ld-secrets-section { border-color: rgba(229,62,62,0.2); }
 .ld-secret-lock {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.7rem;
-  background: rgba(139,0,0,0.15);
-  border: 1px solid rgba(220,20,60,0.25);
-  border-radius: 3px;
-  font-family: 'Cinzel', serif;
-  font-size: 0.63rem;
-  letter-spacing: 0.08em;
-  color: #dc143c;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.ld-secret-items { display: flex; flex-direction: column; gap: 0.8rem; }
-
-.ld-secret-item {
-  border-left: 2px solid rgba(220,20,60,0.35);
-  padding-left: 0.8rem;
-}
-
-.ld-secret-key {
-  font-family: 'Cinzel', serif;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
+  color: rgba(229,62,62,0.6);
+  margin-bottom: 10px;
   letter-spacing: 0.06em;
+}
+.ld-secret-items { display: flex; flex-direction: column; gap: 8px; }
+.ld-secret-item {
+  padding: 10px 12px;
+  background: rgba(229,62,62,0.05);
+  border: 1px solid rgba(229,62,62,0.15);
+  border-radius: 6px;
+}
+.ld-secret-key {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #dc143c;
-  margin-bottom: 0.2rem;
+  color: #e53e3e;
+  margin-bottom: 4px;
 }
+.ld-secret-value { font-size: 0.85rem; color: #c8b89a; line-height: 1.6; }
 
-.ld-secret-value {
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: #999;
-  font-style: italic;
-}
-
+/* ── Remove old overlay/drawer styles if they conflict ── */
+.ld-overlay { display: none; }
+.ld-drawer  { display: none; }
 /* =============================================
    MINI POPUP MARKER (lmp-*)
    ============================================= */
