@@ -960,3 +960,35 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* =============================================
+   RESPONSIVE — LIEU DRAWER MOBILE
+   2 images empilées verticalement
+   ============================================= */
+
+@media (max-width: 768px) {
+  .ld-panel {
+    max-height: 96vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* Hero : 2 images empilées sur toute la largeur */
+  .ld-hero {
+    height: 320px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+  }
+
+  .ld-hero-title {
+    padding: 0 16px 16px;
+  }
+
+  .ld-hero-nom {
+    font-size: 1.4rem;
+  }
+
+  .ld-body {
+    padding: 16px 16px 24px;
+  }
+}

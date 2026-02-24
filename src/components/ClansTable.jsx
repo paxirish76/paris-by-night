@@ -113,7 +113,7 @@ function MembresList({ clanId, couleur, onNavigateToPersonnage }) {
 }
 
 /* ── Detail view ─────────────────────────────────────── */
-function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo }) {
+function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo, playerMode = false }) {
   const buts = safeArray(clan.buts);
   const relations = safeArray(clan.relation);
 
@@ -188,12 +188,14 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
 
       {CLANS_AVEC_ARBRE.includes(clan.id) ? (
         <section className="cd-section">
-          <button
-            className="cd-genealogie-btn"
-            onClick={() => onNavigateToGenealogie(clan.id, clan.nom)}
-          >
-            Arbre généalogique →
-          </button>
+          {!playerMode && (
+            <button
+              className="cd-genealogie-btn"
+              onClick={() => onNavigateToGenealogie(clan.id, clan.nom)}
+            >
+              Arbre généalogique →
+            </button>
+          )}
         </section>
       ) : (
         <section className="cd-section">
@@ -226,7 +228,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
 }
 
 /* ── Main component ──────────────────────────────────── */
-export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonnage }) {
+export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonnage, playerMode = false }) {
   const [clans, setClans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClan, setSelectedClan] = useState(null);
@@ -293,6 +295,7 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
         currentIndex={currentIndex}
         total={clanRoster.length}
         onGoTo={handleGoTo}
+        playerMode={playerMode}
       />
     );
   }

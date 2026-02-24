@@ -94,12 +94,16 @@
 /* Clan tab strip */
 .inf-clan-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   padding: 0 40px;
   background: rgba(0,0,0,0.2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.inf-clan-tabs::-webkit-scrollbar { display: none; }
 .inf-clan-tab {
   display: flex;
   align-items: center;
@@ -278,12 +282,16 @@
 /* Category tab strip */
 .inf-cat-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 4px;
   padding: 20px 40px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   background: rgba(0,0,0,0.15);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.inf-cat-tabs::-webkit-scrollbar { display: none; }
 .inf-cat-tab {
   display: flex;
   align-items: center;
@@ -314,7 +322,10 @@
 /* Matrix */
 .inf-matrix {
   padding: 32px 40px 60px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
 .inf-matrix-title {
   font-size: 1.4rem;
   font-weight: 400;
@@ -334,6 +345,7 @@
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 10px;
   overflow: hidden;
+  min-width: max-content;
 }
 
 .inf-matrix-corner {
