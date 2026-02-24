@@ -150,10 +150,12 @@ function AppInner() {
           <ClansTable
             onNavigateToGenealogie={navigateToGenealogie}
             onNavigateToPersonnage={navigateToPersonnage}
+            playerMode={isPlayer(mode)}
           />
         );
 
       case 'genealogie':
+        if (isPlayer(mode)) return <Home onNavigate={navigate} />;
         return (
           <Genealogie
             clanId={genealogieClan?.id}

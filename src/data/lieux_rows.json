@@ -414,5 +414,45 @@
         "longitude": 2.3980,
         "connu": false,
         "clan_overrides": "[\"nosferatu\"]"
+      },
+      {
+        "id": "le_donjon",
+        "nom": "Le Donjon",
+        "bourg_id": "deuxieme",
+        "clan_id": "lasombra",
+        "statut": "Club Clandestin / Centre de Pression",
+        "protection": 3,
+        "description": {
+          "utilite": "Lieu de recrutement, de chantage et de gestion des réseaux criminels du clan Lasombra. Le Donjon sert de façade pour les opérations clandestines menées par Luciano Bacigalupo, dit Le Loup, et de point de contrôle pour discipliner les éléments indociles.",
+          "ambiance": "L''entrée n''est qu''une lourde porte noire en métal anonyme dans une ruelle du deuxième arrondissement. Au premier sous-sol, une grande salle rouge où musique lourde, danseurs gothiques et cages de métal créent une atmosphère oppressante. Le second sous-sol, glacial et silencieux, ressemble davantage à un centre d'interrogatoire clandestin. Couloirs étroits, cellules verrouillées, instruments de coercition et marques d'obscurité trahissent la présence d'Obténébration.",
+          "securite_occulte": "Surveillance par des goules massives, capteurs thermiques, caméras piratées et passages dissimulés. Le deuxième sous-sol comporte des zones d'ombre instables où Luciano peut exercer son influence lasombra. Les accès sont protégés par des verrouillages magnétiques et des mécanismes à déclenchement discret."
+        },
+        "created_at": "2026-02-23 21:40:57+00",
+        "image_url": null,
+        "adresse": "8 bis rue Marie-Stuart, 75002 Paris",
+        "latitude": 48.86724,
+        "longitude": 2.34984,
+        "connu": false,
+        "clan_overrides": ["lasombra"]
+      },
+      {
+        "id": "chat_des_lumieres",
+        "nom": "Le Chat des Lumières",
+        "bourg_id": "montmartre",
+        "clan_id": "toreador",
+        "statut": "Café artistique / Refuge créatif",
+        "protection": 2,
+        "description": {
+          "utilite": "Café-atelier servant de refuge créatif pour artistes mortels et Caïnites sensibles à l'art. Lieu idéal pour observer, discuter et créer dans une atmosphère de Belle Époque préservée. Modigliani y trouve un espace calme pour ses œuvres et pour sonder discrètement les émotions humaines.",
+          "ambiance": "Miroirs piqués, boiseries sombres, affiches anciennes et lumière chaude presque à gaz. La salle principale bourdonne de conversations artistiques, un piano droit occupe un coin, et la verrière arrière accueille un peintre résident improvisé. Le lieu semble parfois hors du temps, traversé par une inspiration diffuse.",
+          "securite_occulte": "Influence passive des disciplines de Modigliani. Les émotions fortes sont amplifiées ou apaisées selon sa présence. Quelques zones d'ombre subtilement altérées rendent difficile toute écoute surnaturelle non autorisée. La cave, scellée, abrite des archives artistiques et un ancien atelier aux propriétés perceptives étranges."
+        },
+        "created_at": "2026-02-23 21:40:57+00",
+        "image_url": null,
+        "adresse": "Rue montmartroise fictive, 75018 Paris",
+        "latitude": 48.8867,
+        "longitude": 2.3431,
+        "connu": true,
+        "clan_overrides": "[]"
       }
 ]

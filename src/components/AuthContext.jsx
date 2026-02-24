@@ -5,16 +5,16 @@ import { createContext, useContext, useState } from 'react';
 // ─────────────────────────────────────────────────────────
 const PASSWORDS = {
   // MJ
-  'camarilla':   'mj',
+  '7 ai principi dei nani':   'mj',
   // Clans — customize each one
-  'sang-brul':   'brujah',
-  'nuit-verte':  'gangrel',
-  'ombre-pure':  'lasombra',
-  'voile-brise': 'malkavian',
-  'egout-dore':  'nosferatu',
-  'rose-noire':  'toreador',
-  'feu-froid':   'tremere',
-  'or-saignant': 'ventrue',
+  'anarchie':   'brujah',
+  'forestier':  'gangrel',
+  'noirceur':  'lasombra',
+  'alienes': 'malkavian',
+  'horreur':  'nosferatu',
+  'mecenes':  'toreador',
+  'alchhimie':   'tremere',
+  'couronne': 'ventrue',
 };
 
 // ─────────────────────────────────────────────────────────
