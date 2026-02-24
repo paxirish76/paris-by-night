@@ -13,7 +13,7 @@ const PASSWORDS = {
   'alienes': 'malkavian',
   'horreur':  'nosferatu',
   'mecenes':  'toreador',
-  'alchhimie':   'tremere',
+  'alchimie':   'tremere',
   'couronne': 'ventrue',
 };
 
