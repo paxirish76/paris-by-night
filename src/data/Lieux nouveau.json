@@ -1,0 +1,144 @@
+{
+  "id": "tunnel_des_arts",
+  "nom": "Le Tunnel des Arts (La Galerie Souterraine)",
+  "bourg_id": "central",
+  "clan_id": "toreador",
+  "statut": "Salon Diplomatique Masqué / Marché de Faveurs Culturelles",
+  "protection": 4,
+  "description": "{
+"utilite": "Lieu de négociations discrètes entre clans cultivés, marché noir culturel et galerie éphémère pour artistes mortels envoûtés. Les Toreador y règnent officieusement en faisant circuler œuvres, secrets et influences.",
+"ambiance": "Un ancien passage piétonnier sous les Champs-Élysées, illuminé par des néons faibles et des fresques mouvantes. Les murs semblent absorber les sons, créant une atmosphère irréelle. On a la sensation d'être observé par les œuvres elles-mêmes.",
+"securite_occulte": "Inaccessibilité totale aux mortels, surveillance Nosferatu via micro-lentilles dissimulées dans les fresques, perturbations sensorielles naturelles amplifiant ou déformant la perception des disciplines. Les illusions y sont particulièrement efficaces."
+}",
+  "created_at": "2026-02-24 21:40:00+00",
+  "image_url": null,
+  "adresse": "Sous les Champs-Élysées, accès dissimulé",
+  "latitude": 48.8698,
+  "longitude": 2.3076,
+  "connu": false,
+  "clan_overrides": "[]"
+},
+{
+  "id": "salle_des_ardoines",
+  "nom": "La Salle des Ardoines (Elysium de Fer Brûlant)",
+  "bourg_id": "val-de-marne-est",
+  "clan_id": "brujah",
+  "statut": "Elysium Populaire / Salle d’Assemblée Ouvrière",
+  "protection": 4,
+  "description": {
+"utilite": "Lieu de débats politiques Brujah, de duels ritualisés, d'organisation militante et de coordination tactique contre la Camarilla ou la Seconde Inquisition.",
+"ambiance": "Ancien hangar logistique réel du quartier des Ardoines, réapproprié par les Brujah. Graffitis monumentaux, ring improvisé, machines rouillées et humidité lourde venue de la Seine créent une atmosphère d'arène ouvrière.",
+"securite_occulte": "Zones d'ombre industrielles, brouillage électromagnétique naturel, accès par local technique fermé, présence quasi permanente de combattants Brujah."
+}",
+  "created_at": "2026-02-24 22:30:00+00",
+  "image_url": null,
+  "adresse": "Ancien hangar, Quartier des Ardoines, 94400 Vitry-sur-Seine",
+  "latitude": 48.7865,
+  "longitude": 2.4080,
+  "connu": true,
+  "clan_overrides": "[]"
+},
+{
+  "id": "page_d_ambre",
+  "nom": "La Page d’Ambre",
+  "bourg_id": "latin",
+  "clan_id": "tremere",
+  "statut": "Librairie Occulte / Relais de la Fondation Tremere",
+  "protection": 4,
+  "description": {
+    "presentation_generale": "Librairie ancienne du Quartier Latin servant de façade publique au réseau de savoir Tremere. À la fois boutique d’ouvrages ésotériques, relais d’informations et sas discret vers la Fondation.",
+    "tenanciers": {
+      "nuit": "Claire-Lise, Tremere, archiviste des textes interdits, sert de point de contact avec les cercles occultes de Paris.",
+      "jour": "Une goule d’apparence de vieux bibliophile, officiellement le grand-père de Claire-Lise, gère la boutique pour les humains. Il joue le rôle du propriétaire mortel et protège la couverture."
+    },
+    "utilite": [
+      "Recherche et acquisition de tomes rares et occultes",
+      "Analyse de manuscrits et identification d’artefacts",
+      "Diffusion d’idées et d’influences dans les cercles ésotériques",
+      "Point de rencontre de la communauté occulte parisienne",
+      "Relais d’informations vers la Fondation Tremere",
+      "Filtrage et surveillance des occultistes dangereux ou prometteurs"
+    ],
+    "ambiance": "Un espace étroit et labyrinthique, saturé d’odeurs d’encre et de parchemin. Les rayonnages semblent légèrement mouvants, comme s’ils réorganisaient l’espace selon le visiteur. De faibles lumières opalines créent un halo jaune doré sur les dos des livres. Un silence quasi sacré pèse sur l’endroit, où certains livres semblent respirer ou murmurer quand on détourne le regard.",
+    "securite_occulte": {
+      "glyphe_discretion": "Un sceau tremere sous le paillasson rend la boutique difficile à remarquer pour les mortels distraits.",
+      "rayonnages_mouvants": "Les étagères se réagencent légèrement pour perdre les intrus ou guider les visiteurs autorisés.",
+      "protections_psychiques": "Certains ouvrages sont enchantés pour provoquer visions brèves ou migraines lors de tentatives de vol.",
+      "liaison_fondation": "Une sortie de sécurité, dissimulée dans l'arrière-boutique, rejoint un passage thaumaturgique menant directement au Chantry de la Sorbonne.",
+      "salle_des_ambres": "Pièce scellée contenant manuscrits sensibles, fragments instables et livres influencés par l’Anomalie."
+    },
+    "arriere_boutique": {
+      "description": "Un couloir étroit masqué derrière une bibliothèque pivotante. Au fond, une porte en bois noir renforcée de glyphes tremere.",
+      "sortie_tremere": "Sas thaumaturgique relié à la Fondation, utilisé pour évacuation, transport d’ouvrages sensibles, ou arrivée discrète de membres du clan.",
+      "acces": "Activé par une clé runique en pierre que porte Claire-Lise."
+    }
+  },
+  "created_at": "2026-02-24 23:40:00+00",
+  "image_url": null,
+  "adresse": "Ruelle Saint-Séverin, 75005 Paris",
+  "latitude": 48.8472,
+  "longitude": 2.3470,
+  "connu": false,
+  "clan_overrides": []
+},
+{
+  "id": "galerie_lumiere_couronne",
+  "nom": "Galerie Lumière-Couronne",
+  "bourg_id": "artistique",
+  "clan_id": "toreador",
+  "statut": "Galerie d'Art Prestigieuse / Marché Noir Artistique",
+  "protection": 4,
+  "description": {
+    "presentation_generale": "Galerie d'art renommée située entre Pigalle et Montmartre, vitrine culturelle des Toreador et façade élégante d’un trafic sophistiqué d’oeuvres d’art, d’antiquités et d’objets occultes.",
+    "tenancier": {
+      "nom": "Jean-Valentin de la Couronne",
+      "role": "Bourgmestre du Bourg Artistique (9e-18e), expert en provenance et diplomate du clan Toreador.",
+      "description": "Orfèvre du XVIIIe siècle, esthète glacial et perfectionniste absolu. Dirige la galerie comme un temple dédié à la beauté et au contrôle social par l'art."
+    },
+    "activites_officielles": [
+      "Expositions temporaires d'art classique et contemporain",
+      "Vernissages mondains et réceptions privées",
+      "Restauration d’œuvres d’art dans l’atelier du sous-sol",
+      "Conservation et expertise d’antiquités",
+      "Conférences d’histoire de l’art et mécénat"
+    ],
+    "activites_cachees": [
+      "Blanchiment d’œuvres volées via faux certificats d’authenticité",
+      "Trafic discret d’antiquités de haute valeur",
+      "Vente privée d’objets occultes aux clans influents",
+      "Falsification de provenance historique pour réintroduire des oeuvres sur le marché",
+      "Négociations secrètes inter-clans utilisant l’art comme monnaie d’échange"
+    ],
+    "ambiance": "Intérieur luxueux aux murs gris-pierre, parquet ancien, moulures dorées et éclairages directionnels millimétrés. Silence feutré, parfum de cire et d’encens discret. Le lieu semble observer chaque visiteur.",
+    "securite": {
+      "physique": [
+        "Goules garde-du-corps anciennement militaires",
+        "Système d’alarme moderne camouflé dans les moulures",
+        "Salle forte blindée sous biométrie et sceaux de Présence Toreador"
+      ],
+      "occulte": [
+        "Capteurs d’Auspex intégrés aux cadres",
+        "Rituel de prévenance rendant le lieu insupportable aux prédateurs violents",
+        "Dispositif de brouillage magique empêchant l’intrusion des illusions"
+      ]
+    },
+    "zones_secretes": {
+      "atelier_souterrain": "Espace de restauration et de falsification d'œuvres, équipé d’outils modernes et de techniques traditionnelles.",
+      "salle_de_vente_privee": "Pièce réservée aux transactions illégales et aux négociations entre clans.",
+      "chambre_interdite": "Salle scellée contenant des oeuvres maudites, objets sensibles à l’Auspex et pièces occultes de grande valeur."
+    },
+    "rumeurs_et_secrets": [
+      "Une statue antique pleurerait du sang lors des crises de l’Anomalie.",
+      "Un Modigliani exposé ici se réarrange seul la nuit.",
+      "Jean-Valentin entretient un accord tacite avec un voleur malkavian pour récupérer certaines pièces.",
+      "La galerie serait inscrite dans un réseau d’influence reliant les Toreador européens."
+    ]
+  },
+  "created_at": "2026-02-24 23:55:00+00",
+  "image_url": null,
+  "adresse": "Rue des Martyrs, 75009 Paris",
+  "latitude": 48.8822,
+  "longitude": 2.3384,
+  "connu": true,
+  "clan_overrides": []
+}

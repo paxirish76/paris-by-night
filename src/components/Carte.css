@@ -882,6 +882,25 @@
 /* ── Remove old overlay/drawer styles if they conflict ── */
 .ld-overlay { display: none; }
 .ld-drawer  { display: none; }
+
+/* ── Utilité list ── */
+.ld-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ld-list-item {
+  font-size: 0.85rem;
+  color: #c8b89a;
+  line-height: 1.5;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--clan-color, #d4af37);
+  border-radius: 0 4px 4px 0;
+}
 /* =============================================
    MINI POPUP MARKER (lmp-*)
    ============================================= */
