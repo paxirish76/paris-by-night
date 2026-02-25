@@ -67,23 +67,28 @@ function RelChip({ rel, clans, onClick }) {
   );
 }
 
-/* ── Members list (for clans without a genealogy tree) ── */
-function MembresList({ clanId, couleur, onNavigateToPersonnage }) {
+/* ── Members list ────────────────────────────────────── */
+function MembresList({ clanId, couleur, onNavigateToPersonnage, excludeHorsStructure = false }) {
   const [membres, setMembres] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
+    let query = supabase
       .from('personnages')
       .select('id, nom, generation, roles')
       .eq('clan_id', clanId)
       .eq('ghost', false)
-      .order('generation', { ascending: true })
-      .then(({ data }) => {
-        setMembres(data ?? []);
-        setLoading(false);
-      });
-  }, [clanId]);
+      .order('generation', { ascending: true });
+
+    if (excludeHorsStructure) {
+      query = query.not('hors_structure', 'eq', true);
+    }
+
+    query.then(({ data }) => {
+      setMembres(data ?? []);
+      setLoading(false);
+    });
+  }, [clanId, excludeHorsStructure]);
 
   if (loading) return <p className="cd-membres-loading">Chargement…</p>;
   if (membres.length === 0) return <p className="cd-membres-empty">Aucun membre répertorié.</p>;
@@ -112,10 +117,59 @@ function MembresList({ clanId, couleur, onNavigateToPersonnage }) {
   );
 }
 
+/* ── Hors-structure list (grand clan, présence isolée) ── */
+function HorsStructureList({ clanId, couleur, onNavigateToPersonnage }) {
+  const [membres, setMembres] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from('personnages')
+      .select('id, nom, generation, roles')
+      .eq('clan_id', clanId)
+      .eq('ghost', false)
+      .eq('hors_structure', true)
+      .order('generation', { ascending: true })
+      .then(({ data }) => {
+        setMembres(data ?? []);
+        setLoading(false);
+      });
+  }, [clanId]);
+
+  if (loading || membres.length === 0) return null;
+
+  return (
+    <div className="cd-hors-structure">
+      <h2 className="cd-section-title" style={{ marginTop: '2rem' }}>Présences isolées</h2>
+      <ul className="cd-membres-list">
+        {membres.map(p => {
+          const roles = safeArray(p.roles);
+          const roleLabel = roles.length > 0 ? roles[0] : null;
+          return (
+            <li key={p.id} className="cd-membre-item">
+              <button
+                className="cd-membre-btn"
+                style={{ '--clan-color': couleur }}
+                onClick={() => onNavigateToPersonnage(p.id)}
+              >
+                <span className="cd-membre-gen">GÉN. {p.generation ?? '?'}</span>
+                <span className="cd-membre-nom">{p.nom}</span>
+                {roleLabel && <span className="cd-membre-role">{roleLabel}</span>}
+                <span className="cd-membre-arrow">→</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 /* ── Detail view ─────────────────────────────────────── */
 function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo, playerMode = false }) {
   const buts = safeArray(clan.buts);
   const relations = safeArray(clan.relation);
+  const isMineur = clan.clan_mineur === true;
 
   return (
     <div className="cd-root">
@@ -123,8 +177,8 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
         ← Retour aux clans
       </button>
 
-      {/* Navigation arrows */}
-      {total > 1 && (
+      {/* Navigation arrows — clans mineurs exclus du roster */}
+      {!isMineur && total > 1 && (
         <div className="pd-clan-nav">
           <button
             className="pd-clan-nav-arrow"
@@ -153,17 +207,29 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
           <ClanLogo url={clan.icon_url} nom={clan.nom} couleur={clan.couleur} size={120} />
         </div>
         <div className="cd-hero-info">
-          <p className="cd-hero-eyebrow">Clan</p>
+          <p className="cd-hero-eyebrow">{isMineur ? 'Présence isolée' : 'Clan'}</p>
           <h1 className="cd-hero-name">{clan.nom}</h1>
-          <div className="cd-hero-pop">
-            <span className="cd-hero-pop-label">Population</span>
-            <span className="cd-hero-pop-val" style={{ color: clan.couleur }}>
-              {clan.population}
-            </span>
-          </div>
+          {!isMineur && (
+            <div className="cd-hero-pop">
+              <span className="cd-hero-pop-label">Population</span>
+              <span className="cd-hero-pop-val" style={{ color: clan.couleur }}>
+                {clan.population}
+              </span>
+            </div>
+          )}
         </div>
         <div className="cd-hero-bar" style={{ background: clan.couleur }} />
       </div>
+
+      {/* Clans mineurs sans description : texte générique */}
+      {isMineur && !clan.description && (
+        <section className="cd-section">
+          <p className="cd-desc cd-desc-mineur">
+            Ce vampire évolue en marge des structures claniques officielles de Paris.
+            Ses allégeances et ses desseins lui appartiennent.
+          </p>
+        </section>
+      )}
 
       {clan.description && (
         <section className="cd-section">
@@ -186,7 +252,8 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
         </section>
       )}
 
-      {CLANS_AVEC_ARBRE.includes(clan.id) ? (
+      {/* Membres */}
+      {(!isMineur && CLANS_AVEC_ARBRE.includes(clan.id)) ? (
         <section className="cd-section">
           {!playerMode && (
             <button
@@ -196,6 +263,11 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
               Arbre généalogique →
             </button>
           )}
+          <HorsStructureList
+            clanId={clan.id}
+            couleur={clan.couleur}
+            onNavigateToPersonnage={onNavigateToPersonnage}
+          />
         </section>
       ) : (
         <section className="cd-section">
@@ -204,6 +276,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
             clanId={clan.id}
             couleur={clan.couleur}
             onNavigateToPersonnage={onNavigateToPersonnage}
+            excludeHorsStructure={!isMineur}
           />
         </section>
       )}
@@ -222,6 +295,82 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
             ))}
           </div>
         </section>
+      )}
+    </div>
+  );
+}
+
+/* ── Volet AUTRES — Vue MJ ───────────────────────────── */
+function AutresMJ({ clansMineurs, allClans, onSelectClan, onNavigateToPersonnage }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="ct-autres-root">
+      <button
+        className={`ct-autres-toggle ${open ? 'ct-autres-toggle--open' : ''}`}
+        onClick={() => setOpen(o => !o)}
+      >
+        <span className="ct-autres-toggle-label">Autres présences</span>
+        <span className="ct-autres-toggle-icons">
+          {clansMineurs.map(c => (
+            <span key={c.id} className="ct-autres-icon-wrap" style={{ '--clan-color': c.couleur }}>
+              <ClanLogo url={c.icon_url} nom={c.nom} couleur={c.couleur} size={28} />
+            </span>
+          ))}
+        </span>
+        <span className="ct-autres-toggle-chevron">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="ct-autres-body">
+          <p className="ct-autres-intro">
+            Quelques vampires étrangers aux clans établis à Paris ont élu domicile dans la ville,
+            chacun poursuivant ses propres desseins en marge de la politique des grandes maisons.
+          </p>
+          <div className="ct-autres-clans">
+            {clansMineurs.map(clan => (
+              <button
+                key={clan.id}
+                className="ct-autres-clan-row"
+                style={{ '--clan-color': clan.couleur }}
+                onClick={() => onSelectClan(clan)}
+              >
+                <span className="ct-autres-clan-logo">
+                  <ClanLogo url={clan.icon_url} nom={clan.nom} couleur={clan.couleur} size={36} />
+                </span>
+                <span className="ct-autres-clan-nom">{clan.nom}</span>
+                <span className="ct-autres-clan-arrow">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Volet AUTRES — Vue joueurs ──────────────────────── */
+function AutresJoueurs() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="ct-autres-root">
+      <button
+        className={`ct-autres-toggle ${open ? 'ct-autres-toggle--open' : ''}`}
+        onClick={() => setOpen(o => !o)}
+      >
+        <span className="ct-autres-toggle-label">Autres présences</span>
+        <span className="ct-autres-toggle-chevron">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="ct-autres-body">
+          <p className="ct-autres-lore">
+            Paris n'appartient pas qu'aux grandes maisons. Quelques vampires d'autres horizons
+            ont élu domicile dans la ville, chacun poursuivant ses propres desseins.
+            Leurs allégeances et leurs noms restent, pour l'heure, inconnus.
+          </p>
+        </div>
       )}
     </div>
   );
@@ -246,9 +395,12 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
       });
   }, []);
 
-  const maxPop = Math.max(...clans.map(c => c.population ?? 0), 1);
+  const clansNormaux = clans.filter(c => !c.clan_mineur);
+  const clansMineurs = clans.filter(c => c.clan_mineur);
 
-  const sorted = [...clans].sort((a, b) => {
+  const maxPop = Math.max(...clansNormaux.map(c => c.population ?? 0), 1);
+
+  const sorted = [...clansNormaux].sort((a, b) => {
     let va = a[sortKey] ?? '';
     let vb = b[sortKey] ?? '';
     if (sortKey === 'population') { va = +va; vb = +vb; }
@@ -270,8 +422,8 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
     return <div className="ct-loading">Chargement des clans…</div>;
   }
 
-  // Roster for navigation
-  const clanRoster = [...clans].sort((a, b) =>
+  // Roster de navigation (clans normaux uniquement)
+  const clanRoster = [...clansNormaux].sort((a, b) =>
     String(a.nom).toLowerCase().localeCompare(String(b.nom).toLowerCase(), 'fr')
   );
   const currentIndex = clanRoster.findIndex(c => c.id === selectedClan?.id);
@@ -281,6 +433,7 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
   };
 
   if (selectedClan) {
+    const isMineur = selectedClan.clan_mineur === true;
     return (
       <ClanDetail
         clan={selectedClan}
@@ -292,8 +445,8 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
         }}
         onNavigateToGenealogie={onNavigateToGenealogie}
         onNavigateToPersonnage={onNavigateToPersonnage}
-        currentIndex={currentIndex}
-        total={clanRoster.length}
+        currentIndex={isMineur ? -1 : currentIndex}
+        total={isMineur ? 0 : clanRoster.length}
         onGoTo={handleGoTo}
         playerMode={playerMode}
       />
@@ -305,8 +458,8 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
       <div className="ct-header">
         <h1 className="ct-title">Clans de Paris</h1>
         <p className="ct-subtitle">
-          {clans.filter(c => c.population > 0).length} clans actifs ·{' '}
-          {clans.reduce((s, c) => s + (c.population ?? 0), 0)} vampires recensés
+          {clansNormaux.filter(c => c.population > 0).length} clans actifs ·{' '}
+          {clansNormaux.reduce((s, c) => s + (c.population ?? 0), 0)} vampires recensés
         </p>
       </div>
 
@@ -349,6 +502,18 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
           ))}
         </tbody>
       </table>
+
+      {/* Volet AUTRES — visible seulement si des clans mineurs existent */}
+      {clansMineurs.length > 0 && (
+        playerMode
+          ? <AutresJoueurs />
+          : <AutresMJ
+              clansMineurs={clansMineurs}
+              allClans={clans}
+              onSelectClan={setSelectedClan}
+              onNavigateToPersonnage={onNavigateToPersonnage}
+            />
+      )}
     </div>
   );
 }
