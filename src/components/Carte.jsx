@@ -185,6 +185,13 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
             <span>Secrets MJ</span>
           </div>
 
+          {/* Présentation générale */}
+          {desc.presentation_generale && (
+            <Section id="presentation" icon="📖" label="Présentation">
+              <p className="ld-text">{desc.presentation_generale}</p>
+            </Section>
+          )}
+
           {/* Ambiance */}
           {desc.ambiance && (
             <Section id="ambiance" icon="🌑" label="Ambiance">
@@ -192,22 +199,68 @@ const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
             </Section>
           )}
 
-          {/* Utilité */}
-          {desc.utilite && (
-            <Section id="utilite" icon="⚜️" label="Utilité">
-              <p className="ld-text">{desc.utilite}</p>
+          {/* Tenanciers */}
+          {desc.tenanciers && (
+            <Section id="tenanciers" icon="🧛" label="Tenanciers">
+              {typeof desc.tenanciers === 'string'
+                ? <p className="ld-text">{desc.tenanciers}</p>
+                : Object.entries(desc.tenanciers).map(([k, v]) => (
+                    <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
+                      <div className="ld-secret-key">{k}</div>
+                      <div className="ld-secret-value">{v}</div>
+                    </div>
+                  ))
+              }
             </Section>
           )}
 
-          {/* Sécurité occulte */}
+          {/* Utilité — string ou array */}
+          {desc.utilite && (
+            <Section id="utilite" icon="⚜️" label="Utilité">
+              {Array.isArray(desc.utilite)
+                ? <ul className="ld-list">
+                    {desc.utilite.map((item, i) => (
+                      <li key={i} className="ld-list-item">{item}</li>
+                    ))}
+                  </ul>
+                : <p className="ld-text">{desc.utilite}</p>
+              }
+            </Section>
+          )}
+
+          {/* Sécurité occulte — string ou objet */}
           {(desc.securite_occulte || desc.gardien_special) && (
             <Section id="securite" icon="🔒" label="Sécurité Occulte">
-              {desc.securite_occulte && <p className="ld-text">{desc.securite_occulte}</p>}
+              {desc.securite_occulte && (
+                typeof desc.securite_occulte === 'string'
+                  ? <p className="ld-text">{desc.securite_occulte}</p>
+                  : Object.entries(desc.securite_occulte).map(([k, v]) => (
+                      <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
+                        <div className="ld-secret-key">{k}</div>
+                        <div className="ld-secret-value">{v}</div>
+                      </div>
+                    ))
+              )}
               {desc.gardien_special && (
                 <p className="ld-text ld-gardien">
                   <strong>⚔️ Gardien :</strong> {desc.gardien_special}
                 </p>
               )}
+            </Section>
+          )}
+
+          {/* Arrière-boutique */}
+          {desc.arriere_boutique && (
+            <Section id="arriere_boutique" icon="🚪" label="Arrière-boutique">
+              {typeof desc.arriere_boutique === 'string'
+                ? <p className="ld-text">{desc.arriere_boutique}</p>
+                : Object.entries(desc.arriere_boutique).map(([k, v]) => (
+                    <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
+                      <div className="ld-secret-key">{k}</div>
+                      <div className="ld-secret-value">{v}</div>
+                    </div>
+                  ))
+              }
             </Section>
           )}
 
@@ -373,16 +426,15 @@ const Carte = ({
     bourgsFusionnesGeoJSON.features.forEach(feature => {
       const bourg = bourgsMap[feature.properties.bourg_id];
       if (!bourg) return;
-      if (selectedClan === 'aucun') return;   // ← filtre "Aucun" : pas de polygones
       if (selectedClan && bourg.clan_dominant_id !== selectedClan) return;
       const clan    = clansMap[bourg.clan_dominant_id];
       const couleur = clan?.couleur || '#cccccc';
       const layer   = L.geoJSON(feature, {
         pane: 'bourgsPane',
-        style: { fillColor: couleur, fillOpacity: 0.22, color: couleur, weight: 2, opacity: 0.8 },
+        style: { fillColor: couleur, fillOpacity: 0.35, color: couleur, weight: 3, opacity: 1 },
         onEachFeature: (feat, l) => {
-          l.on('mouseover', () => l.setStyle({ fillOpacity: 0.42, weight: 3 }));
-          l.on('mouseout',  () => l.setStyle({ fillOpacity: 0.22, weight: 2 }));
+          l.on('mouseover', () => l.setStyle({ fillOpacity: 0.6, weight: 4 }));
+          l.on('mouseout',  () => l.setStyle({ fillOpacity: 0.35, weight: 3 }));
           l.on('click', () => setSelectedBourg(bourg));
           l.bindPopup(`
             <div class="lmp-root" style="--pc:${couleur}">
@@ -479,9 +531,7 @@ const Carte = ({
 
     const clansMap    = Object.fromEntries(clans.map(c => [c.id, c]));
     const lieuxVisiblesParMode = playerMode ? lieux.filter(l => l.connu || (viewerClan && Array.isArray(l.clan_overrides) && l.clan_overrides.includes(viewerClan))) : lieux;
-    const lieuxFiltres = (selectedClan && selectedClan !== 'aucun')
-      ? lieuxVisiblesParMode.filter(l => l.clan_id === selectedClan)
-      : lieuxVisiblesParMode;
+    const lieuxFiltres = selectedClan ? lieuxVisiblesParMode.filter(l => l.clan_id === selectedClan) : lieuxVisiblesParMode;
 
     lieuxFiltres.forEach(lieu => {
       if (!lieu.latitude || !lieu.longitude) return;
@@ -535,8 +585,8 @@ const Carte = ({
 
   // ── Stats ─────────────────────────────────────────────────────────────────
   const handleClanFilter  = (id) => setSelectedClan(id === selectedClan ? null : id);
-  const bourgsVisibles    = (selectedClan && selectedClan !== 'aucun') ? bourgs.filter(b => b.clan_dominant_id === selectedClan) : bourgs;
-  const lieuxVisibles     = (selectedClan && selectedClan !== 'aucun') ? lieux.filter(l => l.clan_id === selectedClan) : lieux;
+  const bourgsVisibles    = selectedClan ? bourgs.filter(b => b.clan_dominant_id === selectedClan) : bourgs;
+  const lieuxVisibles     = selectedClan ? lieux.filter(l => l.clan_id === selectedClan) : lieux;
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -561,9 +611,6 @@ const Carte = ({
               <div className="filter-buttons">
                 <button className={`filter-btn ${!selectedClan ? 'active' : ''}`} onClick={() => setSelectedClan(null)}>
                   <span className="clan-dot" style={{ background: '#c0c0c0' }} /> Tous
-                </button>
-                <button className={`filter-btn ${selectedClan === 'aucun' ? 'active' : ''}`} onClick={() => setSelectedClan('aucun')}>
-                  <span className="clan-dot" style={{ background: '#444', border: '2px dashed #888' }} /> Aucun territoire
                 </button>
                 {clans.map(clan => (
                   <button key={clan.id}
