@@ -335,12 +335,25 @@
 }
 .ld-field--mj:hover { border-color: rgba(255,140,0,0.35); }
 
-.ld-field--hidden { opacity: 0.45; }
+.ld-field--hidden { opacity: 1; }
+.ld-field--hidden .ld-field-header {
+  background: rgba(255,255,255,0.03);
+}
+.ld-field--hidden .ld-field-label {
+  color: #888;
+}
 .ld-field--hidden .ld-field-label::after {
-  content: ' (masqué)';
-  font-size: 0.7em;
-  color: #555;
+  content: ' — masqué';
+  font-size: 0.75em;
+  color: #dc143c;
   font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+.ld-field--hidden .ld-field-content {
+  color: #666;
 }
 
 .ld-field-header {
@@ -372,14 +385,24 @@
   border: 1px solid;
   border-radius: 3px;
   cursor: pointer;
-  padding: 1px 6px;
-  font-size: 0.75rem;
+  padding: 2px 8px;
+  font-size: 0.8rem;
   line-height: 1.6;
-  transition: opacity 0.15s;
+  transition: all 0.15s;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
 }
-.ld-visibility-toggle.on  { border-color: rgba(76,175,80,0.5); color: #4caf50; }
-.ld-visibility-toggle.off { border-color: #333; color: #444; }
-.ld-visibility-toggle:hover { opacity: 0.75; }
+.ld-visibility-toggle.on  {
+  border-color: #4caf50;
+  color: #4caf50;
+  background: rgba(76,175,80,0.1);
+}
+.ld-visibility-toggle.off {
+  border-color: #dc143c;
+  color: #dc143c;
+  background: rgba(220,20,60,0.08);
+}
+.ld-visibility-toggle:hover { opacity: 0.8; }
 
 .ld-mj-badge {
   font-family: 'Cinzel', serif;

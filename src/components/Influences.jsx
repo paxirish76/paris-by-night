@@ -334,7 +334,7 @@ export default function Influences() {
   useEffect(() => {
     Promise.all([
       supabase.from('influences').select('*'),
-      supabase.from('clans').select('id, nom, couleur, icon_url').neq('id', 'mortel').order('nom'),
+      supabase.from('clans').select('id, nom, couleur, icon_url').neq('id', 'mortel').not('id', 'in', '("assamite","giovanni","tzimisce")').order('nom'),
     ]).then(([{ data: inf }, { data: cl }]) => {
       setInfluences(inf ?? []);
       setClans(cl ?? []);
