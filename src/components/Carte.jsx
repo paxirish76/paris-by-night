@@ -3,6 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './Carte.css';
 import { supabase } from '../lib/supabase';
+import LieuDetail from './LieuDetail';
 
 // ─── Supabase storage bucket URL ──────────────────────────────────────────────
 const BUCKET_URL = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/public/lieux';
@@ -59,258 +60,6 @@ const LieuImage = ({ src, alt, clanColor }) => {
   );
 };
 
-// ─── Fullscreen LieuDrawer ────────────────────────────────────────────────────
-const LieuDrawer = ({ lieu, clans, lieux, onClose, onLieuClick }) => {
-  const [secretsRevealed, setSecretsRevealed] = useState(false);
-  const [openSections, setOpenSections] = useState({ ambiance: true, utilite: true });
-
-  useEffect(() => {
-    setSecretsRevealed(false);
-    setOpenSections({ ambiance: true, utilite: true });
-  }, [lieu?.id]);
-
-  // Lock body scroll when open
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, []);
-
-  // Close on Escape
-  useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose]);
-
-  if (!lieu) return null;
-
-  const clanObj   = clans.find(c => c.id === lieu.clan_id);
-  const clanColor = clanObj?.couleur || '#d4af37';
-  const clanNom   = clanObj?.nom || lieu.clan_id;
-
-  let desc = {};
-  try {
-    desc = typeof lieu.description === 'string'
-      ? JSON.parse(lieu.description)
-      : (lieu.description || {});
-  } catch (e) { desc = {}; }
-
-  const lieuxDuBourg = lieux.filter(l => l.bourg_id === lieu.bourg_id && l.id !== lieu.id);
-
-  const toggleSection = (key) =>
-    setOpenSections(s => ({ ...s, [key]: !s[key] }));
-
-  const Section = ({ id, icon, label, children, className = '' }) => (
-    <div className={`ld-section ${openSections[id] ? 'open' : ''} ${className}`}>
-      <div className="ld-section-header" onClick={() => toggleSection(id)}>
-        <div className="ld-section-title"><span>{icon}</span> {label}</div>
-        <span className="ld-chevron">▼</span>
-      </div>
-      <div className="ld-section-body">
-        <div className="ld-section-content">{children}</div>
-      </div>
-    </div>
-  );
-
-  const protection = lieu.protection || 0;
-  const isElysium  = (lieu.statut || '').toLowerCase().includes('elysium');
-
-  return (
-    <div className="ld-fullscreen" style={{ '--clan-color': clanColor }}>
-      {/* ── Backdrop ── */}
-      <div className="ld-backdrop" onClick={onClose} />
-
-      {/* ── Panel ── */}
-      <div className="ld-panel">
-
-        {/* ── Close button ── */}
-        <button className="ld-close-btn" onClick={onClose} aria-label="Fermer">
-          <span>✕</span>
-        </button>
-
-        {/* ── Hero: 2 images ── */}
-        <div className="ld-hero">
-          <LieuImage
-            src={getLieuImageUrl(lieu.id, 1)}
-            alt={`${lieu.nom} — vue 1`}
-            clanColor={clanColor}
-          />
-          <LieuImage
-            src={getLieuImageUrl(lieu.id, 2)}
-            alt={`${lieu.nom} — vue 2`}
-            clanColor={clanColor}
-          />
-
-          {/* Gradient overlay on hero */}
-          <div className="ld-hero-gradient" />
-
-          {/* Title overlay on hero */}
-          <div className="ld-hero-title">
-            <div className="ld-hero-statut">
-              <span className="ld-statut-dot" />
-              {lieu.statut || 'Lieu'}
-              {isElysium && <span className="ld-elysium-badge">◆ Elysium</span>}
-            </div>
-            <h1 className="ld-hero-nom">{lieu.nom}</h1>
-            <div className="ld-hero-meta">
-              <span className="ld-clan-badge" style={{ background: `${clanColor}22`, borderColor: `${clanColor}66`, color: clanColor }}>
-                {clanNom}
-              </span>
-              {lieu.bourg?.nom && (
-                <span className="ld-bourg-badge">🗺️ {lieu.bourg.nom}</span>
-              )}
-              {lieu.adresse && (
-                <span className="ld-adresse-badge">📍 {lieu.adresse}</span>
-              )}
-            </div>
-            {protection > 0 && (
-              <div className="ld-protection">
-                {[1,2,3,4,5,6].map(i => (
-                  <span key={i} className={`ld-prot-star${i <= protection ? ' filled' : ''}`}>◆</span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ── Body ── */}
-        <div className="ld-body">
-
-          {/* Secrets toggle */}
-          <div
-            className={`ld-secrets-toggle ${secretsRevealed ? 'revealed' : ''}`}
-            onClick={() => setSecretsRevealed(v => !v)}
-          >
-            <div className="ld-toggle-switch"><div className="ld-toggle-knob" /></div>
-            <span>Secrets MJ</span>
-          </div>
-
-          {/* Présentation générale */}
-          {desc.presentation_generale && (
-            <Section id="presentation" icon="📖" label="Présentation">
-              <p className="ld-text">{desc.presentation_generale}</p>
-            </Section>
-          )}
-
-          {/* Ambiance */}
-          {desc.ambiance && (
-            <Section id="ambiance" icon="🌑" label="Ambiance">
-              <p className="ld-text">{desc.ambiance}</p>
-            </Section>
-          )}
-
-          {/* Tenanciers */}
-          {desc.tenanciers && (
-            <Section id="tenanciers" icon="🧛" label="Tenanciers">
-              {typeof desc.tenanciers === 'string'
-                ? <p className="ld-text">{desc.tenanciers}</p>
-                : Object.entries(desc.tenanciers).map(([k, v]) => (
-                    <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
-                      <div className="ld-secret-key">{k}</div>
-                      <div className="ld-secret-value">{v}</div>
-                    </div>
-                  ))
-              }
-            </Section>
-          )}
-
-          {/* Utilité — string ou array */}
-          {desc.utilite && (
-            <Section id="utilite" icon="⚜️" label="Utilité">
-              {Array.isArray(desc.utilite)
-                ? <ul className="ld-list">
-                    {desc.utilite.map((item, i) => (
-                      <li key={i} className="ld-list-item">{item}</li>
-                    ))}
-                  </ul>
-                : <p className="ld-text">{desc.utilite}</p>
-              }
-            </Section>
-          )}
-
-          {/* Sécurité occulte — string ou objet */}
-          {(desc.securite_occulte || desc.gardien_special) && (
-            <Section id="securite" icon="🔒" label="Sécurité Occulte">
-              {desc.securite_occulte && (
-                typeof desc.securite_occulte === 'string'
-                  ? <p className="ld-text">{desc.securite_occulte}</p>
-                  : Object.entries(desc.securite_occulte).map(([k, v]) => (
-                      <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
-                        <div className="ld-secret-key">{k}</div>
-                        <div className="ld-secret-value">{v}</div>
-                      </div>
-                    ))
-              )}
-              {desc.gardien_special && (
-                <p className="ld-text ld-gardien">
-                  <strong>⚔️ Gardien :</strong> {desc.gardien_special}
-                </p>
-              )}
-            </Section>
-          )}
-
-          {/* Arrière-boutique */}
-          {desc.arriere_boutique && (
-            <Section id="arriere_boutique" icon="🚪" label="Arrière-boutique">
-              {typeof desc.arriere_boutique === 'string'
-                ? <p className="ld-text">{desc.arriere_boutique}</p>
-                : Object.entries(desc.arriere_boutique).map(([k, v]) => (
-                    <div key={k} className="ld-secret-item" style={{ marginBottom: '8px' }}>
-                      <div className="ld-secret-key">{k}</div>
-                      <div className="ld-secret-value">{v}</div>
-                    </div>
-                  ))
-              }
-            </Section>
-          )}
-
-          {/* Autres lieux du bourg */}
-          {lieuxDuBourg.length > 0 && (
-            <Section id="bourg_lieux" icon="🏛️" label={`Autres lieux du bourg (${lieuxDuBourg.length})`}>
-              <div className="ld-lieux-list">
-                {lieuxDuBourg.map(l => {
-                  const lClan  = clans.find(c => c.id === l.clan_id);
-                  const lColor = lClan?.couleur || '#d4af37';
-                  const isElys = (l.statut || '').toLowerCase().includes('elysium');
-                  return (
-                    <button key={l.id} className="ld-lieu-link" onClick={() => onLieuClick(l)}>
-                      <span
-                        className={`ld-lieu-shape ${isElys ? 'diamond' : 'circle'}`}
-                        style={{ background: lColor, boxShadow: `0 0 5px ${lColor}55` }}
-                      />
-                      <div className="ld-lieu-link-text">
-                        <span className="ld-lieu-link-nom" style={{ color: lColor }}>{l.nom}</span>
-                        {l.statut && <span className="ld-lieu-link-statut">{l.statut}</span>}
-                      </div>
-                      <span className="ld-lieu-arrow">→</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </Section>
-          )}
-
-          {/* Secrets MJ */}
-          {secretsRevealed && desc.secrets_mj && Object.keys(desc.secrets_mj).length > 0 && (
-            <Section id="secrets" icon="🔴" label="Secrets MJ" className="ld-secrets-section">
-              <div className="ld-secret-lock">🔒 Réservé au Maître du Jeu</div>
-              <div className="ld-secret-items">
-                {Object.entries(desc.secrets_mj).map(([k, v]) => (
-                  <div key={k} className="ld-secret-item">
-                    <div className="ld-secret-key">{k}</div>
-                    <div className="ld-secret-value">{v}</div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-          )}
-
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // ─── Main Carte ───────────────────────────────────────────────────────────────
 const Carte = ({
   targetLieuId       = null,
@@ -327,7 +76,7 @@ const Carte = ({
   const [clans, setClans]                           = useState([]);
   const [selectedBourg, setSelectedBourg]           = useState(null);
   const [selectedClan, setSelectedClan]             = useState(null);
-  const [selectedLieu, setSelectedLieu]             = useState(null);
+  const [selectedLieuId, setSelectedLieuId]           = useState(null);
   const [loading, setLoading]                       = useState(false);
   const [error, setError]                           = useState(null);
   const [contoursGeoJSON, setContoursGeoJSON]       = useState(null);
@@ -465,7 +214,7 @@ const Carte = ({
     const lieu = lieux.find(l => l.id === targetLieuId);
     if (!lieu) return;
 
-    setSelectedLieu(lieu);
+    setSelectedLieuId(lieu.id);
 
     if (mapInstanceRef.current && lieu.latitude && lieu.longitude) {
       mapInstanceRef.current.flyTo([lieu.latitude, lieu.longitude], 15, { duration: 0.8 });
@@ -517,7 +266,7 @@ const Carte = ({
   // ── Expose helpers to window for Leaflet popup buttons ────────────────────
   useEffect(() => {
     window.__lieuById       = (id) => lieux.find(l => l.id === id);
-    window.__openLieuDrawer = (lieu) => { if (lieu) setSelectedLieu(lieu); };
+    window.__openLieuDrawer = (lieu) => { if (lieu) setSelectedLieuId(lieu.id); };
     window.__openBourgDetail = (id) => { if (onNavigateToBourg) onNavigateToBourg(id); };
   }, [lieux, onNavigateToBourg]);
 
@@ -575,7 +324,7 @@ const Carte = ({
 
   // ── Navigate to lieu (from drawer list) ──────────────────────────────────
   const handleLieuClick = (lieu) => {
-    setSelectedLieu(lieu);
+    setSelectedLieuId(lieu.id);
     if (!mapInstanceRef.current || !lieu.latitude) return;
     mapInstanceRef.current.flyTo([lieu.latitude, lieu.longitude], 15, { duration: 0.8 });
     setTimeout(() => {
@@ -651,15 +400,16 @@ const Carte = ({
         </div>
       )}
 
-      {/* ── Fullscreen Lieu Detail — overlays everything ── */}
-      {selectedLieu && (
-        <LieuDrawer
-          lieu={selectedLieu}
-          clans={clans}
-          lieux={lieux}
-          onClose={() => setSelectedLieu(null)}
-          onLieuClick={handleLieuClick}
-        />
+      {/* ── Lieu Detail — overlays everything ── */}
+      {selectedLieuId && (
+        <div className="carte-lieu-detail-overlay">
+          <LieuDetail
+            lieuId={selectedLieuId}
+            onClose={() => setSelectedLieuId(null)}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
+          />
+        </div>
       )}
     </div>
   );

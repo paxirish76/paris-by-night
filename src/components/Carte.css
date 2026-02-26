@@ -1011,3 +1011,17 @@
     padding: 16px 16px 24px;
   }
 }
+
+/* ── LieuDetail overlay sur la carte ───────────────────────────────────── */
+.carte-lieu-detail-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #0d0a0b 0%, #1a1517 100%);
+}
+
+.carte-lieu-detail-overlay .ld-page {
+  min-height: 100%;
+}
+
