@@ -141,4 +141,62 @@
   "longitude": 2.3384,
   "connu": true,
   "clan_overrides": []
+},
+{
+  "id": "etude_de_montfaucon",
+  "nom": "Étude de Montfaucon & Associés",
+  "bourg_id": "pouvoir",
+  "clan_id": "ventrue",
+  "statut": "Cabinet Notarial / Centre du Réseau de Chantage Ventrue",
+  "protection": 5,
+  "description": {
+    "presentation_generale": "Cabinet notarial fondé en 1847, niché entre le quai d'Orsay et les hôtels particuliers du 7e arrondissement. Façade irréprochable d'une étude centenaire gérant patrimoines, successions et actes officiels pour les grandes familles parisiennes. En réalité, c'est le nœud central du réseau de surveillance et de chantage que les Ventrue exercent sur les élites mortelles de la République.",
+    "tenanciers": {
+      "principal": "Armand, Ventrue, Bourgmestre du Cœur Institutionnel (7e-8e). Apparaît sous l'identité de Maître Henri de Montfaucon, notaire associé senior, spécialiste en droit successoral et patrimoniaux. Sa maîtrise du droit mérovingien, carolingien et moderne fait de lui une référence absolue dans les cercles juridiques parisiens.",
+      "associe": "Séraphine Lacroix, goule de haute formation juridique, Premier clerc de l'étude et mémoire administrative des dossiers sensibles. Connaît les secrets de plusieurs centaines de familles de l'élite française.",
+      "archiviste": "Une seconde goule, ancien conseiller d'État reconverti, gère les archives numériques et supervise la transmission des informations au réseau ventrue."
+    },
+    "activites_officielles": [
+      "Gestion de successions et actes notariaux pour les grandes fortunes parisiennes",
+      "Rédaction de contrats confidentiels pour institutions publiques et cabinets ministériels",
+      "Conseil juridique aux ambassades et délégations étrangères installées dans le 7e",
+      "Gestion de fonds patrimoniaux et de fiducies pour familles aristocratiques",
+      "Dépôt légal de testaments et documents sensibles sous sceau notarial"
+    ],
+    "activites_cachees": [
+      "Constitution et archivage de dossiers compromettants sur hauts fonctionnaires, ministres, magistrats et officiers supérieurs",
+      "Centralisation des informations transmises par les goules infiltrées dans les cabinets ministériels",
+      "Monnayage indirect de l'influence via chantage dissimulé en 'conseil juridique discret'",
+      "Manipulation de successions pour orienter des fortunes mortelles vers des intérêts ventrue",
+      "Transmission d'informations d'État à Alexandre, contournant les rapports officiels à Villon",
+      "Coordination avec les Nosferatu pour l'achat et l'échange d'informations sensibles"
+    ],
+    "ambiance": "Un hôtel particulier haussmannien de trois étages, façade en pierre de taille ornée de discrets motifs de balance et de feuilles d'acanthes. L'intérieur est d'un classicisme glacial : parquet Versailles, boiseries sombres, luminaires en bronze, odeur de vieux papier et d'encaustique. Les horloges y semblent avancer plus lentement. Les visiteurs humains ressortent invariablement avec le sentiment d'avoir signé quelque chose de plus grave que prévu.",
+    "securite_occulte": {
+      "aura_domination": "Un rituel permanent instillé dans les murs par Armand génère une légère disposition à la compliance chez les visiteurs mortels — ils tendent à accepter les conditions qu'on leur soumet sans les relire.",
+      "gardiens_lies": "Deux anciens officiers de la DGSE, goulisés, servent d'agents de sécurité. Leur loyauté est absolue et irréversible.",
+      "archives_protegees": "La salle des archives est scellée par un rituel Tremere sous contrat — seul Armand et Séraphine peuvent l'ouvrir sans déclencher une alerte au Chantry de la Sorbonne.",
+      "reseau_de_surveillance": "Des capteurs et micros dissimulés dans les salons permettent d'enregistrer les conversations des visiteurs à leur insu, alimentant le corpus de chantage.",
+      "protocole_efface": "En cas de compromission, Armand peut activer un protocole de destruction sélective des archives physiques — mais les copies numériques cryptées survivent dans un serveur offshore géré par les Nosferatu."
+    },
+    "arriere_boutique": {
+      "description": "Un sous-sol accessible par un escalier dissimulé derrière la bibliothèque du bureau d'Armand. Plafonds voûtés en pierre, humidité froide, éclairage à luminosité réglable.",
+      "salle_des_dossiers": "Rangées de classeurs physiques et terminaux sécurisés. Chaque dossier est indexé par un nom de code inspiré de la numismatique romaine. On y trouve des aveux, des photos, des relevés bancaires, des transcriptions d'appels, des enregistrements vidéo.",
+      "chambre_de_deliberation": "Une pièce aux murs épais, table ovale en ébène, six sièges. Lieu des réunions du réseau Ventrue au niveau du bourg, à l'abri de toute écoute.",
+      "sortie_de_secours": "Un passage voûté débouche dans les égouts du 7e, rejoignant un accès aux catacombes connu des seuls Ventrue et de quelques Nosferatu alliés."
+    },
+    "secrets_mj": {
+      "double_jeu_armand": "Les dossiers les plus sensibles — ceux qui touchent à l'Élysée et à l'État-Major — sont transmis en priorité à Alexandre, avant d'être résumés à Villon. Armand joue Villon contre Alexandre tout en servant les deux, consolidant sa propre position d'homme indispensable.",
+      "dossier_villon": "Il existe un dossier incomplet sur Villon lui-même — non pour servir un chantage, mais comme assurance vitale. Armand ne l'ouvrira jamais. Mais il existe.",
+      "la_filiere_magistrature": "Trois membres de la Cour de Cassation sont sous influence ventrue directe. L'étude coordonne leurs 'conseils juridiques' bénévoles.",
+      "accord_nosferatu": "Un accord informel avec Étienne le Manchot (Nosferatu) permet des échanges de données hors structure hiérarchique — une relation que ni Villon ni Alexandre ne connaît dans son étendue réelle."
+    }
+  },
+  "created_at": "2026-02-25 00:00:00+00",
+  "image_url": null,
+  "adresse": "Rue de Varenne, 75007 Paris",
+  "latitude": 48.8555,
+  "longitude": 2.3157,
+  "connu": false,
+  "clan_overrides": []
 }
