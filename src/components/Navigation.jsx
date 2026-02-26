@@ -30,7 +30,7 @@ function Navigation({ onNavigate, currentPage, mode, onLogout }) {
     { id: 'organisation', label: 'Organisation', icon: '👑', mjOnly: false },
     { id: 'personnages',  label: 'Personnages',  icon: '🦇', mjOnly: false },
     { id: 'clans',        label: 'Clans',        icon: '⚜️', mjOnly: false },
-    { id: 'influences',   label: 'Influences',   icon: '🕸️', mjOnly: false },
+    { id: 'influences',   label: 'Influences',   icon: '🕸️', mjOnly: true  },
     { id: 'chronologie',  label: 'Chronologie',  icon: '📜', mjOnly: false },
     { id: 'lieux',        label: 'Lieux',        icon: '🏛️', mjOnly: false },
     { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️', mjOnly: false },

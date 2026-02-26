@@ -157,8 +157,8 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
         ✕ Fermer
       </button>
 
-      {/* Clan navigation arrows */}
-      {total > 1 && (
+      {/* Clan navigation arrows — MJ uniquement (les joueurs pourraient tomber sur des personnages non visibles) */}
+      {!playerMode && total > 1 && (
         <div className="pd-clan-nav">
           <button
             className="pd-clan-nav-arrow"

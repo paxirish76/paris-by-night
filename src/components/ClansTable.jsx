@@ -270,15 +270,17 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
           />
         </section>
       ) : (
-        <section className="cd-section">
-          <h2 className="cd-section-title">Membres</h2>
-          <MembresList
-            clanId={clan.id}
-            couleur={clan.couleur}
-            onNavigateToPersonnage={onNavigateToPersonnage}
-            excludeHorsStructure={!isMineur}
-          />
-        </section>
+        !playerMode && (
+          <section className="cd-section">
+            <h2 className="cd-section-title">Membres</h2>
+            <MembresList
+              clanId={clan.id}
+              couleur={clan.couleur}
+              onNavigateToPersonnage={onNavigateToPersonnage}
+              excludeHorsStructure={!isMineur}
+            />
+          </section>
+        )
       )}
 
       {relations.length > 0 && (

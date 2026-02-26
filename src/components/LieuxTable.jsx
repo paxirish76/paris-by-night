@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { isMJ } from './AuthContext';
+import LieuDetail from './LieuDetail';
 import './LieuxTable.css';
 
 const SORT_FIELDS = {
@@ -27,6 +28,7 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
   const [sortField, setSortField] = useState('nom');
   const [sortAsc, setSortAsc]     = useState(true);
   const [toggling, setToggling]   = useState(null);
+  const [selectedLieuId, setSelectedLieuId] = useState(null);
 
   // ── Load data ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -111,8 +113,12 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
 
   // ── Navigate to carte ─────────────────────────────────────────────────────
   const handleRowClick = (lieu) => {
-    // Pass the lieu id so Carte can fly to it and open its popup/drawer
-    onNavigateToCarte(lieu.id);
+    setSelectedLieuId(lieu.id);
+  };
+
+  const handleOpenCarte = (lieuId) => {
+    setSelectedLieuId(null);
+    onNavigateToCarte(lieuId);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -274,6 +280,17 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
           </tbody>
         </table>
       </div>
+
+      {/* Lieu detail panel */}
+      {selectedLieuId && (
+        <LieuDetail
+          lieuId={selectedLieuId}
+          onClose={() => setSelectedLieuId(null)}
+          onNavigateToCarte={handleOpenCarte}
+          mode={mode}
+          viewerClan={viewerClan}
+        />
+      )}
     </div>
   );
 };
