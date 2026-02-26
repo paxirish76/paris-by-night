@@ -17,7 +17,7 @@ const SortIcon = ({ field, sortField, sortAsc }) => {
 };
 
 const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, mode = 'mj' }) => {
-  const mjMode = isMJ(mode);
+  const mjMode = playerMode ? false : isMJ(mode);
   const [lieux, setLieux]         = useState([]);
   const [clans, setClans]         = useState([]);
   const [bourgs, setBourgs]       = useState([]);
@@ -121,7 +121,18 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
     onNavigateToCarte(lieuId);
   };
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  // ── Render detail page ────────────────────────────────────────────────────
+  if (selectedLieuId) return (
+    <LieuDetail
+      lieuId={selectedLieuId}
+      onClose={() => setSelectedLieuId(null)}
+      onNavigateToCarte={handleOpenCarte}
+      playerMode={playerMode}
+      viewerClan={viewerClan}
+    />
+  );
+
+  // ── Render table ──────────────────────────────────────────────────────────
   if (loading) return (
     <div className="lt-loading">
       <div className="lt-spinner" />
@@ -211,7 +222,7 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={5} className="lt-empty">
+                <td colSpan={mjMode ? 6 : 5} className="lt-empty">
                   Aucun lieu ne correspond à la recherche
                 </td>
               </tr>
@@ -281,16 +292,6 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
         </table>
       </div>
 
-      {/* Lieu detail panel */}
-      {selectedLieuId && (
-        <LieuDetail
-          lieuId={selectedLieuId}
-          onClose={() => setSelectedLieuId(null)}
-          onNavigateToCarte={handleOpenCarte}
-          mode={mode}
-          viewerClan={viewerClan}
-        />
-      )}
     </div>
   );
 };
