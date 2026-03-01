@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMJ, isPlayer } from './AuthContext';
+import { isMJ, isPlayer, isGuest } from './AuthContext';
 import './Navigation.css';
 
 const CLAN_LABELS = {
@@ -30,7 +30,7 @@ function Navigation({ onNavigate, currentPage, mode, onLogout }) {
     { id: 'organisation', label: 'Organisation', icon: '👑', mjOnly: false },
     { id: 'personnages',  label: 'Personnages',  icon: '🦇', mjOnly: false },
     { id: 'clans',        label: 'Clans',        icon: '⚜️', mjOnly: false },
-    { id: 'influences',   label: 'Influences',   icon: '🕸️', mjOnly: true  },
+    { id: 'influences',   label: 'Influences',   icon: '🕸️', mjOnly: false },
     { id: 'chronologie',  label: 'Chronologie',  icon: '📜', mjOnly: false },
     { id: 'lieux',        label: 'Lieux',        icon: '🏛️', mjOnly: false },
     { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️', mjOnly: false },
@@ -38,7 +38,7 @@ function Navigation({ onNavigate, currentPage, mode, onLogout }) {
   ];
 
   const menuItems = allItems.filter(item => {
-    if (item.mjOnly && isPlayer(mode)) return false;
+    if (item.mjOnly && !isMJ(mode)) return false;
     return true;
   });
 
@@ -55,6 +55,10 @@ function Navigation({ onNavigate, currentPage, mode, onLogout }) {
       <div className="nav-mode-badge">
         {isMJ(mode) ? (
           <span className="nav-badge nav-badge--mj">⚙ Maître de Jeu</span>
+        ) : isGuest(mode) ? (
+          <span className="nav-badge nav-badge--clan" style={{ borderColor: '#888', color: '#888' }}>
+            👁 Invité
+          </span>
         ) : (
           <span
             className="nav-badge nav-badge--clan"

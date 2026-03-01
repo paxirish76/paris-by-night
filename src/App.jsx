@@ -12,7 +12,7 @@ import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
-import { AuthProvider, useAuth, isMJ, isPlayer, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
+import { AuthProvider, useAuth, isMJ, isPlayer, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
 
 // ─── Inner app (has access to auth context) ───────────────
@@ -29,7 +29,8 @@ function AppInner() {
   // Not logged in → show login screen
   if (!mode) return <LoginScreen />;
 
-  const viewerClan = isPlayer(mode) ? mode : null;
+  const viewerClan  = isPlayer(mode) ? mode : null;   // null pour MJ et invité
+  const playerMode  = isPlayer(mode) || isGuest(mode); // invité = restrictions joueur
 
   // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
@@ -45,8 +46,8 @@ function AppInner() {
   };
 
   const navigateToPersonnage = (personnageId) => {
-    // Block globally hidden personnages for all players
-    if (isPlayer(mode) && HIDDEN_PERSONNAGE_IDS.includes(personnageId)) return;
+    // Block globally hidden personnages for all players and guests
+    if (playerMode && HIDDEN_PERSONNAGE_IDS.includes(personnageId)) return;
     setSelectedPersonnageId(personnageId);
   };
 
@@ -75,8 +76,8 @@ function AppInner() {
     <PersonnageDetail
       personnageId={id}
       onClose={() => setSelectedPersonnageId(null)}
-      playerMode={isPlayer(mode)}          // hides all stats, secrets
-      viewerClan={isPlayer(mode) ? mode : null}  // clan of the logged-in player
+      playerMode={playerMode}
+      viewerClan={viewerClan}
     />
   );
 
@@ -101,13 +102,13 @@ function AppInner() {
           />
         );
 
-      // Accessible to all — filtered by mode inside the component
       case 'personnages':
         return (
           <PersonnagesTable
             onSelectPersonnage={navigateToPersonnage}
             mode={mode}
             viewerClan={viewerClan}
+            playerMode={playerMode}
           />
         );
 
@@ -120,9 +121,8 @@ function AppInner() {
             targetBourgId={targetBourgId}
             onTargetBourgConsumed={clearTargetBourg}
             onNavigateToBourg={navigateFromCarteToBourg}
-            // Pass mode so Carte can filter restricted markers if needed
-            playerMode={isPlayer(mode)}
-            viewerClan={isPlayer(mode) ? mode : null}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
           />
         );
 
@@ -130,8 +130,8 @@ function AppInner() {
         return (
           <LieuxTable
             onNavigateToCarte={navigateToCarteFromLieu}
-            playerMode={isPlayer(mode)}
-            viewerClan={isPlayer(mode) ? mode : null}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
           />
         );
 
@@ -150,19 +150,19 @@ function AppInner() {
           <ClansTable
             onNavigateToGenealogie={navigateToGenealogie}
             onNavigateToPersonnage={navigateToPersonnage}
-            playerMode={isPlayer(mode)}
+            playerMode={playerMode}
           />
         );
 
       case 'genealogie':
-        if (isPlayer(mode)) return <Home onNavigate={navigate} />;
+        if (playerMode) return <Home onNavigate={navigate} />;
         return (
           <Genealogie
             clanId={genealogieClan?.id}
             clanLabel={genealogieClan?.label}
             onNavigateToPersonnage={navigateToPersonnage}
             onBack={() => setCurrentPage('clans')}
-            playerMode={isPlayer(mode)}
+            playerMode={playerMode}
           />
         );
 

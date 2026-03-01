@@ -75,9 +75,9 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
 
   // ── Filter & sort ─────────────────────────────────────────────────────────
   const filtered = (mjMode ? lieux : lieux.filter(l => {
-    // Clan override: visible if viewer's clan is in the list
+    // Joueur avec clan : clan_overrides s'applique
     if (viewerClan && (l.clan_overrides || []).includes(viewerClan)) return true;
-    // Otherwise only connu lieux
+    // Invité (viewerClan=null) ou joueur sans override : uniquement connu
     return l.connu;
   }))
     .filter(l => {
