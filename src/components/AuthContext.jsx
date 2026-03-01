@@ -15,6 +15,8 @@ const PASSWORDS = {
   'mecenes':  'toreador',
   'alchimie':   'tremere',
   'couronne': 'ventrue',
+  // Invité — vue publique (connu=true uniquement, sans overrides de clan)
+  'paris':      'invite',
 };
 
 // ─────────────────────────────────────────────────────────
@@ -34,8 +36,9 @@ export const CLAN_IDS = [
 ];
 
 export const isMJ     = (mode) => mode === 'mj';
+export const isGuest  = (mode) => mode === 'invite';
 export const isClan   = (mode) => CLAN_IDS.includes(mode);
-export const isPlayer = (mode) => isClan(mode);
+export const isPlayer = (mode) => isClan(mode); // invité exclu volontairement
 
 // ─────────────────────────────────────────────────────────
 //  Context

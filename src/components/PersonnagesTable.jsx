@@ -18,6 +18,7 @@ export default function PersonnagesTable({
   onSelectPersonnage,
   mode = 'mj',
   viewerClan = null,
+  playerMode = false,
 }) {
   const [personnages, setPersonnages] = useState([]);
   const [clans, setClans]             = useState([]);
@@ -29,7 +30,7 @@ export default function PersonnagesTable({
   const [sortAsc, setSortAsc]         = useState(true);
   const [toggling, setToggling]       = useState(null); // id being toggled
 
-  const mjMode = isMJ(mode);
+  const mjMode = isMJ(mode) && !playerMode;
 
   // ── Load ──────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -75,9 +76,11 @@ export default function PersonnagesTable({
   // ── Filter & sort ──────────────────────────────────────────────────────────
   const filtered = personnages
     .filter(p => {
-      // Player view: only own clan + connu
+      // Invité (viewerClan=null) : uniquement connu=true
+      // Joueur clan : son clan + connu=true
       if (!mjMode) {
-        if (p.clan_id !== viewerClan && !p.connu) return false;
+        if (viewerClan && p.clan_id === viewerClan) return true;
+        if (!p.connu) return false;
       }
 
       const q = search.toLowerCase();
