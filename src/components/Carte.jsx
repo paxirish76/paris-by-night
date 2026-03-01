@@ -11,9 +11,12 @@ const BUCKET_URL = 'https://jjmiaoodkuwmbrplskif.supabase.co/storage/v1/object/p
 const getLieuImageUrl = (lieuId, index) =>
   `${BUCKET_URL}/${lieuId}${index}.jpg`;
 
+const normalizeStr = (s) =>
+  (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 // ─── SVG marker icon ──────────────────────────────────────────────────────────
 const createLieuIcon = (color, statut) => {
-  const s = (statut || '').toLowerCase();
+  const s = normalizeStr(statut);
   if (s.includes('elysium')) {
     return `
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="38" viewBox="0 0 30 38">
@@ -287,7 +290,7 @@ const Carte = ({
 
       const clanColor = clansMap[lieu.clan_id]?.couleur || '#d4af37';
       const clanNom   = clansMap[lieu.clan_id]?.nom || '';
-      const isElysium = (lieu.statut || '').toLowerCase().includes('elysium');
+      const isElysium = normalizeStr(lieu.statut).includes('elysium');
 
       const icon = L.divIcon({
         className: 'lieu-marker-icon',
