@@ -75,9 +75,9 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
 
   // ── Filter & sort ─────────────────────────────────────────────────────────
   const filtered = (mjMode ? lieux : lieux.filter(l => {
-    // Joueur avec clan : clan_overrides s'applique
+    // Clan override: visible if viewer's clan is in the list
     if (viewerClan && (l.clan_overrides || []).includes(viewerClan)) return true;
-    // Invité (viewerClan=null) ou joueur sans override : uniquement connu
+    // Otherwise only connu lieux
     return l.connu;
   }))
     .filter(l => {
@@ -228,7 +228,7 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
               </tr>
             ) : (
               filtered.map(lieu => {
-                const isElysium = (lieu.statut || '').toLowerCase().includes('elysium');
+                const isElysium = (lieu.statut || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes('elysium');
                 return (
                   <tr
                     key={lieu.id}
