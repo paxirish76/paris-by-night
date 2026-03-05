@@ -1,5 +1,6 @@
 import React from 'react';
 import { isMJ, isPlayer, isGuest } from './AuthContext';
+import ThemeToggle from './ThemeToggle';
 import './Navigation.css';
 
 const CLAN_LABELS = {
@@ -84,6 +85,7 @@ function Navigation({ onNavigate, currentPage, mode, onLogout }) {
       </ul>
 
       <div className="nav-footer">
+        <ThemeToggle />
         <p className="nav-version">Version 1.0 - Prototype</p>
         <button className="nav-logout" onClick={onLogout}>
           Déconnexion

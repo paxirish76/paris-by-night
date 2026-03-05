@@ -12,6 +12,7 @@ import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
+import './components/theme-day.css';
 import { AuthProvider, useAuth, isMJ, isPlayer, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
 

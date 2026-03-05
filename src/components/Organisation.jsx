@@ -33,7 +33,7 @@ const CLAN_LABELS = {
 const ADJOINTS = [
   { nom: "Gustave 'Le Marteau' Lemaire",      clan: 'brujah',   id: 'gustave-lemaire' },
   { nom: 'Marc-André Ferrand',                clan: 'gangrel',  id: 'marc-andre-ferrand' },
-  { nom: 'Luciano Bacigalupo dit Le Loup',    clan: 'lasombra', id: 'luciano-Bacigalupo' },
+  { nom: 'Eleanor Driftwood',                 clan: 'lasombra', id: 'eleanor_driftwood' },
   { nom: 'Frère Malachie',                    clan: 'malkavian',id: 'frere_malachie' },
   { nom: 'Marc-Antoine Bréguet',              clan: 'nosferatu',id: 'marc-antoine-le-compilateur' },
   { nom: 'Alessandro di Cavalcanti',          clan: 'toreador', id: 'cavalcanti' },
