@@ -4,6 +4,7 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem 5rem;
+  position: relative; /* ancre le popover absolu */
 }
 
 /* Header */
@@ -43,33 +44,51 @@
 .legend-dot.vampire { background: var(--color-vampire, #c0392b); }
 .legend-label { color: var(--color-muted, #999); }
 
-/* ─── Sticky detail banner ─────────────────────────────────────────────────── */
-.chron-detail {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  background: var(--color-surface, #1c1c1c);
-  border-bottom: 1px solid var(--color-border, #333);
+/* ─── Popover ──────────────────────────────────────────────────────────────── */
+.chron-popover {
+  position: absolute;
+  z-index: 40;
+  padding: 0.75rem 1rem 0.85rem;
   border-radius: 6px;
-  margin-bottom: 1.5rem;
-  min-height: 3.2rem;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
-  flex-wrap: wrap;
-}
-
-.chron-detail.visible {
-  opacity: 1;
-  transform: translateY(0);
+  border: 1px solid;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  animation: chron-pop-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
   pointer-events: auto;
 }
 
+@keyframes chron-pop-in {
+  from { opacity: 0; transform: scale(0.95) translateY(4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+
+.chron-popover--above {
+  animation-name: chron-pop-in-above;
+}
+@keyframes chron-pop-in-above {
+  from { opacity: 0; transform: scale(0.95) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+/* Couleurs selon type */
+.chron-popover.human {
+  background: #111c24;
+  border-color: rgba(126, 184, 212, 0.4);
+}
+.chron-popover.vampire {
+  background: #1c0f0f;
+  border-color: rgba(192, 57, 43, 0.45);
+}
+
+/* Header du popover */
+.chron-popover-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Réutilise les classes existantes chron-detail-badge / name / close */
 .chron-detail-badge {
   flex-shrink: 0;
   font-size: 0.75rem;
@@ -78,8 +97,6 @@
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
   white-space: nowrap;
-  align-self: flex-start;
-  margin-top: 0.1rem;
 }
 .chron-detail-badge.human   { background: rgba(126,184,212,0.15); color: var(--color-human,   #7eb8d4); }
 .chron-detail-badge.vampire { background: rgba(192, 57, 43, 0.15); color: var(--color-vampire, #e05a4e); }
@@ -88,16 +105,14 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-text, #e0e0e0);
-  align-self: center;
+  flex: 1;
 }
 
 .chron-detail-desc {
-  flex: 1;
   font-size: 0.85rem;
   color: var(--color-muted, #999);
-  line-height: 1.5;
-  align-self: center;
-  min-width: 160px;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .chron-detail-close {
@@ -108,11 +123,34 @@
   font-size: 0.85rem;
   padding: 0 0.2rem;
   margin-left: auto;
-  align-self: flex-start;
   line-height: 1;
   transition: color 0.15s;
+  flex-shrink: 0;
 }
 .chron-detail-close:hover { color: var(--color-text, #e0e0e0); }
+
+/* Petite flèche indicatrice */
+.chron-popover-arrow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+
+.chron-popover-arrow--top {
+  top: -7px;
+}
+.chron-popover.human   .chron-popover-arrow--top    { border-bottom: 7px solid rgba(126, 184, 212, 0.4); }
+.chron-popover.vampire .chron-popover-arrow--top    { border-bottom: 7px solid rgba(192, 57, 43, 0.45); }
+
+.chron-popover-arrow--bottom {
+  bottom: -7px;
+}
+.chron-popover.human   .chron-popover-arrow--bottom { border-top: 7px solid rgba(126, 184, 212, 0.4); }
+.chron-popover.vampire .chron-popover-arrow--bottom { border-top: 7px solid rgba(192, 57, 43, 0.45); }
 
 /* ─── Grid layout ──────────────────────────────────────────────────────────── */
 .chron-grid {
@@ -148,8 +186,8 @@
   padding: 0.65rem 0.6rem;
   min-height: 56px;
 }
-.human-cell   { align-items: flex-end;  text-align: right; }
-.vampire-cell { align-items: flex-start; text-align: left; }
+.human-cell   { align-items: flex-end;   text-align: right; }
+.vampire-cell { align-items: flex-start; text-align: left;  }
 
 /* Event pills */
 .pill {
@@ -217,7 +255,6 @@
   position: relative;
 }
 
-/* The dot */
 .spine-node::before {
   content: '';
   width: 10px;
@@ -239,7 +276,7 @@
   font-size: 0.7rem;
   color: var(--color-muted, #888);
   letter-spacing: 0.04em;
-  padding-top: 32px; /* push below the dot */
+  padding-top: 32px;
   text-align: center;
   line-height: 1.2;
   display: block;
@@ -255,5 +292,5 @@
   .chron-col-label { font-size: 0.7rem; padding: 0.5rem 0.4rem 1rem; }
   .pill { font-size: 0.72rem; padding: 0.25rem 0.5rem; }
   .spine-year { font-size: 0.6rem; }
-  .chron-detail { flex-direction: column; gap: 0.3rem; }
+  .chron-popover { font-size: 0.9rem; }
 }
