@@ -35,7 +35,7 @@ const ADJOINTS = [
   { nom: 'Marc-André Ferrand',                clan: 'gangrel',  id: 'marc-andre-ferrand' },
   { nom: 'Eleanor Driftwood',                 clan: 'lasombra', id: 'eleanor_driftwood' },
   { nom: 'Frère Malachie',                    clan: 'malkavian',id: 'frere_malachie' },
-  { nom: 'Marc-Antoine Bréguet',              clan: 'nosferatu',id: 'marc-antoine-le-compilateur' },
+  { nom: 'Lucien Mornay dit « Bouledogue »',  clan: 'nosferatu',id: 'lucien_mornay' },
   { nom: 'Alessandro di Cavalcanti',          clan: 'toreador', id: 'cavalcanti' },
   { nom: 'La Voisin',                         clan: 'tremere',  id: 'la_voisin' },
   { nom: 'Marc-Antoine de Varennes',          clan: 'ventrue',  id: 'de_varennes' },
