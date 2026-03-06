@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "purpose": "Instructions for Claude to generate and insert a new record into the `lieux` table (Supabase/PostgreSQL)",
+    "table": "public.lieux",
+    "version": "1.0"
+  },
+
+  "schema": {
+    "id": {
+      "type": "text",
+      "required": true,
+      "primary_key": true,
+      "format": "snake_case slug, lowercase, no spaces",
+      "example": "etude_de_montfaucon",
+      "instructions": "Derive from the location name. Must be unique."
+    },
+    "nom": {
+      "type": "text",
+      "required": true,
+      "instructions": "Full display name of the location, with proper French capitalization.",
+      "example": "Étude de Montfaucon & Associés"
+    },
+    "bourg_id": {
+      "type": "text",
+      "required": false,
+      "foreign_key": "bourgs(id)",
+      "instructions": "ID of the borough this location belongs to. Must match an existing entry in the `bourgs` table.",
+      "example": "pouvoir"
+    },
+    "clan_id": {
+      "type": "text",
+      "required": false,
+      "foreign_key": "clans(id)",
+      "instructions": "ID of the vampire clan that owns or controls this location. Must match an existing entry in the `clans` table.",
+      "example": "ventrue"
+    },
+    "statut": {
+      "type": "text",
+      "required": false,
+      "instructions": "Short phrase describing the official cover and the real function. Format: 'Official Cover / Real Function'.",
+      "example": "Cabinet Notarial / Centre du Réseau de Chantage Ventrue"
+    },
+    "protection": {
+      "type": "integer",
+      "required": false,
+      "range": "1–5",
+      "instructions": "Security/protection level of the location. 1 = minimal, 5 = maximum.",
+      "example": 5
+    },
+    "description": {
+      "type": "jsonb",
+      "required": false,
+      "default": "{}",
+      "instructions": "Rich structured object. All fields are optional but the more complete, the better. See `description_schema` below.",
+      "description_schema": {
+        "presentation_generale": {
+          "type": "string",
+          "instructions": "2–4 sentence public-facing summary: founding, location, official function, and what it conceals."
+        },
+        "ambiance": {
+          "type": "string",
+          "instructions": "Immersive sensory description for players/GM: architecture, decor, smell, atmosphere, emotional effect on visitors."
+        },
+        "tenanciers": {
+          "type": "object",
+          "instructions": "Key NPCs tied to the location. Use free-form keys (e.g. 'principal', 'associe', 'gardien'). Each value is a string describing the NPC's identity, clan/status, and role.",
+          "example": {
+            "principal": "Armand, Ventrue, Bourgmestre. Appears as Maître Henri de Montfaucon, senior notary.",
+            "associe": "Séraphine Lacroix, high-level ghoul, head clerk, keeper of sensitive files."
+          }
+        },
+        "activites_officielles": {
+          "type": "array of strings",
+          "instructions": "List of the location's legitimate, public-facing activities."
+        },
+        "activites_cachees": {
+          "type": "array of strings",
+          "instructions": "List of secret or hidden activities, known only to vampires and trusted ghouls."
+        },
+        "arriere_boutique": {
+          "type": "object",
+          "instructions": "Description of hidden/back areas not visible to regular visitors.",
+          "sub_fields": {
+            "description": "General description of the hidden area.",
+            "salle_des_dossiers": "Secret archive room details.",
+            "chambre_de_deliberation": "Private meeting room details.",
+            "sortie_de_secours": "Escape route or secret exit."
+          }
+        },
+        "securite_occulte": {
+          "type": "object",
+          "instructions": "Supernatural and mundane security measures. Use free-form keys.",
+          "example_keys": ["gardiens_lies", "aura_domination", "protocole_efface", "archives_protegees", "reseau_de_surveillance"]
+        },
+        "secrets_mj": {
+          "type": "object",
+          "instructions": "GM-only secrets: hidden agendas, double-crosses, secret alliances, buried truths. Use descriptive keys.",
+          "visibility_note": "This field should typically be hidden from players. Set field_visibility.secrets_mj = false if needed."
+        }
+      }
+    },
+    "adresse": {
+      "type": "text",
+      "required": false,
+      "instructions": "Real or plausible Parisian street address.",
+      "example": "Rue de Varenne, 75007 Paris"
+    },
+    "latitude": {
+      "type": "double precision",
+      "required": false,
+      "instructions": "WGS84 latitude of the location. Use real coordinates matching the address.",
+      "example": 48.8555
+    },
+    "longitude": {
+      "type": "double precision",
+      "required": false,
+      "instructions": "WGS84 longitude of the location.",
+      "example": 2.3157
+    },
+    "connu": {
+      "type": "boolean",
+      "required": true,
+      "default": true,
+      "instructions": "Whether this location is known to player characters. Set to false for fully secret locations."
+    },
+    "clan_overrides": {
+      "type": "text[]",
+      "required": true,
+      "default": "[]",
+      "instructions": "Array of clan IDs that have special visibility or access overrides for this location. Usually empty.",
+      "example": []
+    },
+    "field_visibility": {
+      "type": "jsonb",
+      "required": false,
+      "default": "{}",
+      "instructions": "Controls which `description` sub-fields are hidden from players. Set a key to false to hide it. Keys must match keys inside the `description` object.",
+      "example": { "arriere_boutique": false, "secrets_mj": false }
+    },
+    "image_url": {
+      "type": "text",
+      "required": false,
+      "default": null,
+      "instructions": "URL to an image representing the location. Leave null if unavailable."
+    }
+  },
+
+  "output_format": {
+    "instructions": "Generate a single valid JSON object matching the schema above. The `description` field must itself be a JSON object (not a string). Do NOT stringify it.",
+    "sql_insert_template": "INSERT INTO public.lieux (id, nom, bourg_id, clan_id, statut, protection, description, adresse, latitude, longitude, connu, clan_overrides, field_visibility, image_url) VALUES (:id, :nom, :bourg_id, :clan_id, :statut, :protection, :description::jsonb, :adresse, :latitude, :longitude, :connu, :clan_overrides, :field_visibility::jsonb, :image_url);",
+    "supabase_js_template": "const { data, error } = await supabase.from('lieux').insert([ <your_record_object> ]);"
+  },
+
+  "workflow": [
+    "1. Ask the user for: name, bourg_id, clan_id, address, and a brief concept of the location.",
+    "2. Generate the full record JSON following this schema.",
+    "3. Confirm with the user before inserting.",
+    "4. Insert using Supabase JS client or raw SQL depending on context.",
+    "5. Report back the inserted `id` and `nom` to confirm success."
+  ],
+
+  "notes": [
+    "The `description` field is stored as JSONB — always pass it as a parsed object, not a serialized string.",
+    "Foreign keys `bourg_id` and `clan_id` must reference existing rows or the insert will fail.",
+    "Field `clan_overrides` is a PostgreSQL text array — pass as a JS array [].",
+    "Coordinates should be precise enough for map display (4–5 decimal places).",
+    "For fully secret locations, set connu=false AND hide sensitive description sub-fields via field_visibility."
+  ]
+}
