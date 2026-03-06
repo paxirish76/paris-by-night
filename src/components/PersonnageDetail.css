@@ -607,3 +607,171 @@
     font-size: 14px;
   }
 }
+
+/* ================================================================
+   VISIBILITÉ MJ — Ajouts
+   ================================================================ */
+
+/* Barre de statut MJ en haut */
+.pd-mj-statusbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 1002;
+  pointer-events: none;
+}
+
+.pd-save-msg {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  min-width: 90px;
+  text-align: center;
+}
+.pd-save-msg.ok  { color: #4caf50; }
+.pd-save-msg.err { color: #dc143c; }
+
+.pd-mj-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.78rem;
+  color: rgba(212, 175, 55, 0.4);
+  font-style: italic;
+}
+
+/* section-title flex pour accueillir le toggle et le badge MJ */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* meta-label flex pour le toggle sire/génération inline */
+.meta-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Toggle visibilité 👁 / ◌ */
+.pd-visibility-toggle {
+  background: none;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 2px 7px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  transition: all 0.15s;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.pd-visibility-toggle.on {
+  border-color: #4caf50;
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+}
+.pd-visibility-toggle.off {
+  border-color: #dc143c;
+  color: #dc143c;
+  background: rgba(220, 20, 60, 0.08);
+}
+.pd-visibility-toggle:hover { opacity: 0.75; }
+
+/* Pousse le toggle à droite dans un section-title */
+.section-title > .pd-visibility-toggle { margin-left: auto; }
+
+/* Badge MJ (stats, capacités, disciplines) */
+.mj-only-badge {
+  margin-left: auto;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  background: rgba(255, 100, 0, 0.12);
+  border: 1px solid rgba(255, 140, 0, 0.45);
+  color: #ff8c00;
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* Section masquée — visible MJ mais grisée/pointillés */
+.section-hidden {
+  opacity: 0.5;
+  border-color: rgba(220, 20, 60, 0.25) !important;
+  border-style: dashed !important;
+}
+.section-hidden .section-title::after {
+  content: '— masqué';
+  font-size: 0.72em;
+  color: #dc143c;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* meta-item masqué (sire ou génération individuellement) */
+.meta-item-hidden {
+  opacity: 0.5;
+}
+.meta-item-hidden .meta-label::after {
+  content: '— masqué';
+  font-size: 0.72em;
+  color: #dc143c;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* Wrappers pour les items toggleables (roles, relations) */
+.role-badge-wrapper,
+.relation-item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-badge-wrapper .role-badge,
+.relation-item-wrapper .relation-item {
+  flex: 1;
+}
+
+/* Bouton toggle par item */
+.item-visibility-btn {
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 2px 7px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  transition: all 0.15s;
+}
+.item-visibility-btn.on {
+  border-color: rgba(76, 175, 80, 0.5);
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.06);
+}
+.item-visibility-btn.off {
+  border-color: rgba(220, 20, 60, 0.5);
+  color: #dc143c;
+  background: rgba(220, 20, 60, 0.06);
+}
+.item-visibility-btn:hover { opacity: 0.75; }
+
+/* Item masqué individuellement */
+.item-hidden .role-badge,
+.item-hidden .relation-item {
+  opacity: 0.4;
+  text-decoration: line-through;
+  text-decoration-color: rgba(220, 20, 60, 0.4);
+}

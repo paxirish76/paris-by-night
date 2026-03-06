@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "description": "Template d'insertion pour la table `personnages` — projet Paris by Night (Supabase).",
+    "usage": "Charger ce fichier en contexte pour que Claude sache exactement comment formater un nouveau personnage. Supprimer ou remplacer toutes les valeurs entre < > avant insertion.",
+    "clans_valides": ["brujah", "gangrel", "lasombra", "malkavian", "nosferatu", "toreador", "tremere", "ventrue", "assamite", "giovanni", "tzimisce"],
+    "clans_mineurs": ["assamite", "giovanni", "tzimisce"],
+    "regles": {
+      "id": "Slug kebab-case unique, sans accents, sans espaces. Ex: 'jean-de-metz', 'zarha_al-rashida'.",
+      "sire": "id d'un autre personnage existant, ou chaîne vide \"\" si racine / sire inconnu.",
+      "roles": "Tableau JSON de strings. Minimum 1 rôle.",
+      "disciplines": "Tableau JSON de strings (noms des disciplines en français).",
+      "relations": "Tableau JSON de strings. Chaque string = '[Nom du personnage] : [description de la relation]'.",
+      "secrets_mj": "Objet JSON. Clés libres en snake_case descriptif. Valeurs = strings de narration.",
+      "attributes": "Objet JSON fixe à 3 catégories (physique, social, mental), chacune avec 3 sous-attributs entiers (0 si non renseigné).",
+      "abilities": "Texte libre ou chaîne vide.",
+      "notes": "Texte libre MJ : usage narratif, conseils, leviers. Chaîne vide si aucune.",
+      "image_url": "Nom du fichier image stocké dans le bucket Supabase 'lieux'. Format : '[id].jpg'.",
+      "ghost": "true uniquement pour les vampires détruits servant de nœud fantôme dans l'arbre généalogique.",
+      "connu": "true = visible par tous les joueurs dans PersonnagesTable. false par défaut.",
+      "hors_structure": "true = exclu de la liste principale du clan, apparaît sous 'Présences isolées' dans ClanDetail. Obligatoire pour les clans mineurs."
+    }
+  },
+
+  "template": {
+    "id": "<slug-kebab-case-unique>",
+    "nom": "<Prénom Nom complet>",
+    "clan_id": "<clan_id parmi les clans valides>",
+    "generation": "<entier, ex: 8>",
+    "sire": "<id d'un personnage existant, ou \"\">",
+    "roles": ["<Rôle principal>", "<Rôle secondaire optionnel>"],
+    "apparence": "<Description physique détaillée — apparence mortelle, vêtements, posture, ce que les autres retiennent.>",
+    "personnalite": "<Traits de caractère, comportements, contradictions, limites. Narration à la 3e personne.>",
+    "histoire": "<Biographie : origines mortelles, embrace, siècles d'existence, arrivée à Paris, situation actuelle.>",
+    "disciplines": ["<Discipline 1>", "<Discipline 2>", "<Discipline 3>"],
+    "relations": [
+      "<Nom du Personnage A> : <Description de la relation avec A.>",
+      "<Nom du Personnage B> : <Description de la relation avec B.>"
+    ],
+    "secrets_mj": {
+      "<cle_secret_1>": "<Narration du secret 1 — inconnu des joueurs.>",
+      "<cle_secret_2>": "<Narration du secret 2 — inconnu des joueurs.>"
+    },
+    "attributes": {
+      "physique": { "force": 0, "dexterite": 0, "vigueur": 0 },
+      "social":   { "charisme": 0, "apparence": 0, "manipulation": 0 },
+      "mental":   { "perception": 0, "intelligence": 0, "astuce": 0 }
+    },
+    "abilities": "",
+    "notes": "<Notes MJ : leviers narratifs, interactions suggérées, liens avec d'autres PNJ ou lieux. Vide si aucune.>",
+    "image_url": "<slug-kebab-case-unique>.jpg",
+    "ghost": false,
+    "connu": false,
+    "hors_structure": false
+  },
+
+  "exemple_rempli": {
+    "id": "zarha_al-rashida",
+    "nom": "Zarha al-Rashida",
+    "clan_id": "assamite",
+    "generation": 9,
+    "sire": "",
+    "roles": ["Garde du Corps de Villon", "Exécutrice Discrète de la Cour", "Agent Indépendant hors mandat"],
+    "apparence": "Femme d'apparence trentaine, petite et compacte — un mètre soixante que l'on sous-estime invariablement. Peau sombre, traits nets et parfaitement immobiles au repos. Cheveux noirs coupés court, sans ornement. Elle ne porte jamais rien qui puisse accrocher ou faire du bruit : vêtements ajustés, semelles silencieuses, pas de bijoux.",
+    "personnalite": "Zarha parle peu et observe beaucoup. Elle n'est pas froide — elle est économe. Chaque mot dépensé doit valoir quelque chose. Elle a un sens de l'humour rare et très sec, que seuls ceux qui la côtoient depuis longtemps savent reconnaître.",
+    "histoire": "Née vers 1487 à Istanbul. Repérée par un recruteur de l'Ordre à seize ans, formée comme fidaï puis étreinte vers 1520. Arrive à Paris en 1798 dans le sillage de la campagne d'Égypte, portant une missive de l'Ordre à Villon. À l'issue d'un entretien de trois nuits, elle reste.",
+    "disciplines": ["Quietus", "Célérité", "Obfuscation"],
+    "relations": [
+      "François Villon : Elle le sert depuis plus de deux siècles avec une efficacité irréprochable. Il ne lui demande pas de justifier ses méthodes ; elle ne lui demande pas de justifier ses cibles.",
+      "Godefroy de Montmirail-Vexin : Respect mutuel et friction permanente. Ils ne s'aiment pas particulièrement. Ils se reconnaissent."
+    ],
+    "secrets_mj": {
+      "nour_en_danger": "Zarha n'a jamais formellement goulisé Nour — elle lui donne du sang occasionnellement. Si quelqu'un découvrait l'existence de Nour, cette dernière deviendrait immédiatement un levier.",
+      "le_contrat_dormant": "L'Ordre l'a libérée en échange d'un service non spécifié, à réclamer à une date non précisée. Ce blanc-seing existe toujours."
+    },
+    "attributes": {
+      "physique": { "force": 0, "dexterite": 0, "vigueur": 0 },
+      "social":   { "charisme": 0, "apparence": 0, "manipulation": 0 },
+      "mental":   { "perception": 0, "intelligence": 0, "astuce": 0 }
+    },
+    "abilities": "",
+    "notes": "Personnage hors_structure, clan mineur. Présence à Paris officiellement couverte par son statut auprès de Villon. Levier narratif si les joueurs cherchent à approcher Villon.",
+    "image_url": "zarha_al-rashida.jpg",
+    "ghost": false,
+    "connu": true,
+    "hors_structure": true
+  }
+}
