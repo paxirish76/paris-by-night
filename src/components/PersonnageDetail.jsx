@@ -17,7 +17,7 @@ const FIELD_DEFAULTS = {
   personnalite: false,
   histoire:     false,
   sire:         false,
-  generation:   false,
+  generation:   true,
   relations:    false,
   notes:        false,
   roles:        true,   // seul champ visible par défaut
