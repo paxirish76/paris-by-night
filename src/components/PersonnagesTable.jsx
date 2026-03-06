@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
-import { isMJ } from './AuthContext';
+import { isMJ, HIDDEN_PERSONNAGE_IDS } from './AuthContext';
 import './PersonnagesTable.css';
 
 const SORT_FIELDS = {
@@ -76,6 +76,9 @@ export default function PersonnagesTable({
   // ── Filter & sort ──────────────────────────────────────────────────────────
   const filtered = personnages
     .filter(p => {
+      // VETO ABSOLU — prioritaire sur toute autre règle (clan, connu, override)
+      if (!mjMode && HIDDEN_PERSONNAGE_IDS.includes(p.id)) return false;
+
       // Invité (viewerClan=null) : uniquement connu=true
       // Joueur clan : son clan + connu=true
       if (!mjMode) {
