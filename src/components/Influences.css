@@ -282,16 +282,12 @@
 /* Category tab strip */
 .inf-cat-tabs {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
   padding: 20px 40px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   background: rgba(0,0,0,0.15);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
-.inf-cat-tabs::-webkit-scrollbar { display: none; }
 .inf-cat-tab {
   display: flex;
   align-items: center;
@@ -322,6 +318,9 @@
 /* Matrix */
 .inf-matrix {
   padding: 32px 40px 60px;
+}
+
+.inf-matrix-scroll-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }

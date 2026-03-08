@@ -151,12 +151,21 @@ function NiveauBadge({ niveau, detail }) {
 
 // ── View: Par Clan ────────────────────────────────────────────────────────────
 
-function VueParClan({ influences, clans }) {
-  const [selectedClanId, setSelectedClanId] = useState(clans[0]?.id ?? null);
+function VueParClan({ influences, clans, playerMode, viewerClan }) {
+  const [selectedClanId, setSelectedClanId] = useState(
+    playerMode && viewerClan ? viewerClan : (clans[0]?.id ?? null)
+  );
   const [openCats, setOpenCats] = useState(new Set(ALL_CATS));
 
-  const clan = clans.find(c => c.id === selectedClanId);
-  const clanData = influences.filter(r => r.clan_id === selectedClanId);
+  const visibleClans = playerMode && viewerClan
+    ? clans.filter(c => c.id === viewerClan)
+    : clans;
+
+  const clan = visibleClans.find(c => c.id === selectedClanId)
+    ?? visibleClans[0]
+    ?? null;
+  const activeClanId = clan?.id ?? null;
+  const clanData = influences.filter(r => r.clan_id === activeClanId);
 
   const toggleCat = (cat) => {
     setOpenCats(prev => {
@@ -170,20 +179,22 @@ function VueParClan({ influences, clans }) {
 
   return (
     <div className="inf-clan-view">
-      {/* Clan selector */}
-      <div className="inf-clan-tabs">
-        {clans.map(c => (
-          <button
-            key={c.id}
-            className={`inf-clan-tab ${c.id === selectedClanId ? 'active' : ''}`}
-            style={{ '--tab-color': c.couleur }}
-            onClick={() => { setSelectedClanId(c.id); setOpenCats(new Set(ALL_CATS)); }}
-          >
-            {c.icon_url && <img src={c.icon_url} alt={c.nom} className="inf-clan-tab-icon" />}
-            {c.nom}
-          </button>
-        ))}
-      </div>
+      {/* Clan selector — MJ only */}
+      {!playerMode && (
+        <div className="inf-clan-tabs">
+          {visibleClans.map(c => (
+            <button
+              key={c.id}
+              className={`inf-clan-tab ${c.id === activeClanId ? 'active' : ''}`}
+              style={{ '--tab-color': c.couleur }}
+              onClick={() => { setSelectedClanId(c.id); setOpenCats(new Set(ALL_CATS)); }}
+            >
+              {c.icon_url && <img src={c.icon_url} alt={c.nom} className="inf-clan-tab-icon" />}
+              {c.nom}
+            </button>
+          ))}
+        </div>
+      )}
 
       {clan && (
         <div className="inf-clan-content">
@@ -273,6 +284,7 @@ function VueParCategorie({ influences, clans }) {
         </div>
 
         {/* Header row: clan logos */}
+      <div className="inf-matrix-scroll-wrapper">
         <div className="inf-matrix-grid" style={{ '--clan-count': clans.length }}>
           <div className="inf-matrix-corner" />
           {clans.map(c => (
@@ -318,22 +330,25 @@ function VueParCategorie({ influences, clans }) {
             ];
           })}
         </div>
-      </div>
+      </div>{/* inf-matrix-scroll-wrapper */}
+      </div>{/* inf-matrix */}
     </div>
   );
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export default function Influences() {
+export default function Influences({ playerMode = false, viewerClan = null }) {
   const [influences, setInfluences] = useState([]);
   const [clans, setClans]           = useState([]);
   const [loading, setLoading]       = useState(true);
   const [view, setView]             = useState('clan'); // 'clan' | 'categorie'
 
   useEffect(() => {
+    const EXCLUDED_CLANS = ['mortel', 'assamite', 'giovanni', 'tzimisce'];
+
     Promise.all([
-      supabase.from('influences').select('*'),
+      supabase.from('influences').select('*').not('clan_id', 'in', `(${EXCLUDED_CLANS.map(c => `"${c}"`).join(',')})`),
       supabase.from('clans').select('id, nom, couleur, icon_url').neq('id', 'mortel').not('id', 'in', '("assamite","giovanni","tzimisce")').order('nom'),
     ]).then(([{ data: inf }, { data: cl }]) => {
       setInfluences(inf ?? []);
@@ -363,17 +378,19 @@ export default function Influences() {
           >
             Par Clan
           </button>
-          <button
-            className={`inf-toggle-btn ${view === 'categorie' ? 'active' : ''}`}
-            onClick={() => setView('categorie')}
-          >
-            Par Catégorie
-          </button>
+          {!playerMode && (
+            <button
+              className={`inf-toggle-btn ${view === 'categorie' ? 'active' : ''}`}
+              onClick={() => setView('categorie')}
+            >
+              Par Catégorie
+            </button>
+          )}
         </div>
       </header>
 
       {view === 'clan'
-        ? <VueParClan influences={influences} clans={clans} />
+        ? <VueParClan influences={influences} clans={clans} playerMode={playerMode} viewerClan={viewerClan} />
         : <VueParCategorie influences={influences} clans={clans} />
       }
     </div>
