@@ -327,12 +327,67 @@ export default function PersonnagesTable({
                   {/* Rôles */}
                   <td className="pt-td pt-td-roles">
                     <div className="pt-roles">
-                      {(p.roles || []).slice(0, 2).map((r, i) => (
-                        <span key={i} className="pt-role-badge">{r}</span>
-                      ))}
-                      {(p.roles || []).length > 2 && (
-                        <span className="pt-role-more">+{p.roles.length - 2}</span>
-                      )}
+                      {(() => {
+                        const allRoles = p.roles || [];
+                        const fv = p.field_visibility ?? {};
+
+                        // MJ : détermine si un rôle à l'index i est visible par au moins un joueur
+                        // Règle : toggle joueur 'roles' = accès au champ entier
+                        //         roles_items flat MJ = quels items sont visibles dans ce champ
+                        const ROLES_DEFAULT = true; // FIELD_DEFAULTS.roles = true
+                        const flatRolesItems = fv['roles_items'] ?? {}; // toggles MJ globaux
+                        const isRoleVisibleByAnyJoueur = (i) => {
+                          if (!mjMode) return false;
+                          // L'item est-il visible globalement (toggle MJ flat) ?
+                          const itemVisibleGlobally = String(i) in flatRolesItems
+                            ? flatRolesItems[String(i)] !== false
+                            : ROLES_DEFAULT;
+                          if (!itemVisibleGlobally) return false;
+                          // Au moins un joueur a-t-il accès au champ roles ?
+                          return joueurs.some(j => {
+                            if (!(j.id in fv)) return false; // joueur sans accès au personnage
+                            const scopedFv = fv[j.id] ?? {};
+                            return 'roles' in scopedFv
+                              ? scopedFv['roles'] !== false
+                              : ROLES_DEFAULT;
+                          });
+                        };
+
+                        // Campagne joueur : filtrer par roles_items MJ flat (le toggle joueur controle l'acces au champ, pas les items)
+                        const visibleRoles = isCampagneMode
+                          ? allRoles.filter((_, i) => {
+                              return String(i) in flatRolesItems
+                                ? flatRolesItems[String(i)] !== false
+                                : ROLES_DEFAULT;
+                            })
+                          : allRoles;
+
+                        const displayRoles = visibleRoles.slice(0, 2);
+                        const extra = visibleRoles.length - 2;
+
+                        return (
+                          <>
+                            {displayRoles.map((r, displayIdx) => {
+                              // Retrouver l'index original dans allRoles
+                              const origIdx = isCampagneMode
+                                ? allRoles.indexOf(r)
+                                : displayIdx;
+                              const joueurVisible = isRoleVisibleByAnyJoueur(origIdx);
+                              return (
+                                <span
+                                  key={displayIdx}
+                                  className={`pt-role-badge ${mjMode && joueurVisible ? 'pt-role-badge--visible' : ''}`}
+                                >
+                                  {r}
+                                </span>
+                              );
+                            })}
+                            {extra > 0 && (
+                              <span className="pt-role-more">+{extra}</span>
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
                   </td>
 

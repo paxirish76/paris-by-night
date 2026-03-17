@@ -502,3 +502,11 @@
   border-color: rgba(212,175,55,0.4);
   background: rgba(212,175,55,0.06);
 }
+
+/* Rôle visible par au moins un joueur campagne (MJ view) */
+.pt-role-badge--visible {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.1);
+  opacity: 1;
+}

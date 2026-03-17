@@ -202,9 +202,10 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   };
 
   const isItemVisible = (fv, fieldKey, index) => {
-    const scoped = getScopedFv(fv);
-    const items = scoped[`${fieldKey}_items`] || {};
-    if (String(index) in items) return items[String(index)] !== false;
+    // Les toggles d'items individuels sont toujours lus depuis le flat MJ (global),
+    // jamais depuis scopedFv joueur. Le toggle joueur contrôle l'accès au champ entier.
+    const flatItems = fv[`${fieldKey}_items`] || {};
+    if (String(index) in flatItems) return flatItems[String(index)] !== false;
     return FIELD_DEFAULTS[fieldKey] ?? false;
   };
 
