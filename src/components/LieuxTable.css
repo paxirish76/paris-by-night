@@ -182,6 +182,8 @@
 .lt-th-statut { width: 28%; }
 .lt-th-bourg  { width: 18%; }
 .lt-th-clan   { width: 14%; }
+.lt-th-connu  { width: 40px; text-align: center; cursor: default; }
+.lt-th-joueurs { width: 60px; text-align: center; cursor: default; }
 
 .lt-sort-icon { margin-left: 4px; font-size: 0.75rem; }
 .lt-sort-icon.neutral { color: #444; }
@@ -264,6 +266,22 @@
   letter-spacing: 0.04em;
 }
 
+/* Connu toggle */
+.lt-td-connu { width: 40px; text-align: center; }
+.lt-connu-toggle {
+  background: none;
+  border: 1px solid #333;
+  border-radius: 3px;
+  color: #444;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 3px 7px;
+  transition: all 0.15s;
+}
+.lt-connu-toggle:hover { border-color: #666; color: #888; }
+.lt-connu-toggle--on { border-color: rgba(76,175,80,0.5); color: #4caf50; }
+.lt-connu-toggle--on:hover { background: rgba(76,175,80,0.08); }
+
 /* Empty states */
 .lt-empty-cell { color: #444; }
 
@@ -321,4 +339,103 @@
   .lt-table-wrap { padding: 1rem; }
   .lt-th-statut, .lt-td-statut { display: none; }
   .lt-th-bourg, .lt-td-bourg   { display: none; }
+}
+
+/* ── Joueurs column (MJ campagne) ─────────────────────────────────────────── */
+.lt-td-joueurs { width: 60px; text-align: center; vertical-align: middle; }
+
+.lt-joueurs-cell { position: relative; display: inline-block; }
+
+.lt-joueurs-btn {
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #555;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  font-family: 'Cinzel', serif;
+}
+.lt-joueurs-btn:hover { border-color: #d4af37; color: #d4af37; }
+.lt-joueurs-btn--active {
+  border-color: rgba(212,175,55,0.6);
+  color: #d4af37;
+  background: rgba(212,175,55,0.08);
+}
+
+.lt-joueurs-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+  min-width: 200px;
+  background: #140f10;
+  border: 1px solid rgba(139,0,0,0.4);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+.lt-joueurs-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(139,0,0,0.3);
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.lt-joueurs-popover-actions { display: flex; gap: 6px; }
+
+.lt-joueurs-all, .lt-joueurs-none {
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #666;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lt-joueurs-all:hover  { border-color: #4caf50; color: #4caf50; }
+.lt-joueurs-none:hover { border-color: #dc143c; color: #dc143c; }
+
+.lt-joueurs-list { padding: 4px 0; }
+
+.lt-joueurs-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  transition: background 0.1s;
+}
+.lt-joueurs-item:hover { background: rgba(212,175,55,0.04); }
+
+.lt-joueurs-toggle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.lt-joueurs-toggle.on  { border-color: rgba(76,175,80,0.6); color: #4caf50; background: rgba(76,175,80,0.08); }
+.lt-joueurs-toggle.off { color: #444; }
+.lt-joueurs-toggle:hover { border-color: #888; }
+
+.lt-joueurs-nom {
+  font-size: 0.85rem;
+  color: #c0c0c0;
+  font-family: 'Cormorant Garamond', serif;
 }

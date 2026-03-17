@@ -24,7 +24,7 @@ const FIELD_DEFAULTS = {
 };
 
 // ── PersonnageDetail ───────────────────────────────────────────────────────
-function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerClan = null }) {
+function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerClan = null, joueur = null, selectedCampagne = null }) {
   const [personnage, setPersonnage]               = useState(null);
   const [clan, setClan]                           = useState(null);
   const [loading, setLoading]                     = useState(true);
@@ -33,12 +33,14 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   const [saving, setSaving]                       = useState(false);
   const [saveMsg, setSaveMsg]                     = useState('');
   const [fieldVisibility, setFieldVisibility]     = useState({});
+  const [joueurs, setJoueurs]                     = useState([]);
 
   // Clan roster pour la navigation prev/next
   const [clanRoster, setClanRoster]                   = useState([]);
   const [currentPersonnageId, setCurrentPersonnageId] = useState(personnageId);
 
-  const mjMode = !playerMode;
+  const mjMode        = !playerMode;
+  const isCampagneMode = playerMode && !!joueur;
 
   useEffect(() => {
     setCurrentPersonnageId(personnageId);
@@ -47,6 +49,16 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   useEffect(() => {
     loadPersonnage();
   }, [currentPersonnageId]);
+
+  // Load all joueurs for the MJ visibility panel
+  useEffect(() => {
+    if (!mjMode) return;
+    supabase
+      .from('joueurs')
+      .select('id, nom, campagne_id, campagnes(nom)')
+      .order('campagne_id')
+      .then(({ data }) => setJoueurs(data || []));
+  }, [mjMode]);
 
   const loadPersonnage = async () => {
     try {
@@ -114,8 +126,20 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   }, [currentPersonnageId]);
 
   // ── Toggle helpers ─────────────────────────────────────────────────────────
-  const toggleField = useCallback((fieldKey) => {
+  // joueurId: if provided, write into fv[joueurId] scope (MJ joueur panel)
+  //           if null, write flat (existing MJ toggles)
+  const toggleField = useCallback((fieldKey, joueurId = null) => {
     setFieldVisibility(prev => {
+      // Per-joueur scoped toggle
+      if (joueurId) {
+        const joueurScope = prev[joueurId] ?? {};
+        const current = fieldKey in joueurScope ? joueurScope[fieldKey] !== false : (FIELD_DEFAULTS[fieldKey] ?? false);
+        const nextScope = { ...joueurScope, [fieldKey]: !current };
+        const next = { ...prev, [joueurId]: nextScope };
+        saveVisibility(next);
+        return next;
+      }
+      // Flat MJ toggle (existing behaviour)
       const current = isFieldVisible(prev, fieldKey);
       const next = { ...prev, [fieldKey]: !current };
       saveVisibility(next);
@@ -123,11 +147,34 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
     });
   }, [saveVisibility]);
 
-  // Toggle d'un item individuel (roles / relations)
-  // Stocké sous field_visibility.roles_items / relations_items : { "0": false, "2": true }
-  // Absence de clé = hérite du défaut du champ parent
-  const toggleItem = useCallback((fieldKey, index) => {
+  // Toggle presence of a joueur in field_visibility (add with {} or remove entirely)
+  const toggleJoueurPresence = useCallback((joueurId) => {
     setFieldVisibility(prev => {
+      const next = { ...prev };
+      if (joueurId in next) {
+        delete next[joueurId];
+      } else {
+        next[joueurId] = {};
+      }
+      saveVisibility(next);
+      return next;
+    });
+  }, [saveVisibility]);
+
+  // Toggle d'un item individuel (roles / relations)
+  const toggleItem = useCallback((fieldKey, index, joueurId = null) => {
+    setFieldVisibility(prev => {
+      if (joueurId) {
+        const joueurScope = prev[joueurId] ?? {};
+        const itemsKey = `${fieldKey}_items`;
+        const items = joueurScope[itemsKey] || {};
+        const currentlyVisible = String(index) in items ? items[String(index)] !== false : (FIELD_DEFAULTS[fieldKey] ?? false);
+        const nextItems = { ...items, [String(index)]: !currentlyVisible };
+        const nextScope = { ...joueurScope, [itemsKey]: nextItems };
+        const next = { ...prev, [joueurId]: nextScope };
+        saveVisibility(next);
+        return next;
+      }
       const itemsKey = `${fieldKey}_items`;
       const items = prev[itemsKey] || {};
       const currentlyVisible = isItemVisible(prev, fieldKey, index);
@@ -139,15 +186,25 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   }, [saveVisibility]);
 
   // ── Visibility helpers ─────────────────────────────────────────────────────
+  // MJ toggles write to a flat fv: { histoire: true, relations: false }
+  // Campagne joueurs read from fv[joueur.id]: { alice: { histoire: true } }
+  // The MJ panel (added below) writes per-joueur scoped keys.
+
+  const getScopedFv = (fv) => {
+    if (isCampagneMode && joueur) return fv[joueur.id] ?? {};
+    return fv;
+  };
+
   const isFieldVisible = (fv, fieldKey) => {
-    if (fieldKey in fv) return fv[fieldKey] !== false;
+    const scoped = getScopedFv(fv);
+    if (fieldKey in scoped) return scoped[fieldKey] !== false;
     return FIELD_DEFAULTS[fieldKey] ?? false;
   };
 
   const isItemVisible = (fv, fieldKey, index) => {
-    const items = fv[`${fieldKey}_items`] || {};
+    const scoped = getScopedFv(fv);
+    const items = scoped[`${fieldKey}_items`] || {};
     if (String(index) in items) return items[String(index)] !== false;
-    // Item sans surcharge individuelle : hérite du défaut du champ
     return FIELD_DEFAULTS[fieldKey] ?? false;
   };
 
@@ -603,6 +660,17 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
         </div>
       )}
 
+      {/* ── Panneau visibilité joueurs (MJ only) ──────────────────────────── */}
+      {mjMode && joueurs.length > 0 && (
+        <JoueurVisibilityPanel
+          joueurs={joueurs}
+          fieldVisibility={fieldVisibility}
+          onToggleField={toggleField}
+          onTogglePresence={toggleJoueurPresence}
+          selectedCampagne={selectedCampagne}
+        />
+      )}
+
       {showPortraitModal && (
         <PortraitModal
           imageUrl={getImageUrl()}
@@ -624,6 +692,98 @@ function VisibilityToggle({ visible, onToggle, label, className = '' }) {
     >
       {visible ? '👁' : '◌'}
     </button>
+  );
+}
+
+// ── JoueurVisibilityPanel ─────────────────────────────────────────────────
+const TOGGLEABLE_FIELDS = [
+  { key: 'personnalite', label: 'Personnalité' },
+  { key: 'histoire',     label: 'Histoire' },
+  { key: 'sire',         label: 'Sire' },
+  { key: 'generation',   label: 'Génération' },
+  { key: 'relations',    label: 'Relations' },
+  { key: 'notes',        label: 'Notes' },
+  { key: 'roles',        label: 'Rôles' },
+];
+
+function JoueurVisibilityPanel({ joueurs, fieldVisibility, onToggleField, onTogglePresence, selectedCampagne }) {
+  const [open, setOpen] = useState(false);
+
+  // Filter by selected campagne, then group
+  const filteredJoueurs = selectedCampagne
+    ? joueurs.filter(j => j.campagne_id === selectedCampagne)
+    : joueurs;
+
+  // Group joueurs by campagne
+  const byCampagne = filteredJoueurs.reduce((acc, j) => {
+    const key = j.campagne_id;
+    if (!acc[key]) acc[key] = { nom: j.campagnes?.nom || key, joueurs: [] };
+    acc[key].joueurs.push(j);
+    return acc;
+  }, {});
+
+  const isJoueurVisible = (joueurId) => joueurId in fieldVisibility;
+
+  const isJoueurFieldVisible = (joueurId, fieldKey) => {
+    const fv = fieldVisibility[joueurId] ?? {};
+    if (fieldKey in fv) return fv[fieldKey] !== false;
+    return FIELD_DEFAULTS[fieldKey] ?? false;
+  };
+
+  return (
+    <div className="pd-joueur-panel">
+      <button
+        className="pd-joueur-panel-toggle"
+        onClick={() => setOpen(v => !v)}
+        type="button"
+      >
+        <span>👥 Visibilité joueurs</span>
+        <span className="pd-joueur-panel-chevron">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="pd-joueur-panel-body">
+          {Object.entries(byCampagne).map(([campagneId, { nom: campagneNom, joueurs: campagneJoueurs }]) => (
+            <div key={campagneId} className="pd-joueur-campagne">
+              <div className="pd-joueur-campagne-label">{campagneNom}</div>
+              {campagneJoueurs.map(j => {
+                const visible = isJoueurVisible(j.id);
+                return (
+                  <div key={j.id} className="pd-joueur-block">
+                    <div className="pd-joueur-row">
+                      <span className="pd-joueur-name">{j.nom}</span>
+                      <div className="pd-joueur-visible-toggle" onClick={() => onTogglePresence(j.id)}>
+                        <span>{visible ? 'Visible' : 'Caché'}</span>
+                        <div className={`pd-toggle ${visible ? 'on' : ''}`} />
+                      </div>
+                    </div>
+
+                    {visible && (
+                      <div className="pd-joueur-fields">
+                        {TOGGLEABLE_FIELDS.map(({ key, label }) => {
+                          const fieldVisible = isJoueurFieldVisible(j.id, key);
+                          return (
+                            <button
+                              key={key}
+                              type="button"
+                              className={`pd-joueur-field-pill ${fieldVisible ? 'active' : ''}`}
+                              onClick={() => onToggleField(key, j.id)}
+                            >
+                              <span className="pd-joueur-field-dot" />
+                              {label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

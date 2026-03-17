@@ -355,3 +355,150 @@
   .pt-header-text h1 { font-size: 28px; }
   .pt-th-roles, .pt-td-roles { display: none; }
 }
+
+/* ── Joueurs dropdown column ──────────────────────────────────────────────── */
+
+.pt-th-joueurs {
+  cursor: default;
+  min-width: 120px;
+}
+
+.pt-td-joueurs {
+  padding: 6px 12px;
+  vertical-align: middle;
+}
+
+.pt-joueurs-cell {
+  position: relative;
+}
+
+.pt-joueurs-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(212,175,55,0.2);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 0.7;
+  transition: all 0.15s;
+}
+
+.pt-joueurs-btn:hover,
+.pt-joueurs-btn.open {
+  opacity: 1;
+  border-color: rgba(212,175,55,0.5);
+  background: rgba(212,175,55,0.06);
+}
+
+.pt-joueurs-arrow {
+  font-size: 9px;
+  opacity: 0.5;
+}
+
+/* Dropdown popover */
+.pt-joueurs-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 200;
+  background: #111;
+  border: 1px solid rgba(212,175,55,0.3);
+  min-width: 180px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pt-joueurs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 2px;
+  transition: background 0.1s;
+}
+
+.pt-joueurs-row:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.pt-joueurs-name {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+/* Mini toggle inside dropdown */
+.pt-joueurs-toggle {
+  width: 30px;
+  height: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(220,20,60,0.5);
+  background: rgba(220,20,60,0.2);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.pt-joueurs-toggle::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  top: 2px;
+  left: 2px;
+  transition: left 0.15s, background 0.15s;
+}
+
+.pt-joueurs-toggle.on {
+  border-color: rgba(76,175,80,0.6);
+  background: rgba(76,175,80,0.25);
+}
+
+.pt-joueurs-toggle.on::after {
+  left: 16px;
+  background: #4caf50;
+}
+
+.pt-joueurs-divider {
+  height: 1px;
+  background: rgba(212,175,55,0.15);
+  margin: 4px 0;
+}
+
+.pt-joueurs-actions {
+  display: flex;
+  gap: 4px;
+  padding: 2px 4px;
+}
+
+.pt-joueurs-action {
+  flex: 1;
+  background: none;
+  border: 1px solid rgba(212,175,55,0.15);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.15s;
+}
+
+.pt-joueurs-action:hover {
+  opacity: 1;
+  border-color: rgba(212,175,55,0.4);
+  background: rgba(212,175,55,0.06);
+}

@@ -127,6 +127,10 @@
   .nav-label {
     font-size: 12px;
   }
+}
+
+/* ── Mode badge ───────────────────────────────────────────────────────────── */
+
 .nav-mode-badge {
   padding: 8px 16px 12px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
@@ -154,6 +158,34 @@
   border-color: currentColor;
 }
 
+/* Campagne joueur badge */
+.nav-badge--campagne {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-color: rgba(212, 175, 55, 0.3);
+  padding: 5px 10px;
+}
+
+.nav-badge-joueur {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+}
+
+.nav-badge-campagne {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  color: var(--silver);
+  opacity: 0.5;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+
+/* ── Logout ───────────────────────────────────────────────────────────────── */
+
 .nav-logout {
   display: block;
   width: 100%;
@@ -177,4 +209,132 @@
   opacity: 0.7;
 }
 
+/* ── Sélecteur de campagne (MJ only) ─────────────────────────────────────── */
+
+.nav-campagne-selector {
+  padding: 10px 16px 14px;
+  border-bottom: 1px solid rgba(212,175,55,0.1);
+}
+
+.nav-campagne-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin: 0 0 8px;
+}
+
+.nav-campagne-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav-campagne-btn {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(212,175,55,0.2);
+  color: var(--silver);
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.nav-campagne-btn:hover {
+  opacity: 0.9;
+  border-color: rgba(212,175,55,0.4);
+}
+
+.nav-campagne-btn.active {
+  background: rgba(212,175,55,0.1);
+  border-color: rgba(212,175,55,0.6);
+  color: var(--gold);
+  opacity: 1;
+}
+
+/* ── Collapse toggle button ───────────────────────────────────────────────── */
+.nav-collapse-btn {
+  position: absolute;
+  top: 50%;
+  right: -14px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--darker-bg, #0d0a0b);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.4);
+}
+.nav-collapse-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* ── Collapsed state ─────────────────────────────────────────────────────── */
+.navigation--collapsed {
+  width: 60px;
+}
+
+/* Sync margin-left on main-content */
+:root:has(.navigation--collapsed) .main-content {
+  margin-left: 60px;
+}
+
+.navigation--collapsed .nav-header,
+.navigation--collapsed .nav-mode-badge,
+.navigation--collapsed .nav-campagne-selector,
+.navigation--collapsed .nav-label,
+.navigation--collapsed .nav-version,
+.navigation--collapsed .nav-logout {
+  display: none;
+}
+
+.navigation--collapsed .nav-item {
+  justify-content: center;
+  padding: 16px 0;
+  border-left: 3px solid transparent;
+}
+
+.navigation--collapsed .nav-icon {
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+.navigation--collapsed .nav-item:hover .nav-icon,
+.navigation--collapsed .nav-item.active .nav-icon {
+  opacity: 1;
+}
+
+.navigation--collapsed .nav-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+}
+
+/* ThemeToggle centré en mode collapsed */
+.navigation--collapsed .nav-footer > * {
+  margin: 0;
+}
+
+/* Transition fluide */
+.navigation {
+  transition: width 0.25s ease;
 }

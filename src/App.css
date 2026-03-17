@@ -9,6 +9,7 @@
   min-height: 100vh;
   min-width: 0;        /* empêche le flex item de déborder */
   overflow-x: auto;   /* scroll horizontal si le contenu dépasse */
+  transition: margin-left 0.25s ease;
 }
 
 .placeholder-page {

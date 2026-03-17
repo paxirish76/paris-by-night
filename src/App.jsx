@@ -18,7 +18,7 @@ import './App.css';
 
 // ─── Inner app (has access to auth context) ───────────────
 function AppInner() {
-  const { mode, logout } = useAuth();
+  const { mode, joueur, logout } = useAuth();
 
   const [currentPage, setCurrentPage]               = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
@@ -26,12 +26,16 @@ function AppInner() {
   const [targetBourgId, setTargetBourgId]           = useState(null);
   const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
   const [genealogieClan, setGenealogieClan]         = useState(null);
+  const [selectedCampagne, setSelectedCampagne]     = useState(null);
 
   // Not logged in → show login screen
   if (!mode) return <LoginScreen />;
 
-  const viewerClan  = isPlayer(mode) ? mode : null;   // null pour MJ et invité
-  const playerMode  = isPlayer(mode) || isGuest(mode); // invité = restrictions joueur
+  // ── Auth mode resolution ────────────────────────────────
+  const isCampagneMode = mode === 'campagne';
+  const viewerClan     = isPlayer(mode) ? mode : null;
+  // Campagne joueurs get player-level restrictions (no MJ access)
+  const playerMode     = isPlayer(mode) || isGuest(mode) || isCampagneMode;
 
   // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
@@ -47,7 +51,6 @@ function AppInner() {
   };
 
   const navigateToPersonnage = (personnageId) => {
-    // Block globally hidden personnages for all players and guests
     if (playerMode && HIDDEN_PERSONNAGE_IDS.includes(personnageId)) return;
     setSelectedPersonnageId(personnageId);
   };
@@ -65,20 +68,17 @@ function AppInner() {
   const clearTargetLieu  = () => setTargetLieuId(null);
   const clearTargetBourg = () => setTargetBourgId(null);
 
-  // ── Page guard: redirect players away from MJ-only pages ─
-  const safePage = (page) => {
-    return page;
-  };
+  const navigate = (page) => setCurrentPage(page);
 
-  const navigate = (page) => setCurrentPage(safePage(page));
-
-  // ── PersonnageDetail: props vary by mode ────────────────
+  // ── PersonnageDetail ────────────────────────────────────
   const renderPersonnageDetail = (id) => (
     <PersonnageDetail
       personnageId={id}
       onClose={() => setSelectedPersonnageId(null)}
       playerMode={playerMode}
       viewerClan={viewerClan}
+      joueur={joueur}
+      selectedCampagne={selectedCampagne}
     />
   );
 
@@ -110,6 +110,8 @@ function AppInner() {
             mode={mode}
             viewerClan={viewerClan}
             playerMode={playerMode}
+            joueur={joueur}
+            selectedCampagne={selectedCampagne}
           />
         );
 
@@ -173,7 +175,7 @@ function AppInner() {
       case 'influences':
         return (
           <Influences
-            playerMode={isPlayer(mode)}
+            playerMode={isPlayer(mode) || isCampagneMode}
             viewerClan={isPlayer(mode) ? mode : null}
           />
         );
@@ -185,15 +187,15 @@ function AppInner() {
 
   return (
     <div className="app">
-      {!selectedPersonnageId && (
-        <Navigation
-          currentPage={currentPage}
-          onNavigate={navigate}
-          mode={mode}
-          onLogout={logout}
-        />
-      )}
-      <main className={`main-content ${selectedPersonnageId ? 'fullscreen' : ''}`}>
+      <Navigation
+        currentPage={currentPage}
+        onNavigate={navigate}
+        mode={mode}
+        joueur={joueur}
+        onLogout={logout}
+        onCampagneChange={setSelectedCampagne}
+      />
+      <main className="main-content">
         {renderPage()}
       </main>
     </div>

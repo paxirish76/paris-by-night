@@ -4,22 +4,18 @@
    ================================================================ */
 
 .personnage-detail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  min-height: calc(100vh - 60px);
   background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 50%, #1a1215 100%);
   overflow-y: auto;
-  z-index: 1000;
   animation: fadeIn 0.4s ease-out;
   padding: 20px;
 }
 
 .btn-close-top {
-  position: fixed;
+  position: sticky;
   top: 20px;
-  right: 20px;
+  float: right;
   background: rgba(139, 0, 0, 0.8);
   color: var(--gold);
   border: 1px solid var(--gold);
@@ -28,7 +24,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 1001;
+  z-index: 10;
   letter-spacing: 1px;
 }
 
@@ -774,4 +770,195 @@
   opacity: 0.4;
   text-decoration: line-through;
   text-decoration-color: rgba(220, 20, 60, 0.4);
+}
+
+/* ================================================================
+   PANNEAU VISIBILITÉ JOUEURS (MJ only)
+   ================================================================ */
+
+.pd-joueur-panel {
+  max-width: 1600px;
+  margin: 12px auto 24px;
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pd-joueur-panel-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.02);
+  border: none;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--silver);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.pd-joueur-panel-toggle:hover {
+  opacity: 1;
+  background: rgba(212,175,55,0.04);
+}
+
+.pd-joueur-panel-chevron {
+  font-size: 10px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.pd-joueur-panel-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 1px solid rgba(212,175,55,0.15);
+  background: rgba(0,0,0,0.2);
+}
+
+/* Campagne group label */
+.pd-joueur-campagne {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pd-joueur-campagne-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.5;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+}
+
+/* Individual joueur block */
+.pd-joueur-block {
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pd-joueur-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pd-joueur-name {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--pale-gold);
+  letter-spacing: 1px;
+}
+
+/* Visible toggle */
+.pd-joueur-visible-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--silver);
+  opacity: 0.6;
+  user-select: none;
+  cursor: pointer;
+}
+
+.pd-toggle {
+  display: block;
+  width: 34px;
+  height: 18px;
+  min-width: 34px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(220,20,60,0.3);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.pd-toggle::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s, background 0.2s;
+}
+
+.pd-toggle.on {
+  background: rgba(76,175,80,0.5);
+  border-color: rgba(76,175,80,0.8);
+}
+
+.pd-toggle.on::after {
+  left: 18px;
+  background: #4caf50;
+}
+
+/* Field pills grid */
+.pd-joueur-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pd-joueur-field-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--silver);
+  opacity: 0.5;
+  transition: all 0.15s ease;
+}
+
+.pd-joueur-field-pill:hover {
+  opacity: 0.85;
+  border-color: rgba(212,175,55,0.3);
+}
+
+.pd-joueur-field-pill.active {
+  border-color: rgba(76,175,80,0.5);
+  background: rgba(76,175,80,0.1);
+  color: #7ecf81;
+  opacity: 1;
+}
+
+.pd-joueur-field-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.pd-joueur-field-pill.active .pd-joueur-field-dot {
+  background: #4caf50;
 }

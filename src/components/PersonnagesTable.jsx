@@ -19,33 +19,41 @@ export default function PersonnagesTable({
   mode = 'mj',
   viewerClan = null,
   playerMode = false,
+  joueur = null,
+  selectedCampagne = null,
 }) {
   const [personnages, setPersonnages] = useState([]);
   const [clans, setClans]             = useState([]);
+  const [joueurs, setJoueurs]         = useState([]);
   const [loading, setLoading]         = useState(true);
   const [search, setSearch]           = useState('');
   const [filterClan, setFilterClan]   = useState('');
-  const [filterConnu, setFilterConnu] = useState('');   // '' | 'connu' | 'inconnu' (MJ only)
+  const [filterConnu, setFilterConnu] = useState('');
   const [sortField, setSortField]     = useState('clan');
   const [sortAsc, setSortAsc]         = useState(true);
-  const [toggling, setToggling]       = useState(null); // id being toggled
+  const [toggling, setToggling]       = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null); // personnage id with open dropdown
+  const [savingFv, setSavingFv]         = useState(null); // personnage id being saved
 
-  const mjMode = isMJ(mode) && !playerMode;
+  const mjMode       = isMJ(mode) && !playerMode;
+  const isCampagneMode = playerMode && !!joueur;
 
   // ── Load ──────────────────────────────────────────────────────────────────
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const [{ data: clansData }, { data: persoData }] = await Promise.all([
+      const [{ data: clansData }, { data: persoData }, { data: joueursData }] = await Promise.all([
         supabase.from('clans').select('id, nom, couleur').order('nom'),
         supabase.from('personnages')
-          .select('id, nom, clan_id, generation, roles, ghost, connu, image_url')
+          .select('id, nom, clan_id, generation, roles, ghost, connu, image_url, field_visibility')
           .eq('ghost', false)
           .order('generation', { ascending: true }),
+        supabase.from('joueurs').select('id, nom, campagne_id, campagnes(nom)').order('nom'),
       ]);
 
       const clansMap = Object.fromEntries((clansData || []).map(c => [c.id, c]));
       setClans(clansData || []);
+      setJoueurs(joueursData || []);
       setPersonnages((persoData || []).map(p => ({
         ...p,
         clan_nom:   clansMap[p.clan_id]?.nom    || '',
@@ -73,15 +81,65 @@ export default function PersonnagesTable({
     setToggling(null);
   }, [mjMode]);
 
+  // ── Toggle joueur visibility in field_visibility ───────────────────────────
+  const toggleJoueurVisibility = useCallback(async (e, personnage, joueurId) => {
+    e.stopPropagation();
+    const fv = { ...(personnage.field_visibility ?? {}) };
+    if (joueurId in fv) {
+      delete fv[joueurId];
+    } else {
+      fv[joueurId] = {};
+    }
+    setSavingFv(personnage.id);
+    const { error } = await supabase
+      .from('personnages')
+      .update({ field_visibility: fv })
+      .eq('id', personnage.id);
+    if (!error) {
+      setPersonnages(prev =>
+        prev.map(p => p.id === personnage.id ? { ...p, field_visibility: fv } : p)
+      );
+    }
+    setSavingFv(null);
+  }, []);
+
+  // Set all joueurs of current filter visible or hidden
+  const setAllJoueurs = useCallback(async (e, personnage, visible) => {
+    e.stopPropagation();
+    const visibleJoueurs = selectedCampagne
+      ? joueurs.filter(j => j.campagne_id === selectedCampagne)
+      : joueurs;
+    const fv = { ...(personnage.field_visibility ?? {}) };
+    if (visible) {
+      visibleJoueurs.forEach(j => { if (!(j.id in fv)) fv[j.id] = {}; });
+    } else {
+      visibleJoueurs.forEach(j => { delete fv[j.id]; });
+    }
+    setSavingFv(personnage.id);
+    const { error } = await supabase
+      .from('personnages')
+      .update({ field_visibility: fv })
+      .eq('id', personnage.id);
+    if (!error) {
+      setPersonnages(prev =>
+        prev.map(p => p.id === personnage.id ? { ...p, field_visibility: fv } : p)
+      );
+    }
+    setSavingFv(null);
+  }, [joueurs, selectedCampagne]);
+
   // ── Filter & sort ──────────────────────────────────────────────────────────
   const filtered = personnages
     .filter(p => {
       // VETO ABSOLU — prioritaire sur toute autre règle (clan, connu, override)
       if (!mjMode && HIDDEN_PERSONNAGE_IDS.includes(p.id)) return false;
 
-      // Invité (viewerClan=null) : uniquement connu=true
-      // Joueur clan : son clan + connu=true
-      if (!mjMode) {
+      // Campagne joueur: visible only if joueur.id is a key in field_visibility
+      if (isCampagneMode) {
+        const fv = p.field_visibility ?? {};
+        if (!(joueur.id in fv)) return false;
+      } else if (!mjMode) {
+        // Clan player / guest
         if (viewerClan && p.clan_id === viewerClan) return true;
         if (!p.connu) return false;
       }
@@ -117,6 +175,14 @@ export default function PersonnagesTable({
     setSortField('clan');
     setSortAsc(true);
   };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!openDropdown) return;
+    const handler = () => setOpenDropdown(null);
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [openDropdown]);
 
   const isDirty = search || filterClan || filterConnu || sortField !== 'clan' || !sortAsc;
 
@@ -201,21 +267,31 @@ export default function PersonnagesTable({
                 Gén. <SortIcon field="generation" sortField={sortField} sortAsc={sortAsc} />
               </th>
               <th className="pt-th pt-th-roles">Rôles</th>
-              {/* MJ only: connu toggle column */}
               {mjMode && (
                 <th className="pt-th pt-th-connu" title="Visible par les joueurs">👁</th>
+              )}
+              {mjMode && (
+                <th className="pt-th pt-th-joueurs">Joueurs</th>
               )}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={mjMode ? 6 : 5} className="pt-empty">
+                <td colSpan={mjMode ? 7 : 5} className="pt-empty">
                   Aucun personnage ne correspond
                 </td>
               </tr>
             ) : (
-              filtered.map(p => (
+              filtered.map(p => {
+                const fv = p.field_visibility ?? {};
+                const visibleJoueurs = selectedCampagne
+                  ? joueurs.filter(j => j.campagne_id === selectedCampagne)
+                  : joueurs;
+                const visibleCount = visibleJoueurs.filter(j => j.id in fv).length;
+                const isDropOpen = openDropdown === p.id;
+
+                return (
                 <tr
                   key={p.id}
                   className={`pt-row ${p.connu ? 'pt-row--connu' : ''}`}
@@ -223,15 +299,9 @@ export default function PersonnagesTable({
                 >
                   {/* Portrait thumbnail */}
                   <td className="pt-td pt-td-icon">
-                    <div
-                      className="pt-avatar"
-                      style={{ borderColor: p.clan_color }}
-                    >
+                    <div className="pt-avatar" style={{ borderColor: p.clan_color }}>
                       {p.image_url
-                        ? <img
-                            src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/personnages/${p.image_url}`}
-                            alt={p.nom}
-                          />
+                        ? <img src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/personnages/${p.image_url}`} alt={p.nom} />
                         : <span className="pt-avatar-placeholder">🧛</span>
                       }
                     </div>
@@ -239,17 +309,12 @@ export default function PersonnagesTable({
 
                   {/* Nom */}
                   <td className="pt-td pt-td-nom">
-                    <span className="pt-nom" style={{ color: p.clan_color }}>
-                      {p.nom}
-                    </span>
+                    <span className="pt-nom" style={{ color: p.clan_color }}>{p.nom}</span>
                   </td>
 
                   {/* Clan */}
                   <td className="pt-td pt-td-clan">
-                    <span
-                      className="pt-clan-badge"
-                      style={{ background: `${p.clan_color}22`, borderColor: `${p.clan_color}66`, color: p.clan_color }}
-                    >
+                    <span className="pt-clan-badge" style={{ background: `${p.clan_color}22`, borderColor: `${p.clan_color}66`, color: p.clan_color }}>
                       {p.clan_nom}
                     </span>
                   </td>
@@ -283,8 +348,46 @@ export default function PersonnagesTable({
                       </button>
                     </td>
                   )}
+
+                  {/* MJ joueurs dropdown */}
+                  {mjMode && (
+                    <td className="pt-td pt-td-joueurs" onClick={e => e.stopPropagation()}>
+                      <div className="pt-joueurs-cell">
+                        <button
+                          className={`pt-joueurs-btn ${isDropOpen ? 'open' : ''}`}
+                          onClick={e => { e.stopPropagation(); setOpenDropdown(isDropOpen ? null : p.id); }}
+                          disabled={savingFv === p.id}
+                        >
+                          {savingFv === p.id ? '…' : `${visibleCount} / ${visibleJoueurs.length}`}
+                          <span className="pt-joueurs-arrow">{isDropOpen ? '▲' : '▼'}</span>
+                        </button>
+
+                        {isDropOpen && (
+                          <div className="pt-joueurs-dropdown" onClick={e => e.stopPropagation()}>
+                            {visibleJoueurs.map(j => {
+                              const on = j.id in fv;
+                              return (
+                                <div key={j.id} className="pt-joueurs-row">
+                                  <span className="pt-joueurs-name">{j.nom}</span>
+                                  <div
+                                    className={`pt-joueurs-toggle ${on ? 'on' : ''}`}
+                                    onClick={e => toggleJoueurVisibility(e, p, j.id)}
+                                  />
+                                </div>
+                              );
+                            })}
+                            <div className="pt-joueurs-divider" />
+                            <div className="pt-joueurs-actions">
+                              <button className="pt-joueurs-action" onClick={e => setAllJoueurs(e, p, true)}>✓ Tous</button>
+                              <button className="pt-joueurs-action" onClick={e => setAllJoueurs(e, p, false)}>✕ Aucun</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                  )}
                 </tr>
-              ))
+              );})
             )}
           </tbody>
         </table>

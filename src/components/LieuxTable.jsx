@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { isMJ } from './AuthContext';
 import LieuDetail from './LieuDetail';
@@ -16,11 +16,94 @@ const SortIcon = ({ field, sortField, sortAsc }) => {
   return <span className="lt-sort-icon active">{sortAsc ? '↑' : '↓'}</span>;
 };
 
-const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, mode = 'mj' }) => {
+// ── JoueursDropdown ────────────────────────────────────────────────────────
+// Même pattern que PersonnagesTable — X/N + popover avec toggles
+const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence, selectedCampagne }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  const filteredJoueurs = selectedCampagne
+    ? joueurs.filter(j => j.campagne_id === selectedCampagne)
+    : joueurs;
+
+  const presentCount = filteredJoueurs.filter(j => fieldVisibility?.[j.id] !== undefined).length;
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div className="lt-joueurs-cell" ref={ref}>
+      <button
+        className={`lt-joueurs-btn ${presentCount > 0 ? 'lt-joueurs-btn--active' : ''}`}
+        onClick={(e) => { e.stopPropagation(); setOpen(v => !v); }}
+        title="Gérer la visibilité joueurs"
+      >
+        {presentCount}/{filteredJoueurs.length}
+      </button>
+
+      {open && (
+        <div className="lt-joueurs-popover" onClick={e => e.stopPropagation()}>
+          <div className="lt-joueurs-popover-header">
+            <span>Visibilité joueurs</span>
+            <div className="lt-joueurs-popover-actions">
+              <button
+                className="lt-joueurs-all"
+                onClick={() => filteredJoueurs.forEach(j => {
+                  if (fieldVisibility?.[j.id] === undefined) onTogglePresence(lieu.id, j.id, false, fieldVisibility);
+                })}
+              >Tous</button>
+              <button
+                className="lt-joueurs-none"
+                onClick={() => filteredJoueurs.forEach(j => {
+                  if (fieldVisibility?.[j.id] !== undefined) onTogglePresence(lieu.id, j.id, true, fieldVisibility);
+                })}
+              >Aucun</button>
+            </div>
+          </div>
+          <div className="lt-joueurs-list">
+            {filteredJoueurs.map(j => {
+              const isPresent = fieldVisibility?.[j.id] !== undefined;
+              return (
+                <div key={j.id} className="lt-joueurs-item">
+                  <button
+                    className={`lt-joueurs-toggle ${isPresent ? 'on' : 'off'}`}
+                    onClick={() => onTogglePresence(lieu.id, j.id, isPresent, fieldVisibility)}
+                  >
+                    {isPresent ? '👁' : '◌'}
+                  </button>
+                  <span className="lt-joueurs-nom">{j.nom}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── LieuxTable ─────────────────────────────────────────────────────────────
+const LieuxTable = ({
+  onNavigateToCarte,
+  playerMode = false,
+  viewerClan = null,
+  mode = 'mj',
+  joueur = null,
+  selectedCampagne = null,
+}) => {
   const mjMode = playerMode ? false : isMJ(mode);
+  const isJoueurCampagne = !mjMode && joueur != null;
+
   const [lieux, setLieux]         = useState([]);
   const [clans, setClans]         = useState([]);
   const [bourgs, setBourgs]       = useState([]);
+  const [joueurs, setJoueurs]     = useState([]);
   const [loading, setLoading]     = useState(true);
   const [search, setSearch]       = useState('');
   const [filterClan, setFilterClan]     = useState('');
@@ -35,25 +118,32 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
     (async () => {
       try {
         setLoading(true);
-        const [{ data: clansData }, { data: bourgsData }, { data: lieuxData }] = await Promise.all([
+        const queries = [
           supabase.from('clans').select('*').order('nom'),
           supabase.from('bourgs').select('id, nom').order('nom'),
-          supabase.from('lieux').select('*, bourg:bourgs!lieux_bourg_id_fkey(nom)').order('nom'),
-        ]);
+          supabase.from('lieux').select('*, bourg:bourgs!lieux_bourg_id_fkey(nom), field_visibility').order('nom'),
+        ];
+        if (mjMode) {
+          queries.push(supabase.from('joueurs').select('id, nom, campagne_id, clan_id').order('nom'));
+        }
+        const results = await Promise.all(queries);
+        const [{ data: clansData }, { data: bourgsData }, { data: lieuxData }] = results;
         setClans(clansData || []);
         setBourgs(bourgsData || []);
-        // Enrich lieux with clan nom for sorting
         const clansMap = Object.fromEntries((clansData || []).map(c => [c.id, c]));
         setLieux((lieuxData || []).map(l => ({
           ...l,
           clan_nom:   clansMap[l.clan_id]?.nom || '',
           clan_color: clansMap[l.clan_id]?.couleur || '#666',
         })));
+        if (mjMode) {
+          setJoueurs(results[3]?.data || []);
+        }
       } finally {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [mjMode]);
 
   // ── Toggle connu (MJ only) ─────────────────────────────────────────────────
   const toggleConnu = useCallback(async (e, lieu) => {
@@ -66,35 +156,61 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
       .update({ connu: newVal })
       .eq('id', lieu.id);
     if (!error) {
-      setLieux(prev =>
-        prev.map(l => l.id === lieu.id ? { ...l, connu: newVal } : l)
-      );
+      setLieux(prev => prev.map(l => l.id === lieu.id ? { ...l, connu: newVal } : l));
     }
     setToggling(null);
   }, [mjMode]);
 
+  // ── Toggle présence joueur (depuis dropdown) ───────────────────────────────
+  const toggleJoueurPresence = useCallback(async (lieuId, joueurId, isPresent, currentFv) => {
+    let next;
+    if (isPresent) {
+      next = { ...(currentFv || {}) };
+      delete next[joueurId];
+    } else {
+      next = { ...(currentFv || {}), [joueurId]: {} };
+    }
+    const { error } = await supabase.from('lieux').update({ field_visibility: next }).eq('id', lieuId);
+    if (!error) {
+      setLieux(prev => prev.map(l => l.id === lieuId ? { ...l, field_visibility: next } : l));
+    }
+  }, []);
+
   // ── Filter & sort ─────────────────────────────────────────────────────────
-  const filtered = (mjMode ? lieux : lieux.filter(l => {
-    // Clan override: visible if viewer's clan is in the list
-    if (viewerClan && (l.clan_overrides || []).includes(viewerClan)) return true;
-    // Otherwise only connu lieux
-    return l.connu;
-  }))
-    .filter(l => {
-      const q = search.toLowerCase();
-      if (q && !l.nom.toLowerCase().includes(q) &&
-               !(l.statut || '').toLowerCase().includes(q) &&
-               !(l.bourg?.nom || '').toLowerCase().includes(q) &&
-               !(l.clan_nom || '').toLowerCase().includes(q)) return false;
-      if (filterClan && l.clan_id !== filterClan) return false;
-      if (filterStatut === 'elysium' && !(l.statut || '').toLowerCase().includes('elysium')) return false;
-      if (filterStatut === 'autre'   &&  (l.statut || '').toLowerCase().includes('elysium')) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      const cmp = SORT_FIELDS[sortField]?.(a, b) ?? 0;
-      return sortAsc ? cmp : -cmp;
-    });
+  const filtered = (() => {
+    let base;
+    if (mjMode) {
+      base = lieux;
+    } else if (isJoueurCampagne) {
+      // Campagne joueur : seulement les lieux où joueur.id est clé dans field_visibility
+      base = lieux.filter(l => {
+        const fv = l.field_visibility || {};
+        return joueur.id in fv;
+      });
+    } else {
+      // Clan player : connu ou clan_overrides
+      base = lieux.filter(l => {
+        if (viewerClan && (l.clan_overrides || []).includes(viewerClan)) return true;
+        return l.connu;
+      });
+    }
+    return base
+      .filter(l => {
+        const q = search.toLowerCase();
+        if (q && !l.nom.toLowerCase().includes(q) &&
+                 !(l.statut || '').toLowerCase().includes(q) &&
+                 !(l.bourg?.nom || '').toLowerCase().includes(q) &&
+                 !(l.clan_nom || '').toLowerCase().includes(q)) return false;
+        if (filterClan && l.clan_id !== filterClan) return false;
+        if (filterStatut === 'elysium' && !(l.statut || '').toLowerCase().includes('elysium')) return false;
+        if (filterStatut === 'autre'   &&  (l.statut || '').toLowerCase().includes('elysium')) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        const cmp = SORT_FIELDS[sortField]?.(a, b) ?? 0;
+        return sortAsc ? cmp : -cmp;
+      });
+  })();
 
   const handleSort = (field) => {
     if (sortField === field) setSortAsc(v => !v);
@@ -111,17 +227,20 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
 
   const isDirty = search || filterClan || filterStatut || sortField !== 'nom' || !sortAsc;
 
-  // ── Navigate to carte ─────────────────────────────────────────────────────
-  const handleRowClick = (lieu) => {
-    setSelectedLieuId(lieu.id);
-  };
+  // ── Navigate to detail ────────────────────────────────────────────────────
+  const handleRowClick = (lieu) => setSelectedLieuId(lieu.id);
 
   const handleOpenCarte = (lieuId) => {
     setSelectedLieuId(null);
     onNavigateToCarte(lieuId);
   };
 
-  // ── Render detail page ────────────────────────────────────────────────────
+  // ── Filtered joueurs for dropdown (par campagne sélectionnée) ─────────────
+  const filteredJoueurs = selectedCampagne
+    ? joueurs.filter(j => j.campagne_id === selectedCampagne)
+    : joueurs;
+
+  // ── Render detail ─────────────────────────────────────────────────────────
   if (selectedLieuId) return (
     <LieuDetail
       lieuId={selectedLieuId}
@@ -129,6 +248,8 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
       onNavigateToCarte={handleOpenCarte}
       playerMode={playerMode}
       viewerClan={viewerClan}
+      joueur={joueur}
+      selectedCampagne={selectedCampagne}
     />
   );
 
@@ -215,14 +336,17 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
                 Clan <SortIcon field="clan" sortField={sortField} sortAsc={sortAsc} />
               </th>
               {mjMode && (
-                <th className="lt-th lt-th-connu" title="Visible par les joueurs">👁</th>
+                <th className="lt-th lt-th-connu" title="Visible par les joueurs clan">👁</th>
+              )}
+              {mjMode && (
+                <th className="lt-th lt-th-joueurs" title="Visibilité joueurs campagne">👥</th>
               )}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={mjMode ? 6 : 5} className="lt-empty">
+                <td colSpan={mjMode ? 7 : 5} className="lt-empty">
                   Aucun lieu ne correspond à la recherche
                 </td>
               </tr>
@@ -234,7 +358,6 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
                     key={lieu.id}
                     className="lt-row"
                     onClick={() => handleRowClick(lieu)}
-                    title={`Voir ${lieu.nom} sur la carte`}
                   >
                     {/* Shape marker */}
                     <td className="lt-td lt-td-icon">
@@ -278,10 +401,23 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
                         <button
                           className={`lt-connu-toggle ${lieu.connu ? 'lt-connu-toggle--on' : ''}`}
                           disabled={toggling === lieu.id}
-                          title={lieu.connu ? 'Masquer aux joueurs' : 'Révéler aux joueurs'}
+                          title={lieu.connu ? 'Masquer aux joueurs clan' : 'Révéler aux joueurs clan'}
                         >
                           {toggling === lieu.id ? '…' : lieu.connu ? '👁' : '◌'}
                         </button>
+                      </td>
+                    )}
+
+                    {/* MJ joueurs dropdown */}
+                    {mjMode && (
+                      <td className="lt-td lt-td-joueurs" onClick={e => e.stopPropagation()}>
+                        <JoueursDropdown
+                          lieu={lieu}
+                          joueurs={filteredJoueurs}
+                          fieldVisibility={lieu.field_visibility || {}}
+                          onTogglePresence={toggleJoueurPresence}
+                          selectedCampagne={selectedCampagne}
+                        />
                       </td>
                     )}
                   </tr>
@@ -291,7 +427,6 @@ const LieuxTable = ({ onNavigateToCarte, playerMode = false, viewerClan = null, 
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };
