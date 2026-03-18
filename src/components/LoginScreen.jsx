@@ -3,43 +3,43 @@ import { useAuth } from './AuthContext';
 import { supabase } from '../lib/supabase';
 import './LoginScreen.css';
 
-// ── Modes ─────────────────────────────────────────────────────────────────
-// 'clan'     → single password field (existing behaviour)
-// 'campagne' → campaign selector → player selector → password field
+// Special identifiers for non-campagne users
+const SPECIAL_USERS = [
+  { id: '__mj__',    nom: 'Maître de Jeu', special: true },
+  { id: '__guest__', nom: 'Invité',        special: true },
+];
 
 export default function LoginScreen() {
-  const { login, loginJoueur } = useAuth();
+  const { loginJoueur } = useAuth();
 
-  const [scheme, setScheme]         = useState('clan'); // 'clan' | 'campagne'
-
-  // Clan path
-  const [password, setPassword]     = useState('');
-  const [error, setError]           = useState(false);
-  const [shaking, setShaking]       = useState(false);
-
-  // Campagne path
-  const [campagnes, setCampagnes]   = useState([]);
-  const [joueurs, setJoueurs]       = useState([]);
+  // Step 1 — campagne
+  const [campagnes, setCampagnes]           = useState([]);
   const [selectedCampagne, setSelectedCampagne] = useState(null);
-  const [selectedJoueur, setSelectedJoueur]     = useState(null);
-  const [campagnePassword, setCampagnePassword] = useState('');
-  const [campagneError, setCampagneError]       = useState('');
-  const [campagneShaking, setCampagneShaking]   = useState(false);
   const [loadingCampagnes, setLoadingCampagnes] = useState(false);
 
-  // ── Load campagnes on scheme switch ──────────────────────────────────
+  // Step 2 — joueur
+  const [joueurs, setJoueurs]               = useState([]);
+  const [selectedJoueur, setSelectedJoueur] = useState(null); // { id, nom, special? }
+
+  // Step 3 — password
+  const [password, setPassword]   = useState('');
+  const [error, setError]         = useState('');
+  const [shaking, setShaking]     = useState(false);
+
+  // ── Load campagnes on mount, auto-select if only one ─────────────────
   useEffect(() => {
-    if (scheme !== 'campagne') return;
     setLoadingCampagnes(true);
     supabase
       .from('campagnes')
       .select('id, nom')
       .order('nom')
       .then(({ data }) => {
-        setCampagnes(data || []);
+        const list = data || [];
+        setCampagnes(list);
+        if (list.length === 1) setSelectedCampagne(list[0].id);
         setLoadingCampagnes(false);
       });
-  }, [scheme]);
+  }, []);
 
   // ── Load joueurs when campagne selected ───────────────────────────────
   useEffect(() => {
@@ -52,158 +52,114 @@ export default function LoginScreen() {
       .then(({ data }) => setJoueurs(data || []));
   }, [selectedCampagne]);
 
-  // ── Clan login ────────────────────────────────────────────────────────
-  const handleClanSubmit = (e) => {
+  // ── Handlers ──────────────────────────────────────────────────────────
+  const handleSelectCampagne = (id) => {
+    setSelectedCampagne(id);
+    setSelectedJoueur(null);
+    setPassword('');
+    setError('');
+  };
+
+  const handleSelectJoueur = (joueur) => {
+    setSelectedJoueur(joueur);
+    setPassword('');
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const ok = login(password);
-    if (!ok) {
-      setError(true);
+    if (!selectedJoueur || !password) return;
+
+    const result = await loginJoueur(selectedJoueur.id, password);
+
+    if (result !== 'ok') {
+      setError('Accès refusé.');
       setShaking(true);
       setPassword('');
       setTimeout(() => setShaking(false), 600);
     }
   };
 
-  // ── Campagne login ────────────────────────────────────────────────────
-  const handleCampagneSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedJoueur || !campagnePassword) return;
-    const result = await loginJoueur(selectedJoueur, campagnePassword);
-    if (result !== 'ok') {
-      setCampagneError('Accès refusé.');
-      setCampagneShaking(true);
-      setCampagnePassword('');
-      setTimeout(() => setCampagneShaking(false), 600);
-    }
-  };
-
-  const handleSelectCampagne = (id) => {
-    setSelectedCampagne(id);
-    setSelectedJoueur(null);
-    setCampagnePassword('');
-    setCampagneError('');
-  };
-
-  const handleSelectJoueur = (id) => {
-    setSelectedJoueur(id);
-    setCampagnePassword('');
-    setCampagneError('');
-  };
-
-  const handleSchemeChange = (s) => {
-    setScheme(s);
-    setError(false);
-    setPassword('');
-    setCampagneError('');
-    setSelectedCampagne(null);
-    setSelectedJoueur(null);
-    setCampagnePassword('');
-  };
-
   // ── Render ────────────────────────────────────────────────────────────
   return (
     <div className="login-screen">
-      <div className={`login-box ${(shaking || campagneShaking) ? 'shake' : ''}`}>
+      <div className={`login-box ${shaking ? 'shake' : ''}`}>
         <div className="login-ornament">✦</div>
         <h1 className="login-title">Paris by Night</h1>
         <p className="login-subtitle">Domaine de François Villon</p>
 
-        {/* Scheme toggle */}
-        <div className="login-scheme-toggle">
-          <button
-            className={`login-scheme-btn ${scheme === 'clan' ? 'active' : ''}`}
-            onClick={() => handleSchemeChange('clan')}
-            type="button"
-          >
-            Par clan
-          </button>
-          <button
-            className={`login-scheme-btn ${scheme === 'campagne' ? 'active' : ''}`}
-            onClick={() => handleSchemeChange('campagne')}
-            type="button"
-          >
-            Par campagne
-          </button>
-        </div>
+        {/* Step 1 — Campagne */}
+        {loadingCampagnes ? (
+          <p className="login-loading">Chargement…</p>
+        ) : campagnes.length > 1 && (
+          <div className="login-selector">
+            <p className="login-selector-label">Campagne</p>
+            <div className="login-selector-grid">
+              {campagnes.map(c => (
+                <button
+                  key={c.id}
+                  type="button"
+                  className={`login-selector-btn ${selectedCampagne === c.id ? 'active' : ''}`}
+                  onClick={() => handleSelectCampagne(c.id)}
+                >
+                  {c.nom}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-        {/* ── Clan path ─────────────────────────────────────────────── */}
-        {scheme === 'clan' && (
-          <form onSubmit={handleClanSubmit} className="login-form">
+        {/* Step 2 — Joueur */}
+        {selectedCampagne && (
+          <div className="login-selector">
+            <p className="login-selector-label">Joueur</p>
+            <div className="login-selector-grid">
+              {joueurs.map(j => (
+                <button
+                  key={j.id}
+                  type="button"
+                  className={`login-selector-btn ${selectedJoueur?.id === j.id ? 'active' : ''}`}
+                  onClick={() => handleSelectJoueur(j)}
+                >
+                  {j.nom}
+                </button>
+              ))}
+            </div>
+
+            {/* Special users — MJ & Guest, separated */}
+            {joueurs.length > 0 && (
+              <div className="login-selector-divider" />
+            )}
+            <div className="login-selector-grid">
+              {SPECIAL_USERS.map(u => (
+                <button
+                  key={u.id}
+                  type="button"
+                  className={`login-selector-btn login-selector-btn--special ${selectedJoueur?.id === u.id ? 'active' : ''}`}
+                  onClick={() => handleSelectJoueur(u)}
+                >
+                  {u.nom}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 3 — Password */}
+        {selectedJoueur && (
+          <form onSubmit={handleSubmit} className="login-form">
             <input
               type="password"
               className={`login-input ${error ? 'error' : ''}`}
               placeholder="Mot de passe"
               value={password}
-              onChange={(e) => { setPassword(e.target.value); setError(false); }}
+              onChange={(e) => { setPassword(e.target.value); setError(''); }}
               autoFocus
               autoComplete="off"
             />
-            {error && <p className="login-error">Accès refusé.</p>}
+            {error && <p className="login-error">{error}</p>}
             <button type="submit" className="login-btn">Entrer</button>
           </form>
-        )}
-
-        {/* ── Campagne path ──────────────────────────────────────────── */}
-        {scheme === 'campagne' && (
-          <div className="login-campagne">
-
-            {/* Step 1 — campaign selection */}
-            {loadingCampagnes ? (
-              <p className="login-loading">Chargement…</p>
-            ) : (
-              <div className="login-selector">
-                <p className="login-selector-label">Campagne</p>
-                <div className="login-selector-grid">
-                  {campagnes.map(c => (
-                    <button
-                      key={c.id}
-                      type="button"
-                      className={`login-selector-btn ${selectedCampagne === c.id ? 'active' : ''}`}
-                      onClick={() => handleSelectCampagne(c.id)}
-                    >
-                      {c.nom}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 2 — player selection */}
-            {selectedCampagne && joueurs.length > 0 && (
-              <div className="login-selector">
-                <p className="login-selector-label">Joueur</p>
-                <div className="login-selector-grid">
-                  {joueurs.map(j => (
-                    <button
-                      key={j.id}
-                      type="button"
-                      className={`login-selector-btn ${selectedJoueur === j.id ? 'active' : ''}`}
-                      onClick={() => handleSelectJoueur(j.id)}
-                    >
-                      {j.nom}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 3 — password */}
-            {selectedJoueur && (
-              <form onSubmit={handleCampagneSubmit} className="login-form">
-                <input
-                  type="password"
-                  className={`login-input ${campagneError ? 'error' : ''}`}
-                  placeholder="Mot de passe"
-                  value={campagnePassword}
-                  onChange={(e) => { setCampagnePassword(e.target.value); setCampagneError(''); }}
-                  autoFocus
-                  autoComplete="off"
-                />
-                {campagneError && <p className="login-error">{campagneError}</p>}
-                <button type="submit" className="login-btn">Entrer</button>
-              </form>
-            )}
-          </div>
         )}
 
       </div>

@@ -13,29 +13,31 @@ import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
 import './components/theme-day.css';
-import { AuthProvider, useAuth, isMJ, isPlayer, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
+import { AuthProvider, useAuth, isMJ, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
 
 // ─── Inner app (has access to auth context) ───────────────
 function AppInner() {
   const { mode, joueur, logout } = useAuth();
 
-  const [currentPage, setCurrentPage]               = useState('home');
+  const [currentPage, setCurrentPage]                   = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
-  const [targetLieuId, setTargetLieuId]             = useState(null);
-  const [targetBourgId, setTargetBourgId]           = useState(null);
-  const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
-  const [genealogieClan, setGenealogieClan]         = useState(null);
-  const [selectedCampagne, setSelectedCampagne]     = useState(null);
+  const [targetLieuId, setTargetLieuId]                 = useState(null);
+  const [targetBourgId, setTargetBourgId]               = useState(null);
+  const [targetBourgDetailId, setTargetBourgDetailId]   = useState(null);
+  const [genealogieClan, setGenealogieClan]             = useState(null);
+  const [selectedCampagne, setSelectedCampagne]         = useState(null);
 
   // Not logged in → show login screen
   if (!mode) return <LoginScreen />;
 
   // ── Auth mode resolution ────────────────────────────────
   const isCampagneMode = mode === 'campagne';
-  const viewerClan     = isPlayer(mode) ? mode : null;
-  // Campagne joueurs get player-level restrictions (no MJ access)
-  const playerMode     = isPlayer(mode) || isGuest(mode) || isCampagneMode;
+  // viewerClan: used to restrict visible data to a single clan
+  // — for campagne joueurs, read from joueur.clan_id
+  const viewerClan = isCampagneMode ? (joueur?.clan_id ?? null) : null;
+  // playerMode: true for anyone who isn't MJ
+  const playerMode = !isMJ(mode);
 
   // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
@@ -135,6 +137,7 @@ function AppInner() {
             onNavigateToCarte={navigateToCarteFromLieu}
             playerMode={playerMode}
             viewerClan={viewerClan}
+            joueur={joueur}
           />
         );
 
@@ -175,8 +178,8 @@ function AppInner() {
       case 'influences':
         return (
           <Influences
-            playerMode={isPlayer(mode) || isCampagneMode}
-            viewerClan={isPlayer(mode) ? mode : null}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
           />
         );
 

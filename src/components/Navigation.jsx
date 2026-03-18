@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { isMJ, isPlayer, isGuest } from './AuthContext';
+import { isMJ, isGuest } from './AuthContext';
 import { supabase } from '../lib/supabase';
 import ThemeToggle from './ThemeToggle';
 import './Navigation.css';
@@ -27,8 +27,8 @@ const CLAN_COLORS = {
 };
 
 function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, onCampagneChange }) {
-  const [campagnes, setCampagnes]           = useState([]);
-  const [selectedCampagne, setSelectedCampagne] = useState(null); // null = toutes
+  const [campagnes, setCampagnes]               = useState([]);
+  const [selectedCampagne, setSelectedCampagne] = useState(null);
   const [collapsed, setCollapsed] = useState(() => {
     return localStorage.getItem('pbn-nav-collapsed') === 'true';
   });
@@ -40,7 +40,7 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
     });
   };
 
-  // Load campagnes for MJ
+  // Load campagnes for MJ selector
   useEffect(() => {
     if (!isMJ(mode)) return;
     supabase
@@ -54,31 +54,33 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
     setSelectedCampagne(id);
     onCampagneChange?.(id);
   };
+
   const allItems = [
-    { id: 'home',         label: 'Accueil',      icon: '🏰', mjOnly: false },
-    { id: 'organisation', label: 'Organisation', icon: '👑', mjOnly: false },
-    { id: 'personnages',  label: 'Personnages',  icon: '🦇', mjOnly: false },
-    { id: 'clans',        label: 'Clans',        icon: '⚜️', mjOnly: false },
-    { id: 'influences',   label: 'Influences',   icon: '🕸️', mjOnly: false },
-    { id: 'chronologie',  label: 'Chronologie',  icon: '📜', mjOnly: false },
-    { id: 'lieux',        label: 'Lieux',        icon: '🏛️', mjOnly: false },
-    { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️', mjOnly: false },
-    { id: 'carte',        label: 'Carte',        icon: '📍', mjOnly: false },
+    { id: 'home',         label: 'Accueil',      icon: '🏰' },
+    { id: 'organisation', label: 'Organisation', icon: '👑' },
+    { id: 'personnages',  label: 'Personnages',  icon: '🦇' },
+    { id: 'clans',        label: 'Clans',        icon: '⚜️' },
+    { id: 'influences',   label: 'Influences',   icon: '🕸️' },
+    { id: 'chronologie',  label: 'Chronologie',  icon: '📜' },
+    { id: 'lieux',        label: 'Lieux',        icon: '🏛️' },
+    { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️' },
+    { id: 'carte',        label: 'Carte',        icon: '📍' },
   ];
 
-  const menuItems = allItems.filter(item => {
-    if (item.mjOnly && !isMJ(mode)) return false;
-    return true;
-  });
-
-  const clanColor = CLAN_COLORS[mode] || null;
-  const clanLabel = CLAN_LABELS[mode] || null;
+  // Clan badge data — for campagne joueurs, read from joueur.clan_id
+  const effectiveClan = mode === 'campagne' ? joueur?.clan_id : null;
+  const clanColor     = CLAN_COLORS[effectiveClan] || null;
+  const clanLabel     = CLAN_LABELS[effectiveClan] || null;
 
   return (
     <nav className={`navigation ${collapsed ? 'navigation--collapsed' : ''}`}>
 
-      {/* ── Toggle collapse button ───────────────────────────────────────── */}
-      <button className="nav-collapse-btn" onClick={toggleCollapsed} title={collapsed ? 'Étendre' : 'Réduire'}>
+      {/* ── Toggle collapse button ── */}
+      <button
+        className="nav-collapse-btn"
+        onClick={toggleCollapsed}
+        title={collapsed ? 'Étendre' : 'Réduire'}
+      >
         {collapsed ? '›' : '‹'}
       </button>
 
@@ -90,23 +92,26 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
       <div className="nav-mode-badge">
         {isMJ(mode) ? (
           <span className="nav-badge nav-badge--mj">⚙ Maître de Jeu</span>
-        ) : mode === 'campagne' && joueur ? (
-          <span className="nav-badge nav-badge--campagne">
-            <span className="nav-badge-joueur">⚜ {joueur.nom}</span>
-            <span className="nav-badge-campagne">{joueur.campagne_nom}</span>
-          </span>
         ) : isGuest(mode) ? (
           <span className="nav-badge nav-badge--clan" style={{ borderColor: '#888', color: '#888' }}>
             👁 Invité
           </span>
-        ) : (
+        ) : mode === 'campagne' && joueur ? (
           <span
-            className="nav-badge nav-badge--clan"
-            style={{ borderColor: clanColor, color: clanColor }}
+            className="nav-badge nav-badge--campagne"
+            style={clanColor ? { borderColor: clanColor } : undefined}
           >
-            ⚜ {clanLabel}
+            <span className="nav-badge-joueur" style={clanColor ? { color: clanColor } : undefined}>
+              ⚜ {joueur.nom}
+            </span>
+            {clanLabel && (
+              <span className="nav-badge-clan-label" style={{ color: clanColor }}>
+                {clanLabel}
+              </span>
+            )}
+            <span className="nav-badge-campagne">{joueur.campagne_nom}</span>
           </span>
-        )}
+        ) : null}
       </div>
 
       {/* Sélecteur de campagne — MJ uniquement */}
@@ -136,7 +141,7 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
       )}
 
       <ul className="nav-menu">
-        {menuItems.map(item => (
+        {allItems.map(item => (
           <li key={item.id}>
             <button
               className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
