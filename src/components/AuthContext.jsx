@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
 
     // Guest
     if (joueurId === '__guest__') {
-      if (password === import.meta.env.VITE_PASSWORD_GUEST) {
+      if (password === import.meta.env.VITE_PASSWORD_INVITE) {
         setMode('guest');
         setJoueur(null);
         return 'ok';
