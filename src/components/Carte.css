@@ -1,6 +1,7 @@
 /* Carte.css - Style vampirique pour la carte interactive */
 
 .carte-container {
+  position: relative;
   width: 100%;
   min-height: calc(100vh - 60px);
   background: linear-gradient(135deg, #0d0a0b 0%, #1a1517 100%);

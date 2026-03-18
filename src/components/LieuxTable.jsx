@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { isMJ } from './AuthContext';
-import LieuDetail from './LieuDetail';
 import './LieuxTable.css';
 
 const SORT_FIELDS = {
@@ -91,6 +90,7 @@ const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence, sel
 // ── LieuxTable ─────────────────────────────────────────────────────────────
 const LieuxTable = ({
   onNavigateToCarte,
+  onSelectLieu,
   playerMode = false,
   viewerClan = null,
   mode = 'mj',
@@ -111,7 +111,6 @@ const LieuxTable = ({
   const [sortField, setSortField] = useState('nom');
   const [sortAsc, setSortAsc]     = useState(true);
   const [toggling, setToggling]   = useState(null);
-  const [selectedLieuId, setSelectedLieuId] = useState(null);
 
   // ── Load data ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -228,10 +227,9 @@ const LieuxTable = ({
   const isDirty = search || filterClan || filterStatut || sortField !== 'nom' || !sortAsc;
 
   // ── Navigate to detail ────────────────────────────────────────────────────
-  const handleRowClick = (lieu) => setSelectedLieuId(lieu.id);
+  const handleRowClick = (lieu) => onSelectLieu(lieu.id);
 
   const handleOpenCarte = (lieuId) => {
-    setSelectedLieuId(null);
     onNavigateToCarte(lieuId);
   };
 
@@ -239,19 +237,6 @@ const LieuxTable = ({
   const filteredJoueurs = selectedCampagne
     ? joueurs.filter(j => j.campagne_id === selectedCampagne)
     : joueurs;
-
-  // ── Render detail ─────────────────────────────────────────────────────────
-  if (selectedLieuId) return (
-    <LieuDetail
-      lieuId={selectedLieuId}
-      onClose={() => setSelectedLieuId(null)}
-      onNavigateToCarte={handleOpenCarte}
-      playerMode={playerMode}
-      viewerClan={viewerClan}
-      joueur={joueur}
-      selectedCampagne={selectedCampagne}
-    />
-  );
 
   // ── Render table ──────────────────────────────────────────────────────────
   if (loading) return (

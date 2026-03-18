@@ -12,6 +12,7 @@ import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
+import LieuDetail from './components/LieuDetail';
 import './components/theme-day.css';
 import { AuthProvider, useAuth, isMJ, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
@@ -22,6 +23,7 @@ function AppInner() {
 
   const [currentPage, setCurrentPage]                   = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
+  const [selectedLieuId, setSelectedLieuId]             = useState(null);
   const [targetLieuId, setTargetLieuId]                 = useState(null);
   const [targetBourgId, setTargetBourgId]               = useState(null);
   const [targetBourgDetailId, setTargetBourgDetailId]   = useState(null);
@@ -41,6 +43,7 @@ function AppInner() {
 
   // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
+    setSelectedLieuId(null);
     setTargetLieuId(lieuId);
     setTargetBourgId(null);
     setCurrentPage('carte');
@@ -72,6 +75,7 @@ function AppInner() {
 
   const navigate = (page) => {
     setSelectedPersonnageId(null);
+    setSelectedLieuId(null);
     setCurrentPage(page);
   };
 
@@ -138,6 +142,7 @@ function AppInner() {
         return (
           <LieuxTable
             onNavigateToCarte={navigateToCarteFromLieu}
+            onSelectLieu={setSelectedLieuId}
             playerMode={playerMode}
             viewerClan={viewerClan}
             joueur={joueur}
@@ -204,6 +209,26 @@ function AppInner() {
       <main className="main-content">
         {renderPage()}
       </main>
+      {selectedLieuId && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          left: 'var(--nav-width, 280px)',
+          zIndex: 500,
+          overflowY: 'auto',
+          background: 'linear-gradient(135deg, #0d0a0b 0%, #1a1517 100%)',
+        }}>
+          <LieuDetail
+            lieuId={selectedLieuId}
+            onClose={() => setSelectedLieuId(null)}
+            onNavigateToCarte={navigateToCarteFromLieu}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
+            joueur={joueur}
+            selectedCampagne={selectedCampagne}
+          />
+        </div>
+      )}
     </div>
   );
 }

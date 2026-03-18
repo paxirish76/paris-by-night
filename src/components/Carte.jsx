@@ -217,8 +217,6 @@ const Carte = ({
     const lieu = lieux.find(l => l.id === targetLieuId);
     if (!lieu) return;
 
-    setSelectedLieuId(lieu.id);
-
     if (mapInstanceRef.current && lieu.latitude && lieu.longitude) {
       mapInstanceRef.current.flyTo([lieu.latitude, lieu.longitude], 15, { duration: 0.8 });
       setTimeout(() => {
