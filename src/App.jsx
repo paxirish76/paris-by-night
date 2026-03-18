@@ -70,7 +70,10 @@ function AppInner() {
   const clearTargetLieu  = () => setTargetLieuId(null);
   const clearTargetBourg = () => setTargetBourgId(null);
 
-  const navigate = (page) => setCurrentPage(page);
+  const navigate = (page) => {
+    setSelectedPersonnageId(null);
+    setCurrentPage(page);
+  };
 
   // ── PersonnageDetail ────────────────────────────────────
   const renderPersonnageDetail = (id) => (
