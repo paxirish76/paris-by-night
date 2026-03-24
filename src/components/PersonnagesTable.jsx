@@ -43,7 +43,7 @@ export default function PersonnagesTable({
     (async () => {
       setLoading(true);
       const [{ data: clansData }, { data: persoData }, { data: joueursData }] = await Promise.all([
-        supabase.from('clans').select('id, nom, couleur').order('nom'),
+        supabase.from('clans').select('id, nom, couleur, clan_mineur').order('nom'),
         supabase.from('personnages')
           .select('id, nom, clan_id, generation, roles, ghost, connu, image_url, field_visibility')
           .eq('ghost', false)
@@ -228,7 +228,7 @@ export default function PersonnagesTable({
           onChange={e => setFilterClan(e.target.value)}
         >
           <option value="">Tous les clans</option>
-          {clans.map(c => (
+          {clans.filter(c => mjMode || !c.clan_mineur).map(c => (
             <option key={c.id} value={c.id}>{c.nom}</option>
           ))}
         </select>

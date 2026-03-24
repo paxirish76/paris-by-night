@@ -337,6 +337,8 @@ const Carte = ({
   const handleClanFilter  = (id) => setSelectedClan(id === selectedClan ? null : id);
   const bourgsVisibles    = selectedClan ? bourgs.filter(b => b.clan_dominant_id === selectedClan) : bourgs;
   const lieuxVisibles     = selectedClan ? lieux.filter(l => l.clan_id === selectedClan) : lieux;
+  // Clans affichés dans le filtre : exclure les clans mineurs en mode joueur
+  const clansFiltre       = playerMode ? clans.filter(c => !c.clan_mineur) : clans;
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -362,7 +364,7 @@ const Carte = ({
                 <button className={`filter-btn ${!selectedClan ? 'active' : ''}`} onClick={() => setSelectedClan(null)}>
                   <span className="clan-dot" style={{ background: '#c0c0c0' }} /> Tous
                 </button>
-                {clans.map(clan => (
+                {clansFiltre.map(clan => (
                   <button key={clan.id}
                     className={`filter-btn ${selectedClan === clan.id ? 'active' : ''}`}
                     onClick={() => handleClanFilter(clan.id)}>
@@ -375,7 +377,7 @@ const Carte = ({
             <div className="carte-stats">
               <div className="stat-item"><span className="stat-label">Bourgs</span><span className="stat-value">{bourgsVisibles.length}</span></div>
               <div className="stat-item"><span className="stat-label">Lieux</span><span className="stat-value">{lieuxVisibles.length}</span></div>
-              <div className="stat-item"><span className="stat-label">Clans</span><span className="stat-value">{clans.length}</span></div>
+              <div className="stat-item"><span className="stat-label">Clans</span><span className="stat-value">{clansFiltre.length}</span></div>
             </div>
 
             {selectedBourg && (

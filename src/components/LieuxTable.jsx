@@ -280,7 +280,7 @@ const LieuxTable = ({
           onChange={e => setFilterClan(e.target.value)}
         >
           <option value="">Tous les clans</option>
-          {clans.map(c => (
+          {clans.filter(c => mjMode || !c.clan_mineur).map(c => (
             <option key={c.id} value={c.id}>{c.nom}</option>
           ))}
         </select>
