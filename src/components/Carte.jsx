@@ -73,6 +73,7 @@ const Carte = ({
   onNavigateToBourg  = null,
   playerMode         = false,
   viewerClan         = null,
+  joueur             = null,
 }) => {
   const [bourgs, setBourgs]                         = useState([]);
   const [lieux, setLieux]                           = useState([]);
@@ -116,7 +117,7 @@ const Carte = ({
         const [{ data: clansData }, { data: bourgsData }, { data: lieuxData }] = await Promise.all([
           supabase.from('clans').select('*').order('nom'),
           supabase.from('bourgs').select('*, clan:clans!bourgs_clan_dominant_id_fkey(*)').order('nom'),
-          supabase.from('lieux').select('*, bourg:bourgs!lieux_bourg_id_fkey(nom)').order('nom'),
+          supabase.from('lieux').select('*, bourg:bourgs!lieux_bourg_id_fkey(nom), field_visibility').order('nom'),
         ]);
         setClans(clansData || []);
         setBourgs(bourgsData || []);
@@ -280,7 +281,17 @@ const Carte = ({
     markersMapRef.current.clear();
 
     const clansMap    = Object.fromEntries(clans.map(c => [c.id, c]));
-    const lieuxVisiblesParMode = playerMode ? lieux.filter(l => l.connu || (viewerClan && Array.isArray(l.clan_overrides) && l.clan_overrides.includes(viewerClan))) : lieux;
+    const lieuxVisiblesParMode = (() => {
+      if (!playerMode) return lieux; // MJ — tout visible
+      if (joueur) {
+        // Campagne joueur — seulement les lieux où joueur.id est clé dans field_visibility
+        return lieux.filter(l => joueur.id in (l.field_visibility || {}));
+      }
+      // Clan player / guest — connu ou clan_overrides
+      return lieux.filter(l =>
+        l.connu || (viewerClan && Array.isArray(l.clan_overrides) && l.clan_overrides.includes(viewerClan))
+      );
+    })();
     const lieuxFiltres = selectedClan ? lieuxVisiblesParMode.filter(l => l.clan_id === selectedClan) : lieuxVisiblesParMode;
 
     lieuxFiltres.forEach(lieu => {

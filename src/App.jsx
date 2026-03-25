@@ -12,38 +12,33 @@ import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
-import LieuDetail from './components/LieuDetail';
 import './components/theme-day.css';
-import { AuthProvider, useAuth, isMJ, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
+import { AuthProvider, useAuth, isMJ, isPlayer, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
 
 // ─── Inner app (has access to auth context) ───────────────
 function AppInner() {
   const { mode, joueur, logout } = useAuth();
 
-  const [currentPage, setCurrentPage]                   = useState('home');
+  const [currentPage, setCurrentPage]               = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
-  const [selectedLieuId, setSelectedLieuId]             = useState(null);
-  const [targetLieuId, setTargetLieuId]                 = useState(null);
-  const [targetBourgId, setTargetBourgId]               = useState(null);
-  const [targetBourgDetailId, setTargetBourgDetailId]   = useState(null);
-  const [genealogieClan, setGenealogieClan]             = useState(null);
-  const [selectedCampagne, setSelectedCampagne]         = useState(null);
+  const [targetLieuId, setTargetLieuId]             = useState(null);
+  const [targetBourgId, setTargetBourgId]           = useState(null);
+  const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
+  const [genealogieClan, setGenealogieClan]         = useState(null);
+  const [selectedCampagne, setSelectedCampagne]     = useState(null);
 
   // Not logged in → show login screen
   if (!mode) return <LoginScreen />;
 
   // ── Auth mode resolution ────────────────────────────────
   const isCampagneMode = mode === 'campagne';
-  // viewerClan: used to restrict visible data to a single clan
-  // — for campagne joueurs, read from joueur.clan_id
-  const viewerClan = isCampagneMode ? (joueur?.clan_id ?? null) : null;
-  // playerMode: true for anyone who isn't MJ
-  const playerMode = !isMJ(mode);
+  const viewerClan     = isPlayer(mode) ? mode : null;
+  // Campagne joueurs get player-level restrictions (no MJ access)
+  const playerMode     = isPlayer(mode) || isGuest(mode) || isCampagneMode;
 
   // ── Navigation helpers ──────────────────────────────────
   const navigateToCarteFromLieu = (lieuId) => {
-    setSelectedLieuId(null);
     setTargetLieuId(lieuId);
     setTargetBourgId(null);
     setCurrentPage('carte');
@@ -73,11 +68,7 @@ function AppInner() {
   const clearTargetLieu  = () => setTargetLieuId(null);
   const clearTargetBourg = () => setTargetBourgId(null);
 
-  const navigate = (page) => {
-    setSelectedPersonnageId(null);
-    setSelectedLieuId(null);
-    setCurrentPage(page);
-  };
+  const navigate = (page) => setCurrentPage(page);
 
   // ── PersonnageDetail ────────────────────────────────────
   const renderPersonnageDetail = (id) => (
@@ -135,6 +126,7 @@ function AppInner() {
             onNavigateToBourg={navigateFromCarteToBourg}
             playerMode={playerMode}
             viewerClan={viewerClan}
+            joueur={joueur}
           />
         );
 
@@ -142,10 +134,11 @@ function AppInner() {
         return (
           <LieuxTable
             onNavigateToCarte={navigateToCarteFromLieu}
-            onSelectLieu={setSelectedLieuId}
             playerMode={playerMode}
             viewerClan={viewerClan}
+            mode={mode}
             joueur={joueur}
+            selectedCampagne={selectedCampagne}
           />
         );
 
@@ -186,8 +179,8 @@ function AppInner() {
       case 'influences':
         return (
           <Influences
-            playerMode={playerMode}
-            viewerClan={viewerClan}
+            playerMode={isPlayer(mode) || isCampagneMode}
+            viewerClan={isPlayer(mode) ? mode : null}
           />
         );
 
@@ -198,37 +191,19 @@ function AppInner() {
 
   return (
     <div className="app">
-      <Navigation
-        currentPage={currentPage}
-        onNavigate={navigate}
-        mode={mode}
-        joueur={joueur}
-        onLogout={logout}
-        onCampagneChange={setSelectedCampagne}
-      />
-      <main className="main-content">
+      {!selectedPersonnageId && (
+        <Navigation
+          currentPage={currentPage}
+          onNavigate={navigate}
+          mode={mode}
+          joueur={joueur}
+          onLogout={logout}
+          onCampagneChange={setSelectedCampagne}
+        />
+      )}
+      <main className={`main-content ${selectedPersonnageId ? 'fullscreen' : ''}`}>
         {renderPage()}
       </main>
-      {selectedLieuId && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          left: 'var(--nav-width, 280px)',
-          zIndex: 500,
-          overflowY: 'auto',
-          background: 'linear-gradient(135deg, #0d0a0b 0%, #1a1517 100%)',
-        }}>
-          <LieuDetail
-            lieuId={selectedLieuId}
-            onClose={() => setSelectedLieuId(null)}
-            onNavigateToCarte={navigateToCarteFromLieu}
-            playerMode={playerMode}
-            viewerClan={viewerClan}
-            joueur={joueur}
-            selectedCampagne={selectedCampagne}
-          />
-        </div>
-      )}
     </div>
   );
 }

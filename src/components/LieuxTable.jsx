@@ -17,15 +17,11 @@ const SortIcon = ({ field, sortField, sortAsc }) => {
 
 // ── JoueursDropdown ────────────────────────────────────────────────────────
 // Même pattern que PersonnagesTable — X/N + popover avec toggles
-const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence, selectedCampagne }) => {
+const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  const filteredJoueurs = selectedCampagne
-    ? joueurs.filter(j => j.campagne_id === selectedCampagne)
-    : joueurs;
-
-  const presentCount = filteredJoueurs.filter(j => fieldVisibility?.[j.id] !== undefined).length;
+  const presentCount = joueurs.filter(j => fieldVisibility?.[j.id] !== undefined).length;
 
   useEffect(() => {
     if (!open) return;
@@ -43,7 +39,7 @@ const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence, sel
         onClick={(e) => { e.stopPropagation(); setOpen(v => !v); }}
         title="Gérer la visibilité joueurs"
       >
-        {presentCount}/{filteredJoueurs.length}
+        {presentCount}/{joueurs.length}
       </button>
 
       {open && (
@@ -53,20 +49,20 @@ const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence, sel
             <div className="lt-joueurs-popover-actions">
               <button
                 className="lt-joueurs-all"
-                onClick={() => filteredJoueurs.forEach(j => {
+                onClick={() => joueurs.forEach(j => {
                   if (fieldVisibility?.[j.id] === undefined) onTogglePresence(lieu.id, j.id, false, fieldVisibility);
                 })}
               >Tous</button>
               <button
                 className="lt-joueurs-none"
-                onClick={() => filteredJoueurs.forEach(j => {
+                onClick={() => joueurs.forEach(j => {
                   if (fieldVisibility?.[j.id] !== undefined) onTogglePresence(lieu.id, j.id, true, fieldVisibility);
                 })}
               >Aucun</button>
             </div>
           </div>
           <div className="lt-joueurs-list">
-            {filteredJoueurs.map(j => {
+            {joueurs.map(j => {
               const isPresent = fieldVisibility?.[j.id] !== undefined;
               return (
                 <div key={j.id} className="lt-joueurs-item">
