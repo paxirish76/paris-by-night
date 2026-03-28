@@ -3,6 +3,7 @@ import Navigation from './components/Navigation';
 import Home from './components/Home';
 import PersonnagesTable from './components/PersonnagesTable';
 import PersonnageDetail from './components/PersonnageDetail';
+import LieuDetail from './components/LieuDetail';
 import Carte from './components/Carte';
 import LieuxTable from './components/LieuxTable';
 import BourgsTable from './components/BourgsTable';
@@ -22,6 +23,7 @@ function AppInner() {
 
   const [currentPage, setCurrentPage]               = useState('home');
   const [selectedPersonnageId, setSelectedPersonnageId] = useState(null);
+  const [selectedLieuId, setSelectedLieuId]             = useState(null);
   const [targetLieuId, setTargetLieuId]             = useState(null);
   const [targetBourgId, setTargetBourgId]           = useState(null);
   const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
@@ -134,6 +136,7 @@ function AppInner() {
         return (
           <LieuxTable
             onNavigateToCarte={navigateToCarteFromLieu}
+            onSelectLieu={(id) => setSelectedLieuId(id)}
             playerMode={playerMode}
             viewerClan={viewerClan}
             mode={mode}
@@ -204,6 +207,16 @@ function AppInner() {
       <main className={`main-content ${selectedPersonnageId ? 'fullscreen' : ''}`}>
         {renderPage()}
       </main>
+      {selectedLieuId && (
+        <div className="carte-lieu-detail-overlay">
+          <LieuDetail
+            lieuId={selectedLieuId}
+            onClose={() => setSelectedLieuId(null)}
+            playerMode={playerMode}
+            viewerClan={viewerClan}
+          />
+        </div>
+      )}
     </div>
   );
 }

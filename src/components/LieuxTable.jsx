@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { supabase } from '../lib/supabase';
 import { isMJ } from './AuthContext';
 import './LieuxTable.css';
@@ -17,68 +18,97 @@ const SortIcon = ({ field, sortField, sortAsc }) => {
 
 // ── JoueursDropdown ────────────────────────────────────────────────────────
 // Même pattern que PersonnagesTable — X/N + popover avec toggles
+// ── JoueursDropdown ────────────────────────────────────────────────────────
 const JoueursDropdown = ({ lieu, joueurs, fieldVisibility, onTogglePresence }) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const [popoverPos, setPopoverPos] = useState({ top: 0, right: 0 });
+  const btnRef     = useRef(null);
+  const popoverRef = useRef(null);
 
   const presentCount = joueurs.filter(j => fieldVisibility?.[j.id] !== undefined).length;
+
+  const handleOpen = (e) => {
+    e.stopPropagation();
+    if (!open && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      const POPOVER_HEIGHT = 60 + joueurs.length * 34;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const openUpward = spaceBelow < POPOVER_HEIGHT && rect.top > POPOVER_HEIGHT;
+      setPopoverPos({
+        top:   openUpward ? rect.top - POPOVER_HEIGHT - 4 : rect.bottom + 4,
+        right: window.innerWidth - rect.right,
+      });
+    }
+    setOpen(v => !v);
+  };
 
   useEffect(() => {
     if (!open) return;
     const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+      const clickedBtn     = btnRef.current?.contains(e.target);
+      const clickedPopover = popoverRef.current?.contains(e.target);
+      if (!clickedBtn && !clickedPopover) setOpen(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
+  const popover = open ? ReactDOM.createPortal(
+    <div
+      ref={popoverRef}
+      className="lt-joueurs-popover"
+      style={{ position: 'fixed', top: popoverPos.top, right: popoverPos.right, zIndex: 9999 }}
+      onClick={e => e.stopPropagation()}
+      onMouseDown={e => e.stopPropagation()}
+    >
+      <div className="lt-joueurs-popover-header">
+        <span>Visibilité joueurs</span>
+        <div className="lt-joueurs-popover-actions">
+          <button
+            className="lt-joueurs-all"
+            onClick={() => joueurs.forEach(j => {
+              if (fieldVisibility?.[j.id] === undefined) onTogglePresence(lieu.id, j.id, false, fieldVisibility);
+            })}
+          >Tous</button>
+          <button
+            className="lt-joueurs-none"
+            onClick={() => joueurs.forEach(j => {
+              if (fieldVisibility?.[j.id] !== undefined) onTogglePresence(lieu.id, j.id, true, fieldVisibility);
+            })}
+          >Aucun</button>
+        </div>
+      </div>
+      <div className="lt-joueurs-list">
+        {joueurs.map(j => {
+          const isPresent = fieldVisibility?.[j.id] !== undefined;
+          return (
+            <div key={j.id} className="lt-joueurs-item">
+              <button
+                className={`lt-joueurs-toggle ${isPresent ? 'on' : 'off'}`}
+                onClick={() => onTogglePresence(lieu.id, j.id, isPresent, fieldVisibility)}
+              >
+                {isPresent ? '👁' : '◌'}
+              </button>
+              <span className="lt-joueurs-nom">{j.nom}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>,
+    document.body
+  ) : null;
+
   return (
-    <div className="lt-joueurs-cell" ref={ref}>
+    <div className="lt-joueurs-cell">
       <button
+        ref={btnRef}
         className={`lt-joueurs-btn ${presentCount > 0 ? 'lt-joueurs-btn--active' : ''}`}
-        onClick={(e) => { e.stopPropagation(); setOpen(v => !v); }}
+        onClick={handleOpen}
         title="Gérer la visibilité joueurs"
       >
         {presentCount}/{joueurs.length}
       </button>
-
-      {open && (
-        <div className="lt-joueurs-popover" onClick={e => e.stopPropagation()}>
-          <div className="lt-joueurs-popover-header">
-            <span>Visibilité joueurs</span>
-            <div className="lt-joueurs-popover-actions">
-              <button
-                className="lt-joueurs-all"
-                onClick={() => joueurs.forEach(j => {
-                  if (fieldVisibility?.[j.id] === undefined) onTogglePresence(lieu.id, j.id, false, fieldVisibility);
-                })}
-              >Tous</button>
-              <button
-                className="lt-joueurs-none"
-                onClick={() => joueurs.forEach(j => {
-                  if (fieldVisibility?.[j.id] !== undefined) onTogglePresence(lieu.id, j.id, true, fieldVisibility);
-                })}
-              >Aucun</button>
-            </div>
-          </div>
-          <div className="lt-joueurs-list">
-            {joueurs.map(j => {
-              const isPresent = fieldVisibility?.[j.id] !== undefined;
-              return (
-                <div key={j.id} className="lt-joueurs-item">
-                  <button
-                    className={`lt-joueurs-toggle ${isPresent ? 'on' : 'off'}`}
-                    onClick={() => onTogglePresence(lieu.id, j.id, isPresent, fieldVisibility)}
-                  >
-                    {isPresent ? '👁' : '◌'}
-                  </button>
-                  <span className="lt-joueurs-nom">{j.nom}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {popover}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { isMJ, HIDDEN_PERSONNAGE_IDS } from './AuthContext';
 import './PersonnagesTable.css';
@@ -34,6 +34,9 @@ export default function PersonnagesTable({
   const [toggling, setToggling]       = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null); // personnage id with open dropdown
   const [savingFv, setSavingFv]         = useState(null); // personnage id being saved
+  const [dropdownPos, setDropdownPos]   = useState({ top: 0, right: 0 }); // fixed position for open dropdown
+  const dropdownBtnRefs                 = useRef({});
+  const dropdownPopoverRef              = useRef(null);
 
   const mjMode       = isMJ(mode) && !playerMode;
   const isCampagneMode = playerMode && !!joueur;
@@ -179,9 +182,13 @@ export default function PersonnagesTable({
   // Close dropdown on outside click
   useEffect(() => {
     if (!openDropdown) return;
-    const handler = () => setOpenDropdown(null);
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+    const handler = (e) => {
+      const clickedBtn     = dropdownBtnRefs.current[openDropdown]?.contains(e.target);
+      const clickedPopover = dropdownPopoverRef.current?.contains(e.target);
+      if (!clickedBtn && !clickedPopover) setOpenDropdown(null);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, [openDropdown]);
 
   const isDirty = search || filterClan || filterConnu || sortField !== 'clan' || !sortAsc;
@@ -409,8 +416,24 @@ export default function PersonnagesTable({
                     <td className="pt-td pt-td-joueurs" onClick={e => e.stopPropagation()}>
                       <div className="pt-joueurs-cell">
                         <button
+                          ref={el => dropdownBtnRefs.current[p.id] = el}
                           className={`pt-joueurs-btn ${isDropOpen ? 'open' : ''}`}
-                          onClick={e => { e.stopPropagation(); setOpenDropdown(isDropOpen ? null : p.id); }}
+                          onClick={e => {
+                            e.stopPropagation();
+                            if (!isDropOpen) {
+                              const rect = dropdownBtnRefs.current[p.id]?.getBoundingClientRect();
+                              if (rect) {
+                                const POPOVER_HEIGHT = 60 + visibleJoueurs.length * 34;
+                                const spaceBelow = window.innerHeight - rect.bottom;
+                                const openUpward = spaceBelow < POPOVER_HEIGHT && rect.top > POPOVER_HEIGHT;
+                                setDropdownPos({
+                                  top:   openUpward ? rect.top - POPOVER_HEIGHT - 4 : rect.bottom + 4,
+                                  right: window.innerWidth - rect.right,
+                                });
+                              }
+                            }
+                            setOpenDropdown(isDropOpen ? null : p.id);
+                          }}
                           disabled={savingFv === p.id}
                         >
                           {savingFv === p.id ? '…' : `${visibleCount} / ${visibleJoueurs.length}`}
@@ -418,7 +441,12 @@ export default function PersonnagesTable({
                         </button>
 
                         {isDropOpen && (
-                          <div className="pt-joueurs-dropdown" onClick={e => e.stopPropagation()}>
+                          <div
+                            ref={dropdownPopoverRef}
+                            className="pt-joueurs-dropdown"
+                            style={{ position: 'fixed', top: dropdownPos.top, right: dropdownPos.right, zIndex: 9999 }}
+                            onClick={e => e.stopPropagation()}
+                          >
                             {visibleJoueurs.map(j => {
                               const on = j.id in fv;
                               return (

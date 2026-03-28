@@ -153,6 +153,7 @@
 .lt-table-wrap {
   padding: 1.5rem 2rem 2rem;
   overflow-x: auto;
+  overflow-y: visible;
 }
 
 .lt-table {
