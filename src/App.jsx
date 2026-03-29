@@ -180,6 +180,8 @@ function AppInner() {
         return <Chronologie />;
 
       case 'influences':
+        // Guests cannot access influences
+        if (isGuest(mode)) return <Home onNavigate={navigate} />;
         return (
           <Influences
             playerMode={isPlayer(mode) || isCampagneMode}

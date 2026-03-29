@@ -60,12 +60,17 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
     { id: 'organisation', label: 'Organisation', icon: '👑' },
     { id: 'personnages',  label: 'Personnages',  icon: '🦇' },
     { id: 'clans',        label: 'Clans',        icon: '⚜️' },
-    { id: 'influences',   label: 'Influences',   icon: '🕸️' },
+    { id: 'influences',   label: 'Influences',   icon: '🕸️', guestHidden: true },
     { id: 'chronologie',  label: 'Chronologie',  icon: '📜' },
     { id: 'lieux',        label: 'Lieux',        icon: '🏛️' },
     { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️' },
     { id: 'carte',        label: 'Carte',        icon: '📍' },
   ];
+
+  // Filter out items hidden for guests
+  const visibleItems = isGuest(mode)
+    ? allItems.filter(item => !item.guestHidden)
+    : allItems;
 
   // Clan badge data — for campagne joueurs, read from joueur.clan_id
   const effectiveClan = mode === 'campagne' ? joueur?.clan_id : null;
@@ -141,7 +146,7 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
       )}
 
       <ul className="nav-menu">
-        {allItems.map(item => (
+        {visibleItems.map(item => (
           <li key={item.id}>
             <button
               className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
