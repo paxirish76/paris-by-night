@@ -217,6 +217,17 @@ tr:hover .bt-row-arrow { opacity: 1; color: #dc143c; }
 .bd-map-badge:hover { border-color: #dc143c; color: #dc143c; }
 .bd-map-badge.disabled { opacity: 0.35; cursor: default; pointer-events: none; }
 
+/* Bouton ✏️ Modifier — même ligne que ↗ Carte */
+.bd-edit-badge {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.18em; color: #a08840;
+  border: 1px solid rgba(212,175,55,0.25);
+  padding: 4px 10px; border-radius: 1px; white-space: nowrap;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  align-self: center;
+}
+.bd-edit-badge:hover { border-color: #d4af37; color: #d4af37; }
+
 /* meta row */
 .bd-meta-row {
   display: flex; flex-wrap: wrap; gap: 16px;

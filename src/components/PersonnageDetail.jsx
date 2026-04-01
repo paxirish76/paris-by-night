@@ -24,7 +24,7 @@ const FIELD_DEFAULTS = {
 };
 
 // ── PersonnageDetail ───────────────────────────────────────────────────────
-function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerClan = null, joueur = null, selectedCampagne = null }) {
+function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerClan = null, joueur = null, selectedCampagne = null, onEdit = null }) {
   const [personnage, setPersonnage]               = useState(null);
   const [clan, setClan]                           = useState(null);
   const [loading, setLoading]                     = useState(true);
@@ -300,6 +300,15 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
             {saving ? '…' : saveMsg}
           </span>
           <span className="pd-mj-hint">👁 / ◌ contrôle la visibilité joueur</span>
+          {onEdit && (
+            <button
+              className="pd-edit-btn"
+              onClick={() => onEdit(currentPersonnageId)}
+              title="Modifier ce personnage"
+            >
+              ✏️ Modifier
+            </button>
+          )}
         </div>
       )}
 

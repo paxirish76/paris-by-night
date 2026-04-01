@@ -166,7 +166,7 @@ function HorsStructureList({ clanId, couleur, onNavigateToPersonnage }) {
 }
 
 /* ── Detail view ─────────────────────────────────────── */
-function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo, playerMode = false }) {
+function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie, onNavigateToPersonnage, currentIndex, total, onGoTo, playerMode = false, onEdit = null, viewerClan = null }) {
   const buts = safeArray(clan.buts);
   const relations = safeArray(clan.relation);
   const isMineur = clan.clan_mineur === true;
@@ -217,6 +217,15 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
               </span>
             </div>
           )}
+          {onEdit && (
+            <button
+              className="cd-edit-btn"
+              onClick={() => onEdit(clan.id)}
+              title="Modifier ce clan"
+            >
+              ✏️ Modifier
+            </button>
+          )}
         </div>
         <div className="cd-hero-bar" style={{ background: clan.couleur }} />
       </div>
@@ -238,7 +247,7 @@ function ClanDetail({ clan, clans, onBack, onSelectClan, onNavigateToGenealogie,
         </section>
       )}
 
-      {buts.length > 0 && (
+      {buts.length > 0 && (!playerMode || viewerClan === clan.id) && (
         <section className="cd-section">
           <h2 className="cd-section-title">Objectifs</h2>
           <ul className="cd-buts">
@@ -379,7 +388,7 @@ function AutresJoueurs() {
 }
 
 /* ── Main component ──────────────────────────────────── */
-export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonnage, playerMode = false }) {
+export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonnage, playerMode = false, onEdit = null, viewerClan = null }) {
   const [clans, setClans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClan, setSelectedClan] = useState(null);
@@ -451,6 +460,8 @@ export default function ClansTable({ onNavigateToGenealogie, onNavigateToPersonn
         total={isMineur ? 0 : clanRoster.length}
         onGoTo={handleGoTo}
         playerMode={playerMode}
+        onEdit={onEdit}
+        viewerClan={viewerClan}
       />
     );
   }

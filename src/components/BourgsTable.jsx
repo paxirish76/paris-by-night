@@ -44,7 +44,7 @@ function Richesse({ value }) {
 }
 
 // ─── Detail view ──────────────────────────────────────────────────────────────
-const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigateToPersonnage, currentIndex, total, onGoTo }) => {
+const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigateToPersonnage, currentIndex, total, onGoTo, onEdit = null }) => {
   const clan  = clans.find(c => c.id === bourg.clan_dominant_id);
   const color = clan?.couleur || '#d4af37';
 
@@ -118,6 +118,15 @@ const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigat
             >
               ↗ Carte
             </span>
+            {onEdit && (
+              <span
+                className="bd-edit-badge"
+                onClick={() => onEdit(bourg.id)}
+                title="Modifier ce bourg"
+              >
+                ✏️ Modifier
+              </span>
+            )}
           </div>
 
           <div className="bd-meta-row">
@@ -254,7 +263,7 @@ const BourgDetail = ({ bourg, lieux, clans, onBack, onNavigateToCarte, onNavigat
 };
 
 // ─── Main component ───────────────────────────────────────────────────────────
-const BourgsTable = ({ onNavigateToCarte, onNavigateToPersonnage, initialBourgId = null, onInitialBourgConsumed = () => {} }) => {
+const BourgsTable = ({ onNavigateToCarte, onNavigateToPersonnage, initialBourgId = null, onInitialBourgConsumed = () => {}, onEdit = null }) => {
   const [bourgs,  setBourgs]  = useState([]);
   const [lieux,   setLieux]   = useState([]);
   const [clans,   setClans]   = useState([]);
@@ -370,6 +379,7 @@ const BourgsTable = ({ onNavigateToCarte, onNavigateToPersonnage, initialBourgId
         currentIndex={currentIndex}
         total={bourgRoster.length}
         onGoTo={handleGoTo}
+        onEdit={onEdit}
       />
     );
   }

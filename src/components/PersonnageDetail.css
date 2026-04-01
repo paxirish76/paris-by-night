@@ -618,7 +618,7 @@
   align-items: center;
   gap: 16px;
   z-index: 1002;
-  pointer-events: none;
+  pointer-events: none; /* children opt back in with pointer-events: auto */
 }
 
 .pd-save-msg {
@@ -636,6 +636,27 @@
   font-size: 0.78rem;
   color: rgba(212, 175, 55, 0.4);
   font-style: italic;
+}
+
+/* Bouton ✏️ Modifier — dans la barre statut MJ */
+.pd-edit-btn {
+  pointer-events: auto;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: var(--gold);
+  border-radius: 3px;
+  padding: 3px 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.pd-edit-btn:hover {
+  background: rgba(201, 168, 76, 0.25);
+  border-color: var(--gold);
 }
 
 /* section-title flex pour accueillir le toggle et le badge MJ */

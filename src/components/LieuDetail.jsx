@@ -268,6 +268,7 @@ const LieuDetail = ({
   viewerClan = null,
   joueur = null,
   selectedCampagne = null,
+  onEdit = null,
 }) => {
   const mjMode = !playerMode;
   const isJoueurCampagne = !mjMode && joueur != null;
@@ -428,6 +429,11 @@ const LieuDetail = ({
           {onNavigateToCarte && (
             <button className="ld-carte-btn" onClick={() => onNavigateToCarte(lieuId)}>
               🗺 Carte
+            </button>
+          )}
+          {mjMode && onEdit && (
+            <button className="ld-edit-btn" onClick={() => onEdit(lieuId)}>
+              ✏️ Modifier
             </button>
           )}
           {mjMode && (

@@ -13,6 +13,7 @@ import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
+import AdminPanel from './components/AdminPanel';
 import './components/theme-day.css';
 import { AuthProvider, useAuth, isMJ, isPlayer, isGuest, HIDDEN_PERSONNAGE_IDS } from './components/AuthContext';
 import './App.css';
@@ -29,6 +30,8 @@ function AppInner() {
   const [targetBourgDetailId, setTargetBourgDetailId] = useState(null);
   const [genealogieClan, setGenealogieClan]         = useState(null);
   const [selectedCampagne, setSelectedCampagne]     = useState(null);
+  // { table, recordId } when the MJ opens the editor, null when closed
+  const [adminPanel, setAdminPanel]                 = useState(null);
 
   // Not logged in → show login screen
   if (!mode) return <LoginScreen />;
@@ -72,6 +75,11 @@ function AppInner() {
 
   const navigate = (page) => setCurrentPage(page);
 
+  // ── Admin editor helper (MJ only) ───────────────────────
+  // Call this from any detail view: openAdmin('personnages', 'francois-villon')
+  const openAdmin  = (table, recordId) => setAdminPanel({ table, recordId });
+  const closeAdmin = () => setAdminPanel(null);
+
   // ── PersonnageDetail ────────────────────────────────────
   const renderPersonnageDetail = (id) => (
     <PersonnageDetail
@@ -81,6 +89,7 @@ function AppInner() {
       viewerClan={viewerClan}
       joueur={joueur}
       selectedCampagne={selectedCampagne}
+      onEdit={isMJ(mode) ? (pid) => openAdmin('personnages', pid) : null}
     />
   );
 
@@ -152,6 +161,7 @@ function AppInner() {
             onNavigateToPersonnage={navigateToPersonnage}
             initialBourgId={targetBourgDetailId}
             onInitialBourgConsumed={() => setTargetBourgDetailId(null)}
+            onEdit={isMJ(mode) ? (id) => openAdmin('bourgs', id) : null}
           />
         );
 
@@ -161,6 +171,7 @@ function AppInner() {
             onNavigateToGenealogie={navigateToGenealogie}
             onNavigateToPersonnage={navigateToPersonnage}
             playerMode={playerMode}
+            onEdit={isMJ(mode) ? (id) => openAdmin('clans', id) : null}
           />
         );
 
@@ -216,8 +227,16 @@ function AppInner() {
             onClose={() => setSelectedLieuId(null)}
             playerMode={playerMode}
             viewerClan={viewerClan}
+            onEdit={isMJ(mode) ? (id) => openAdmin('lieux', id) : null}
           />
         </div>
+      )}
+      {adminPanel && isMJ(mode) && (
+        <AdminPanel
+          table={adminPanel.table}
+          recordId={adminPanel.recordId}
+          onClose={closeAdmin}
+        />
       )}
     </div>
   );

@@ -82,6 +82,21 @@
 }
 .ld-carte-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; }
 
+/* Bouton ✏️ Modifier — dans la navbar MJ */
+.ld-edit-btn {
+  background: none;
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 4px;
+  color: #a08840;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  padding: 0.38rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ld-edit-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; color: #d4af37; }
+
 .ld-connu-btn {
   border: 1px solid;
   border-radius: 4px;
