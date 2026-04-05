@@ -1,0 +1,965 @@
+{
+  "meta": {
+    "titre": "Politique de Paris by Night",
+    "version": "1.3",
+    "notes": "Document de travail MJ — valable pour PbN1 et PbN2. Ne pas inclure d'événements scénario spécifiques.",
+    "pj_pbn1": [
+      "armoise_bellamy",
+      "jules_martin",
+      "lucien_mornay",
+      "mikael_montrouge"
+    ],
+    "pj_pbn2": [
+      "adrien_montclair",
+      "auguste_saint-clair",
+      "balthazar_tremere",
+      "marius_ratel",
+      "eleanor_driftwood"
+    ]
+  },
+  "principes_generaux": {
+    "objectif_commun": "Le prestige",
+    "methodes": [
+      "séduction",
+      "mécénat",
+      "poignards dans le dos",
+      "alliances opportunistes"
+    ],
+    "note": "Les factions ne sont pas des partis politiques. Ce sont des coteries structurées par affinités personnelles et chapelles artistiques. Un vampire n'y adhère pas par idéologie, il s'y retrouve."
+  },
+  "hors_factions": [
+    {
+      "id": "villon",
+      "nom": "François Villon",
+      "clan": "toreador",
+      "generation": 5,
+      "role": "Prince de Paris",
+      "statut": "npc",
+      "note": "Au-dessus des factions. Entretient délibérément la compétition entre coteries. Peut occasionnellement appuyer l'une ou l'autre."
+    },
+    {
+      "id": "alienor",
+      "nom": "Aliénor de Valois",
+      "clan": "toreador",
+      "generation": 6,
+      "role": "Sénéchal — Infant #1 (prestige)",
+      "statut": "npc",
+      "note": "Tension de prestige avec les deux autres Infants."
+    },
+    {
+      "id": "agnes_sorel",
+      "nom": "Agnès Sorel",
+      "clan": "toreador",
+      "generation": 6,
+      "role": "Bourgmestre de Versailles — Infant #2 (prestige)",
+      "statut": "npc",
+      "note": "Loyaliste absolue, gant de velours de Villon."
+    },
+    {
+      "id": "godefroy_sheriff",
+      "nom": "Godefroy de Montmirail-Vexin",
+      "clan": "toreador",
+      "generation": 6,
+      "role": "Sheriff — Infant #3 (prestige)",
+      "statut": "npc",
+      "note": "Affinité artistique : escrime comme danse létale. Soutient des dojos et écoles de capoeira mortelles."
+    },
+    {
+      "id": "landeric_landry",
+      "nom": "Landry",
+      "clan": "ventrue",
+      "generation": 6,
+      "role": "Primogène Ventrue — strictement neutre",
+      "statut": "npc",
+      "note": "Refuse de prendre parti entre Influence et Interventiste."
+    },
+    {
+      "id": "armand",
+      "nom": "Armand",
+      "clan": "ventrue",
+      "generation": 7,
+      "role": "Bourgmestre 7e-8e — patron officieux faction Interventiste",
+      "statut": "npc",
+      "note": "N'appartient pas formellement à la faction."
+    },
+    {
+      "id": "colbert",
+      "nom": "Jean-Baptiste Colbert",
+      "clan": "ventrue",
+      "generation": 7,
+      "role": "Bourgmestre Levallois, Intendant des Finances — patron officieux faction Influence",
+      "statut": "npc",
+      "note": "N'appartient pas formellement à la faction."
+    },
+    {
+      "id": "alexandre",
+      "nom": "Alexandre",
+      "clan": "ventrue",
+      "generation": 4,
+      "role": "Ancien Prince de Paris — statut à part entière",
+      "statut": "npc",
+      "note": "Présence rare. Agenda propre et opaque."
+    },
+    {
+      "id": "auguste_saint-clair",
+      "nom": "Auguste Saint-Clair",
+      "clan": "ventrue",
+      "generation": 8,
+      "role": "Choisira lui-même son camp entre Influence et Interventiste",
+      "statut": "pj_pbn2"
+    },
+    {
+      "id": "frere_malachie",
+      "nom": "Frère Malachie",
+      "clan": "malkavian",
+      "generation": 7,
+      "role": "Électron libre — lié à l'Anomalie, hors politique active",
+      "statut": "npc"
+    },
+    {
+      "id": "marguerite_lefebvre",
+      "nom": "Marguerite Lefebvre",
+      "clan": "malkavian",
+      "generation": 10,
+      "role": "Généalogiste, chroniqueuse de l'Anomalie — hors politique",
+      "statut": "npc"
+    }
+  ],
+  "factions": [
+    {
+      "id": "academie",
+      "nom": "L'Académie",
+      "description": "La coterie la plus ancienne et la plus conservatrice des Toreador. Défend ce qui dure contre ce qui s'invente — arts classiques, patrimoine, permanence. Leur prestige repose sur les collections et les institutions. Méfiance viscérale envers la modernité.",
+      "style": "conservateur",
+      "themes": [
+        "arts classiques",
+        "patrimoine",
+        "permanence",
+        "nostalgie"
+      ],
+      "leader_id": "van_huys",
+      "membres": [
+        {
+          "id": "van_huys",
+          "nom": "Pieter Van Huys",
+          "clan": "toreador",
+          "generation": 7,
+          "role": "Leader de fait — Mécène Royal, conservateur des collections de Villon, président du Cercle de la Lumière",
+          "statut": "npc"
+        },
+        {
+          "id": "valliere_sculpteur",
+          "nom": "Étienne-Maurice de Vallière",
+          "clan": "toreador",
+          "generation": 8,
+          "role": "Patrimoine statuaire, jardins. Rancunier et patient — le poignard dans le dos incarné",
+          "statut": "npc"
+        },
+        {
+          "id": "nicolas_saint_hubert",
+          "nom": "Nicolas de Saint-Hubert",
+          "clan": "toreador",
+          "generation": 9,
+          "role": "Architecture classique, nombre d'or. Nostalgique du Paris pré-révolutionnaire",
+          "statut": "npc"
+        },
+        {
+          "id": "blanche-daulnay",
+          "nom": "Blanche d'Aulnay",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Critique littéraire, protectrice des arts traditionnels. Bourgmestre de la Boucle Sud-Ouest",
+          "statut": "npc"
+        },
+        {
+          "id": "ludovic",
+          "nom": "Ludovic l'Ancien",
+          "clan": "malkavian",
+          "generation": 6,
+          "role": "Influence massive, refuse la politique. Affinité principale ici — pour la permanence et le classicisme",
+          "statut": "npc"
+        },
+        {
+          "id": "caldus_vermeren",
+          "nom": "Caldus Vermeren",
+          "clan": "tremere",
+          "generation": 8,
+          "role": "Bourgmestre du 5e, liaison avec Vienne. Affinité avec le classicisme et la permanence",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "modigliani",
+          "nom": "Amedeo Modigliani",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Trop en transe créatrice pour appartenir vraiment. Courtisé par l'Académie et La Scène",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "hotel_rothschild",
+        "nom": "L'Hôtel Salomon de Rothschild"
+      }
+    },
+    {
+      "id": "scene",
+      "nom": "La Scène",
+      "description": "Musique, performance, voix, intensité de l'instant. L'art comme présence physique et émotionnelle — l'ancienneté ne compte pas, seule l'intensité prime. Cavalcanti opère en metteur en scène qui ne monte jamais sur scène : il place les pièces.",
+      "style": "ambitieux",
+      "themes": [
+        "musique",
+        "performance",
+        "voix",
+        "intensité de l'instant"
+      ],
+      "leader_id": "cavalcanti",
+      "membres": [
+        {
+          "id": "cavalcanti",
+          "nom": "Alessandro di Cavalcanti",
+          "clan": "toreador",
+          "generation": 7,
+          "role": "Leader — Maître des Cérémonies, compositeur",
+          "statut": "npc"
+        },
+        {
+          "id": "balthazar_la_salle",
+          "nom": "Balthazar de la Salle",
+          "clan": "toreador",
+          "generation": 8,
+          "role": "Musique de chambre, mécène des philharmonies. Haine viscérale des Brujah",
+          "statut": "npc",
+          "note": "Ne pas confondre avec Lucien Desfontaines dit Balthazar (PJ Tremere PbN2)"
+        },
+        {
+          "id": "isabella_soprano",
+          "nom": "Isabella Moretti",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Soprano dramatique, Opéra Garnier. Volcanique, compétitive",
+          "statut": "npc"
+        },
+        {
+          "id": "julian_tenor",
+          "nom": "Julian Vance",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Ténor mélancolique. Rancœur envers Silas Sterling",
+          "statut": "npc"
+        },
+        {
+          "id": "baptiste_deburau",
+          "nom": "Baptiste 'L'Ombre Blanche' Deburau",
+          "clan": "malkavian",
+          "generation": 9,
+          "role": "Metteur en scène muet, perfectionniste de l'illusion. Bourgmestre de Marne-la-Vallée",
+          "statut": "npc"
+        },
+        {
+          "id": "marcus_delacroix",
+          "nom": "Marcus Delacroix",
+          "clan": "lasombra",
+          "generation": 7,
+          "role": "Bourgmestre du 2e. Allié Toreador déclaré — laconique, patient, méthodique",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "modigliani",
+          "nom": "Amedeo Modigliani",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Courtisé par La Scène et l'Académie — trop en transe créatrice pour choisir",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "opera_garnier",
+        "nom": "L'Opéra Garnier"
+      }
+    },
+    {
+      "id": "salon",
+      "nom": "Le Salon",
+      "description": "Littérature, théâtre, conversation, paraître. L'art de se montrer autant que de créer. Olympe de Saint-Gilles collecte les secrets comme d'autres collectent les toiles. Alliance naturelle avec les Lasombra — même goût pour la manipulation des réseaux sociaux.",
+      "style": "mondain",
+      "themes": [
+        "littérature",
+        "théâtre",
+        "conversation",
+        "paraître"
+      ],
+      "leader_id": "olympe_actrice",
+      "membres": [
+        {
+          "id": "olympe_actrice",
+          "nom": "Olympe de Saint-Gilles",
+          "clan": "toreador",
+          "generation": 9,
+          "role": "Leader probable — Comédie-Française, salons Rive Gauche. Mémoire des secrets",
+          "statut": "npc"
+        },
+        {
+          "id": "jean-valentin",
+          "nom": "Jean-Valentin de La Couronne",
+          "clan": "toreador",
+          "generation": 8,
+          "role": "Bourgmestre bourg artistique (9e, 18e). Pont vers la cour. Sire d'Armoise Bellamy — relation hostile",
+          "statut": "npc"
+        },
+        {
+          "id": "arthur_rimbaud",
+          "nom": "Arthur Rimbaud",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Poète maudit. Figure de dissidence interne — méprise les conventions Camarilla",
+          "statut": "npc"
+        },
+        {
+          "id": "julien-roche-noire",
+          "nom": "Julien de la Roche-Noire",
+          "clan": "toreador",
+          "generation": 9,
+          "role": "Bourgmestre Montparnasse. Mélancolie érudite — admire et jalouse simultanément",
+          "statut": "npc"
+        },
+        {
+          "id": "louis_charles",
+          "nom": "Louis-Charles de France (Louis XVII)",
+          "clan": "malkavian",
+          "generation": 7,
+          "role": "Primogène Malkavian, Bourgmestre du 13e. Affinité principale ici",
+          "statut": "npc"
+        },
+        {
+          "id": "jean_louis_valmont",
+          "nom": "Jean-Louis Valmont",
+          "clan": "tremere",
+          "generation": 9,
+          "role": "Bourgmestre ad honorem, maître des géométries urbaines",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "arthur_rimbaud",
+          "nom": "Arthur Rimbaud",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Membre du Salon, mais affinités personnelles avec le Bitume — dissidence interne",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "deux_magots",
+        "nom": "Les Deux Magots"
+      }
+    },
+    {
+      "id": "bitume",
+      "nom": "Le Bitume",
+      "description": "Arts populaires, modernité, rue, musiques actuelles. La plus récente et la plus fragile politiquement — méprisée par les trois autres coteries. Alliance naturelle avec les Brujah Camarilla. Silas Sterling impose une légitimité institutionnelle qui la maintient à flot.",
+      "style": "progressiste",
+      "themes": [
+        "arts populaires",
+        "modernité",
+        "rue",
+        "musiques actuelles"
+      ],
+      "leader_id": "silas-sterling",
+      "membres": [
+        {
+          "id": "silas-sterling",
+          "nom": "Silas Sterling",
+          "clan": "toreador",
+          "generation": 9,
+          "role": "Leader par défaut — Belleville, pragmatique, protecteur. Bourgmestre",
+          "statut": "npc"
+        },
+        {
+          "id": "maya_oiseau_rivers",
+          "nom": "Maya 'L'Oiseau' Rivers",
+          "clan": "toreador",
+          "generation": 11,
+          "role": "Jazz, Montparnasse, communauté afro-descendante. Liberté comme principe",
+          "statut": "npc"
+        },
+        {
+          "id": "edith_piaf",
+          "nom": "Édith Piaf",
+          "clan": "toreador",
+          "generation": 11,
+          "role": "Paris populaire, bas-fonds, intensité brute. Déteste la haute cour",
+          "statut": "npc"
+        },
+        {
+          "id": "van_gogh",
+          "nom": "Vincent Van Gogh",
+          "clan": "malkavian",
+          "generation": 10,
+          "role": "Intensité émotionnelle, art brut. Affinité naturelle ici",
+          "statut": "npc"
+        },
+        {
+          "id": "eleonore_beaumont",
+          "nom": "Éléonore Beaumont",
+          "clan": "malkavian",
+          "generation": 8,
+          "role": "Sensibilité à vif, haine de l'autorité. Affinité naturelle ici",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "jim_morrison",
+          "nom": "Jim Morrison",
+          "clan": "toreador",
+          "generation": 12,
+          "role": "Trop anarchique pour vraiment appartenir. Proche du Bitume et des Anarchs",
+          "statut": "npc"
+        },
+        {
+          "id": "ludovic",
+          "nom": "Ludovic l'Ancien",
+          "clan": "malkavian",
+          "generation": 6,
+          "role": "Affinité secondaire — pour le chaos, pas pour l'art de rue",
+          "statut": "npc"
+        },
+        {
+          "id": "arthur_rimbaud",
+          "nom": "Arthur Rimbaud",
+          "clan": "toreador",
+          "generation": 10,
+          "role": "Dissidence interne au Salon — affinités personnelles avec le Bitume",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "pavillon_baudouin",
+        "nom": "Le Pavillon Carré de Baudouin"
+      }
+    },
+    {
+      "id": "influence",
+      "nom": "Influence",
+      "description": "Pénétration des institutions mortelles, réseaux financiers, cercles décisionnels de l'État. Gagner sans que personne ne s'aperçoive qu'ils ont gagné. Patron officieux : Colbert (hors faction). Affinité avec L'Académie et Le Salon.",
+      "style": "discret",
+      "themes": [
+        "institutions",
+        "finance",
+        "réseaux",
+        "infiltration douce"
+      ],
+      "leader_id": "jaures",
+      "patron_id": "colbert",
+      "membres": [
+        {
+          "id": "jaures",
+          "nom": "Jean Jaurès",
+          "clan": "ventrue",
+          "generation": 9,
+          "role": "Leader opérationnel — médiateur social, tribun, Grand Paris Sud",
+          "statut": "npc"
+        },
+        {
+          "id": "vincenzo-moretti",
+          "nom": "Vincenzo 'Enzo' Moretti",
+          "clan": "ventrue",
+          "generation": 8,
+          "role": "Trader d'assaut, régent financier de La Défense. Voit la tradition comme un frein",
+          "statut": "npc"
+        },
+        {
+          "id": "mandel",
+          "nom": "Georges Mandel",
+          "clan": "ventrue",
+          "generation": 10,
+          "role": "Maître des archives, contrôle total de l'information. Craint car il sait tout",
+          "statut": "npc"
+        },
+        {
+          "id": "la_roche_morfouace",
+          "nom": "Alexandra de La Roche-Morfouace",
+          "clan": "ventrue",
+          "generation": 13,
+          "role": "Soft power, diplomatie, médiation inter-clans. Très jeune mais utile",
+          "statut": "npc"
+        },
+        {
+          "id": "lucien_vaneau",
+          "nom": "Lucien Vaneau",
+          "clan": "malkavian",
+          "generation": 9,
+          "role": "Ingénieur des ombres, cage de Faraday. Affinité technocratique avec Influence",
+          "statut": "npc"
+        },
+        {
+          "id": "valerius",
+          "nom": "Maître Valerius",
+          "clan": "malkavian",
+          "generation": 8,
+          "role": "Astrologue de cour. Calcule les rapports de force comme d'autres lisent les astres",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "musee_orsay",
+        "nom": "Le Musée d'Orsay"
+      }
+    },
+    {
+      "id": "interventiste",
+      "nom": "Interventiste",
+      "description": "Positions de force directe, contrôle des milices de goules, coercition territoriale. Les Interventistes croient que le pouvoir s'impose, pas qu'il se négocie. Patron officieux : Armand (hors faction). La Tour-Laval agit trop souvent en solo, ce qui fragilise la faction.",
+      "style": "coercitif",
+      "themes": [
+        "force directe",
+        "territoire",
+        "coercition",
+        "ordre"
+      ],
+      "leader_id": "constance-porte-st-louis",
+      "patron_id": "armand",
+      "membres": [
+        {
+          "id": "constance-porte-st-louis",
+          "nom": "Constance de la Porte-Saint-Louis",
+          "clan": "ventrue",
+          "generation": 8,
+          "role": "Leader opérationnelle — Bourgmestre La Défense, matriarche du Coffre, gardienne des titres",
+          "statut": "npc"
+        },
+        {
+          "id": "de_varennes",
+          "nom": "Marc-Antoine de Varennes",
+          "clan": "ventrue",
+          "generation": 9,
+          "role": "L'exécuteur froid — adjoint au Sheriff, prévôt des manufactures, liaison CAC 40",
+          "statut": "npc"
+        },
+        {
+          "id": "la_vauguyon",
+          "nom": "Édouard-Jean de La Vauguyon",
+          "clan": "ventrue",
+          "generation": 10,
+          "role": "Port de Gennevilliers, logistique brutale. Pas de manières de cour",
+          "statut": "npc"
+        },
+        {
+          "id": "saint_cyr",
+          "nom": "Marie-Henriette de Saint-Cyr",
+          "clan": "ventrue",
+          "generation": 11,
+          "role": "Préfète occulte, liaison Préfecture de Police, obsédée discipline et hiérarchie",
+          "statut": "npc"
+        },
+        {
+          "id": "la_tour_laval",
+          "nom": "Jean-Rémy de la Tour-Laval",
+          "clan": "ventrue",
+          "generation": 12,
+          "role": "Haine viscérale des Brujah, méthodes paramilitaires. Agit souvent en solo — se fragilise politiquement",
+          "statut": "npc"
+        },
+        {
+          "id": "la_voisin",
+          "nom": "Catherine Deshayes dite La Voisin",
+          "clan": "tremere",
+          "generation": 8,
+          "role": "Adjointe au Sheriff, maîtresse des poisons, alchimiste. Toxicologue du clan — macabre et dénuée de remords",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "grande_arche_defense",
+        "nom": "La Grande Arche de La Défense"
+      }
+    },
+    {
+      "id": "nosferatu",
+      "nom": "Nosferatu",
+      "description": "Neutralité active. En cas de déséquilibre, appuient discrètement la faction perdante via informations ou rétention d'infos vers la dominante. But : maintenir l'équilibre, pas choisir un gagnant. Les informations sont leur monnaie et leur seule arme politique.",
+      "style": "neutre actif",
+      "themes": [
+        "information",
+        "neutralité",
+        "équilibre",
+        "ombre"
+      ],
+      "membres": [
+        {
+          "id": "etienne_manchot",
+          "nom": "Étienne le manchot",
+          "clan": "nosferatu",
+          "generation": 6,
+          "role": "Bourgmestre du Sous-sol Rive Droite",
+          "statut": "npc"
+        },
+        {
+          "id": "louise_francoise",
+          "nom": "Louise-Françoise de la Vallière",
+          "clan": "nosferatu",
+          "generation": 6,
+          "role": "Bourgmestre du Sous-sol Rive Gauche",
+          "statut": "npc"
+        },
+        {
+          "id": "aristide_lecoq",
+          "nom": "Aristide 'Gueule d'Acier' Lecoq",
+          "clan": "nosferatu",
+          "generation": 7,
+          "role": "Bourgmestre Nord-Est. Sire de Lucien Mornay dit Bouledogue (PJ PbN1)",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "dessous",
+        "nom": "Les Souterrains — réseau non cartographié"
+      }
+    },
+    {
+      "id": "reformistes",
+      "nom": "Réformistes",
+      "description": "Faction de la survie. Idéalisme des Lumières tempéré par deux siècles de défaites. Réformistes, pas révolutionnaires — ils veulent changer la Camarilla de l'intérieur. Marat fait le pont avec les Anarchs mais la méfiance est réciproque.",
+      "style": "réformiste",
+      "themes": [
+        "idéalisme",
+        "réforme",
+        "survie",
+        "progressisme"
+      ],
+      "leader_id": "vallier",
+      "membres": [
+        {
+          "id": "vallier",
+          "nom": "Vallier",
+          "clan": "brujah",
+          "generation": 7,
+          "role": "Primogène — philosophe des Lumières, médiateur du Conseil",
+          "statut": "npc"
+        },
+        {
+          "id": "mallet",
+          "nom": "Étienne-Louis Mallet",
+          "clan": "brujah",
+          "generation": 8,
+          "role": "Bourgmestre Val-de-Marne Est, doyen de l'Académie Nocturne. Froid, logique",
+          "statut": "npc"
+        },
+        {
+          "id": "marat",
+          "nom": "Jean-Paul Marat",
+          "clan": "brujah",
+          "generation": 8,
+          "role": "Bourgmestre Saint-Denis — pont entre Camarilla et Anarchs. Ancien Anarch devenu patient",
+          "statut": "npc"
+        },
+        {
+          "id": "gustave_marteau",
+          "nom": "Gustave 'Le Marteau' Lemaire",
+          "clan": "brujah",
+          "generation": 9,
+          "role": "Adjoint au Sheriff, bras armé des idéalistes. Rage froide contre l'injustice",
+          "statut": "npc"
+        },
+        {
+          "id": "barnabe",
+          "nom": "Barnabé",
+          "clan": "malkavian",
+          "generation": 9,
+          "role": "Cynisme macabre, humour du chaos. Affinité naturelle avec les réformistes Brujah",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "marat",
+          "nom": "Jean-Paul Marat",
+          "clan": "brujah",
+          "generation": 8,
+          "role": "Membre Brujah Cam, mais pont permanent avec les Anarchs",
+          "statut": "npc"
+        },
+        {
+          "id": "tom_miller",
+          "nom": "Thomas 'Tom' Miller",
+          "clan": "brujah",
+          "generation": 12,
+          "role": "Idéologue pacifiste, utopiste. Désobéissance civile plutôt qu'attaque directe — trop modéré pour les Anarchs",
+          "statut": "proche"
+        },
+        {
+          "id": "claire_valade",
+          "nom": "Claire Valade",
+          "clan": "malkavian",
+          "generation": 12,
+          "role": "Interface sociale de Louis XVII. Douceur maternelle — suit les progressistes par empathie",
+          "statut": "proche"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "centquatre",
+        "nom": "Le Centquatre-Paris"
+      }
+    },
+    {
+      "id": "anarchs",
+      "nom": "Anarchs",
+      "description": "Peu d'interactions avec la cour. Brasseur juge sur les actes, pas sur la lignée. Faction hétérogène entre pacifistes (Tom Miller) et nihilistes (Idriss). L'unité de façade masque de profondes divergences internes sur les méthodes et les objectifs.",
+      "style": "radical",
+      "themes": [
+        "indépendance",
+        "action directe",
+        "rue",
+        "anti-hiérarchie"
+      ],
+      "leader_id": "brasseur",
+      "membres": [
+        {
+          "id": "brasseur",
+          "nom": "Jean-Pierre 'Le Rescapé' Brasseur",
+          "clan": "brujah",
+          "generation": 10,
+          "role": "Leader — pragmatique, férocement indépendant. Juge sur les actes pas sur la lignée",
+          "statut": "npc"
+        },
+        {
+          "id": "lady_diana",
+          "nom": "Lady Diana Spencer",
+          "clan": "brujah",
+          "generation": 10,
+          "role": "Icône, maîtresse de l'influence digitale. Voix des sans-voix (Caitiffs, sang-clairs)",
+          "statut": "npc"
+        },
+        {
+          "id": "rossi",
+          "nom": "Julien 'Le Passeur' Rossi",
+          "clan": "brujah",
+          "generation": 11,
+          "role": "Coordinateur des cellules, artificier du mouvement",
+          "statut": "npc"
+        },
+        {
+          "id": "le_poilu",
+          "nom": "Marcel 'Le Poilu' Durand",
+          "clan": "brujah",
+          "generation": 11,
+          "role": "Éclaireur, nihiliste taciturne. Ne croit plus en aucune cause sauf la survie",
+          "statut": "npc"
+        },
+        {
+          "id": "molotov",
+          "nom": "Marc 'Molotov' Lefebvre",
+          "clan": "brujah",
+          "generation": 12,
+          "role": "Fer de lance des raids, agitateur de rue. Méprise même Brasseur qu'il trouve trop mou",
+          "statut": "npc"
+        },
+        {
+          "id": "laroche",
+          "nom": "Benoît 'La Terre' Laroche",
+          "clan": "brujah",
+          "generation": 12,
+          "role": "Logisticien, activiste anti-Camarilla",
+          "statut": "npc"
+        },
+        {
+          "id": "bako",
+          "nom": "Bakary 'Bako' Traoré",
+          "clan": "brujah",
+          "generation": 13,
+          "role": "Chef de sécurité, médiateur des quartiers Sud",
+          "statut": "npc"
+        },
+        {
+          "id": "idriss",
+          "nom": "Idriss 'Roots' Ben-Chabane",
+          "clan": "brujah",
+          "generation": 13,
+          "role": "Puriste — veut voir s'effondrer la société des vampires, pas la réformer",
+          "statut": "npc"
+        },
+        {
+          "id": "vilebrequin",
+          "nom": "Yacine 'Vilebrequin' Mansour",
+          "clan": "brujah",
+          "generation": 13,
+          "role": "Estafette motorisée, éclaireur banlieue Nord",
+          "statut": "npc"
+        },
+        {
+          "id": "leo_splash_graffeur",
+          "nom": "Léo 'Splash' Morand-Bensaid",
+          "clan": "toreador",
+          "generation": 13,
+          "role": "Graffiti, calligraphie. Ancien protégé de Silas Sterling, a glissé vers les Anarchs",
+          "statut": "npc"
+        }
+      ],
+      "proches": [
+        {
+          "id": "jim_morrison",
+          "nom": "Jim Morrison",
+          "clan": "toreador",
+          "generation": 12,
+          "role": "Trop anarchique pour s'engager formellement — proche des Anarchs et du Bitume",
+          "statut": "npc"
+        },
+        {
+          "id": "malik_the_lizard",
+          "nom": "Malik 'The Lizard' Ben Salem",
+          "clan": "toreador",
+          "generation": 13,
+          "role": "Mélancolique, visionnaire — plus proche que membre. Protégé de Silas avec des affinités Anarch",
+          "statut": "npc"
+        },
+        {
+          "id": "marat",
+          "nom": "Jean-Paul Marat",
+          "clan": "brujah",
+          "generation": 8,
+          "role": "Membre Brujah Cam qui fait le pont. Méfiance réciproque mais dialogue permanent",
+          "statut": "npc"
+        },
+        {
+          "id": "ludovic",
+          "nom": "Ludovic l'Ancien",
+          "clan": "malkavian",
+          "generation": 6,
+          "role": "Affinité secondaire pour le chaos — gravite parfois ici pour semer la zizanie",
+          "statut": "npc"
+        }
+      ],
+      "lieu_de_rencontre": {
+        "id": "la_ligne_13",
+        "nom": "La Ligne 13"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "factions": [
+        "academie",
+        "scene"
+      ],
+      "type": "tension",
+      "description": "Compétition de prestige orchestrée par Villon. Rivalité latente sur la légitimité artistique — qui définit ce qui compte comme art."
+    },
+    {
+      "factions": [
+        "academie",
+        "salon"
+      ],
+      "type": "neutre",
+      "description": "Coexistence polie. Le Salon est trop mondain pour l'Académie, mais pas assez menaçant pour valoir un conflit."
+    },
+    {
+      "factions": [
+        "academie",
+        "bitume"
+      ],
+      "type": "hostile",
+      "description": "Mépris esthétique franc. L'Académie considère le Bitume comme une insulte à la notion même d'art."
+    },
+    {
+      "factions": [
+        "scene",
+        "salon"
+      ],
+      "type": "tension",
+      "description": "Jalousie croisée. La Scène méprise le paraître du Salon, le Salon trouve La Scène vulgaire dans ses passions."
+    },
+    {
+      "factions": [
+        "scene",
+        "bitume"
+      ],
+      "type": "tension",
+      "description": "Distance de classe. La Scène s'estime supérieure, mais partage avec le Bitume l'amour de la performance émotionnelle."
+    },
+    {
+      "factions": [
+        "salon",
+        "bitume"
+      ],
+      "type": "tension",
+      "description": "Condescendance du Salon. Rimbaud fait exception — il a des affinités personnelles avec le Bitume."
+    },
+    {
+      "factions": [
+        "academie",
+        "influence"
+      ],
+      "type": "alliance",
+      "description": "Alliance établie — consolidation discrète, respect des structures. Affinité naturelle entre conservateurs."
+    },
+    {
+      "factions": [
+        "salon",
+        "influence"
+      ],
+      "type": "alliance",
+      "description": "Affinités ponctuelles. Le Salon et Influence partagent le goût des réseaux discrets et de la manipulation sociale."
+    },
+    {
+      "factions": [
+        "bitume",
+        "interventiste"
+      ],
+      "type": "tension",
+      "description": "Tour-Laval déborde — sa haine des Brujah s'étend au Bitume, trop proche des Brujah pour être confortable."
+    },
+    {
+      "factions": [
+        "influence",
+        "interventiste"
+      ],
+      "type": "tension",
+      "description": "Même objectif (le pouvoir), méthodes opposées. Tension permanente. Colbert et Armand maintiennent une façade de cohésion."
+    },
+    {
+      "factions": [
+        "bitume",
+        "reformistes"
+      ],
+      "type": "alliance",
+      "description": "Alliance naturelle établie — factions progressistes face aux conservateurs de la cour."
+    },
+    {
+      "factions": [
+        "interventiste",
+        "reformistes"
+      ],
+      "type": "hostile",
+      "description": "Tour-Laval — haine viscérale des Brujah, initiatives solo non concertées. Crée une friction que Constance et Varennes doivent gérer."
+    },
+    {
+      "factions": [
+        "influence",
+        "anarchs"
+      ],
+      "type": "hostile",
+      "description": "Les Anarchs sont une menace à l'ordre institutionnel que la faction Influence cherche à contrôler discrètement."
+    },
+    {
+      "factions": [
+        "interventiste",
+        "anarchs"
+      ],
+      "type": "hostile",
+      "description": "Hostilité frontale. Les Interventistes verraient bien les Anarchs détruits ou chassés de Paris."
+    },
+    {
+      "factions": [
+        "reformistes",
+        "anarchs"
+      ],
+      "type": "tension",
+      "description": "Marat fait le pont mais la méfiance est réciproque. La Camarilla voit les Anarchs comme des irresponsables qui nuisent à la cause."
+    }
+  ]
+}

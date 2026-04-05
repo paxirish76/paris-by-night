@@ -2,13 +2,13 @@
   "_meta": {
     "description": "Template d'insertion pour la table `personnages` — projet Paris by Night (Supabase).",
     "usage": "Charger ce fichier en contexte pour que Claude sache exactement comment formater un nouveau personnage. Supprimer ou remplacer toutes les valeurs entre < > avant insertion.",
-    "clans_valides": ["brujah", "gangrel", "lasombra", "malkavian", "nosferatu", "toreador", "tremere", "ventrue", "assamite", "giovanni", "tzimisce"],
+    "clans_valides": ["brujah", "gangrel", "lasombra", "malkavian", "mortel", "nosferatu", "toreador", "tremere", "ventrue", "assamite", "giovanni", "tzimisce"],
     "clans_mineurs": ["assamite", "giovanni", "tzimisce"],
     "regles": {
       "id": "Slug kebab-case unique, sans accents, sans espaces. Ex: 'jean-de-metz', 'zarha_al-rashida'.",
       "sire": "id d'un autre personnage existant, ou chaîne vide \"\" si racine / sire inconnu.",
       "roles": "Tableau JSON de strings. Minimum 1 rôle.",
-      "disciplines": "Tableau JSON de strings (noms des disciplines en français).",
+      "disciplines": "Tableau JSON de strings (noms des disciplines en français). Tableau vide [] pour les mortels.",
       "relations": "Tableau JSON de strings. Chaque string = '[Nom du personnage] : [description de la relation]'.",
       "secrets_mj": "Objet JSON. Clés libres en snake_case descriptif. Valeurs = strings de narration.",
       "attributes": "Objet JSON fixe à 3 catégories (physique, social, mental), chacune avec 3 sous-attributs entiers (0 si non renseigné).",
@@ -17,7 +17,9 @@
       "image_url": "Nom du fichier image stocké dans le bucket Supabase 'lieux'. Format : '[id].jpg'.",
       "ghost": "true uniquement pour les vampires détruits servant de nœud fantôme dans l'arbre généalogique.",
       "connu": "true = visible par tous les joueurs dans PersonnagesTable. false par défaut.",
-      "hors_structure": "true = exclu de la liste principale du clan, apparaît sous 'Présences isolées' dans ClanDetail. Obligatoire pour les clans mineurs."
+      "hors_structure": "true = exclu de la liste principale du clan, apparaît sous 'Présences isolées' dans ClanDetail. Obligatoire pour les clans mineurs.",
+      "field_visibility": "Objet JSON. Contrôle la visibilité des champs sensibles pour chaque joueur ou groupe. Clés = identifiants de joueurs ou de champs, valeurs = booléens ou objets de visibilité. Laisser {} si aucune restriction.",
+      "created_at": "Généré automatiquement par Supabase (now()). Ne pas inclure dans l'insertion — Supabase le renseigne seul."
     }
   },
 
@@ -25,7 +27,7 @@
     "id": "<slug-kebab-case-unique>",
     "nom": "<Prénom Nom complet>",
     "clan_id": "<clan_id parmi les clans valides>",
-    "generation": "<entier, ex: 8>",
+    "generation": "<entier, ex: 8 — null pour les mortels>",
     "sire": "<id d'un personnage existant, ou \"\">",
     "roles": ["<Rôle principal>", "<Rôle secondaire optionnel>"],
     "apparence": "<Description physique détaillée — apparence mortelle, vêtements, posture, ce que les autres retiennent.>",
@@ -50,7 +52,8 @@
     "image_url": "<slug-kebab-case-unique>.jpg",
     "ghost": false,
     "connu": false,
-    "hors_structure": false
+    "hors_structure": false,
+    "field_visibility": {}
   },
 
   "exemple_rempli": {
@@ -82,6 +85,10 @@
     "image_url": "zarha_al-rashida.jpg",
     "ghost": false,
     "connu": true,
-    "hors_structure": true
+    "hors_structure": true,
+    "field_visibility": {
+      "nono": { "sire": true, "histoire": true, "personnalite": true },
+      "secrets_mj": false
+    }
   }
 }

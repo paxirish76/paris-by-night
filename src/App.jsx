@@ -11,6 +11,7 @@ import ClansTable from './components/ClansTable';
 import Genealogie from './components/Genealogie';
 import Chronologie from './components/Chronologie';
 import Influences from './components/Influences';
+import Factions from './components/Factions';
 import Organisation from './components/Organisation';
 import LoginScreen from './components/LoginScreen';
 import AdminPanel from './components/AdminPanel';
@@ -197,6 +198,15 @@ function AppInner() {
           <Influences
             playerMode={isPlayer(mode) || isCampagneMode}
             viewerClan={isPlayer(mode) ? mode : null}
+          />
+        );
+
+      case 'factions':
+        if (!isMJ(mode)) return <Home onNavigate={navigate} />;
+        return (
+          <Factions
+            onNavigateToPersonnage={navigateToPersonnage}
+            onSelectLieu={(id) => setSelectedLieuId(id)}
           />
         );
 

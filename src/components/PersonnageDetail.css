@@ -983,3 +983,85 @@
 .pd-joueur-field-pill.active .pd-joueur-field-dot {
   background: #4caf50;
 }
+
+/* ── Factions ─────────────────────────────────────── */
+
+.detail-faction {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.02);
+}
+
+.faction-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--silver);
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.faction-affiliations {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.faction-affiliation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.faction-affiliation-nom {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.faction-affiliation-role {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.faction-affiliation-role--membre {
+  background: rgba(212,175,55,0.1);
+  color: var(--gold);
+  border: 1px solid rgba(212,175,55,0.25);
+}
+
+.faction-affiliation-role--proche {
+  background: rgba(140,140,200,0.08);
+  color: #9999cc;
+  border: 1px solid rgba(140,140,200,0.2);
+}
+
+.faction-value--none {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--silver);
+  opacity: 0.3;
+}
+
+/* Day theme */
+[data-theme="day"] .detail-faction                    { background: #f0ece0; border-color: rgba(154,124,24,0.2); }
+[data-theme="day"] .faction-label                     { opacity: 0.6; }
+[data-theme="day"] .faction-affiliation-role--membre  { background: rgba(154,124,24,0.1); color: #9a7c18; border-color: rgba(154,124,24,0.25); }
+[data-theme="day"] .faction-affiliation-role--proche  { background: rgba(100,100,180,0.06); color: #6666aa; border-color: rgba(100,100,180,0.18); }

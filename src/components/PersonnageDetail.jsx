@@ -3,6 +3,19 @@ import { supabase } from '../lib/supabase';
 import PortraitModal from './PortraitModal';
 import './PersonnageDetail.css';
 
+// ── Couleurs de style de faction (synchro avec Factions.jsx) ──────────────
+const FACTION_STYLE_COLORS = {
+  conservateur:   '#c9a84c',
+  ambitieux:      '#d4537a',
+  mondain:        '#9b7fb6',
+  progressiste:   '#5b8fc9',
+  discret:        '#3a6fb5',
+  coercitif:      '#c0392b',
+  'neutre actif': '#7d9e7d',
+  réformiste:     '#e05c2a',
+  radical:        '#cc4466',
+};
+
 // ── Visibilité par défaut ──────────────────────────────────────────────────
 // true  = visible par défaut si la clé est absente de field_visibility
 // false = masqué par défaut si la clé est absente de field_visibility
@@ -20,7 +33,8 @@ const FIELD_DEFAULTS = {
   generation:   true,
   relations:    false,
   notes:        false,
-  roles:        true,   // seul champ visible par défaut
+  roles:        true,
+  faction:      false,  // masqué par défaut, révélable par le MJ
 };
 
 // ── PersonnageDetail ───────────────────────────────────────────────────────
@@ -34,6 +48,7 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
   const [saveMsg, setSaveMsg]                     = useState('');
   const [fieldVisibility, setFieldVisibility]     = useState({});
   const [joueurs, setJoueurs]                     = useState([]);
+  const [factionsData, setFactionsData]           = useState([]);
 
   // Clan roster pour la navigation prev/next
   const [clanRoster, setClanRoster]                   = useState([]);
@@ -59,6 +74,13 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
       .order('campagne_id')
       .then(({ data }) => setJoueurs(data || []));
   }, [mjMode]);
+
+  // Load factions data (static JSON) pour résoudre faction_id → nom + couleur
+  useEffect(() => {
+    import('../data/paris_factions.json')
+      .then(mod => setFactionsData((mod.default ?? mod).factions ?? []))
+      .catch(() => {});
+  }, []);
 
   const loadPersonnage = async () => {
     try {
@@ -271,11 +293,18 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
     );
   }
 
-  const attributes  = getAttributes();
-  const roles       = personnage.roles || [];
-  const disciplines = personnage.disciplines || [];
-  const relations   = personnage.relations || [];
-  const secrets     = personnage.secrets_mj || {};
+  const attributes    = getAttributes();
+  const roles         = personnage.roles || [];
+  const disciplines   = personnage.disciplines || [];
+  const relations     = personnage.relations || [];
+  const secrets       = personnage.secrets_mj || {};
+  const factionsList  = Array.isArray(personnage.factions) ? personnage.factions : [];
+  const factionsResolved = factionsList
+    .map(entry => ({
+      ...entry,
+      info: factionsData.find(f => f.id === entry.faction_id) || null,
+    }))
+    .filter(entry => entry.info);
 
   // ── Logique de visibilité globale ─────────────────────────────────────────
   // MJ              : voit tout + toggles
@@ -566,6 +595,42 @@ function PersonnageDetail({ personnageId, onClose, playerMode = false, viewerCla
             <span className="clan-nom" style={{ color: clan?.couleur }}>{clan?.nom}</span>
           </div>
 
+          {/* Factions — masqué par défaut, révélable par le MJ */}
+          {(factionsResolved.length > 0 || mjMode) && (mjMode || playerCanSee('faction')) && (
+            <div className={`detail-faction ${!isFieldVisible(fv, 'faction') && mjMode ? 'section-hidden' : ''}`}>
+              <span className="faction-label">
+                Faction{factionsResolved.length > 1 ? 's' : ''}
+                {mjMode && (
+                  <VisibilityToggle
+                    visible={isFieldVisible(fv, 'faction')}
+                    onToggle={() => toggleField('faction')}
+                    label="les factions"
+                    className="meta-toggle"
+                  />
+                )}
+              </span>
+              {factionsResolved.length > 0 ? (
+                <div className="faction-affiliations">
+                  {factionsResolved.map((entry, i) => (
+                    <div key={i} className="faction-affiliation">
+                      <span
+                        className="faction-affiliation-nom"
+                        style={{ color: FACTION_STYLE_COLORS[entry.info.style] || '#888' }}
+                      >
+                        {entry.info.nom}
+                      </span>
+                      <span className={`faction-affiliation-role faction-affiliation-role--${entry.role}`}>
+                        {entry.role}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <span className="faction-value faction-value--none">Aucune faction</span>
+              )}
+            </div>
+          )}
+
           {/* Attributs — MJ uniquement, pas de toggle */}
           {showMJOnly && (
             <div className="detail-section">
@@ -711,6 +776,7 @@ const TOGGLEABLE_FIELDS = [
   { key: 'histoire',     label: 'Histoire' },
   { key: 'sire',         label: 'Sire' },
   { key: 'generation',   label: 'Génération' },
+  { key: 'faction',      label: 'Faction' },
   { key: 'relations',    label: 'Relations' },
   { key: 'notes',        label: 'Notes' },
   { key: 'roles',        label: 'Rôles' },

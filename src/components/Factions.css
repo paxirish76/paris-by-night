@@ -1,0 +1,835 @@
+/* ── Root & Layout ─────────────────────────────────────────────────────────── */
+
+.ft-root {
+  padding: 0 0 4rem;
+  min-height: 100vh;
+}
+
+.ft-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: var(--text-2, #aaa);
+}
+
+.ft-spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--border, #333);
+  border-top-color: var(--gold, #d4af37);
+  border-radius: 50%;
+  animation: ft-spin 0.8s linear infinite;
+}
+
+@keyframes ft-spin { to { transform: rotate(360deg); } }
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+
+.ft-header {
+  padding: 2.5rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border, #2a2a2a);
+}
+
+.ft-header-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-2, #888);
+  margin-bottom: 0.4rem;
+}
+
+.ft-header-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gold, #d4af37);
+  margin: 0 0 0.25rem;
+}
+
+.ft-header-sub {
+  font-size: 0.85rem;
+  color: var(--text-2, #888);
+  margin: 0 0 1.25rem;
+}
+
+.ft-view-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ft-toggle-btn {
+  padding: 0.4rem 1.1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border, #333);
+  background: transparent;
+  color: var(--text-2, #aaa);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ft-toggle-btn:hover {
+  background: var(--bg-2, #1a1a1a);
+  color: var(--text-1, #eee);
+}
+
+.ft-toggle-btn.active {
+  background: var(--gold, #d4af37);
+  color: #000;
+  border-color: var(--gold, #d4af37);
+  font-weight: 600;
+}
+
+/* ── MATRICE ────────────────────────────────────────────────────────────────── */
+
+.ft-matrice-view {
+  padding: 1.5rem 2rem;
+}
+
+.ft-matrice-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+.ft-matrice-table {
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.ft-matrice-corner {
+  min-width: 160px;
+  border: none;
+  background: transparent;
+}
+
+/* Col headers — rotation 55° */
+.ft-matrice-col-head {
+  padding: 0;
+  width: 48px;
+  height: 130px;
+  vertical-align: bottom;
+  border: none;
+}
+
+.ft-col-head-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 8px;
+}
+
+.ft-col-head-text {
+  display: block;
+  transform: rotate(-55deg);
+  transform-origin: bottom center;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  font-weight: 600;
+  max-width: 120px;
+}
+
+/* Row headers */
+.ft-matrice-row-head {
+  padding: 6px 12px 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-1, #eee);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border, #222);
+  transition: background 0.12s;
+}
+
+.ft-matrice-row-head:hover {
+  background: var(--bg-2, #1a1a1a);
+}
+
+/* Cells */
+.ft-matrice-cell {
+  width: 48px;
+  height: 38px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--border, #1e1e1e);
+  cursor: pointer;
+  transition: filter 0.1s;
+}
+
+.ft-matrice-cell:hover { filter: brightness(1.3); }
+
+.ft-cell-self {
+  background: var(--bg-2, #111);
+  cursor: default;
+}
+.ft-cell-self:hover { filter: none; }
+
+.ft-cell-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* Cell colour fills */
+.ft-cell-alliance { background: rgba(88, 160, 100, 0.25); }
+.ft-cell-tension  { background: rgba(220, 150, 50,  0.20); }
+.ft-cell-hostile  { background: rgba(200, 60,  60,  0.25); }
+.ft-cell-neutre   { background: transparent; }
+
+/* Legend */
+.ft-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-2, #888);
+  border-top: 1px solid var(--border, #222);
+  margin-top: 1rem;
+}
+
+.ft-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ft-legend-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.ft-legend-tip {
+  color: var(--text-2, #666);
+  font-style: italic;
+  margin-left: auto;
+}
+
+/* ── Relation drawer ────────────────────────────────────────────────────────── */
+
+.ft-rel-drawer {
+  margin-top: 1rem;
+  background: var(--bg-2, #141414);
+  border: 1px solid var(--border, #2a2a2a);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  min-height: 60px;
+  font-size: 0.85rem;
+  transition: border-color 0.15s;
+}
+
+.ft-rel-drawer--empty {
+  color: var(--text-2, #666);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+}
+
+.ft-rel-drawer--alliance { border-left: 3px solid #58a064; }
+.ft-rel-drawer--tension  { border-left: 3px solid #dc9632; }
+.ft-rel-drawer--hostile  { border-left: 3px solid #c83c3c; }
+.ft-rel-drawer--neutre   { border-left: 3px solid #444; }
+
+.ft-rel-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ft-rel-type-icon {
+  font-size: 1rem;
+  width: 1.25rem;
+  text-align: center;
+}
+
+.ft-rel-arrow {
+  color: var(--text-2, #666);
+}
+
+.ft-rel-type-label {
+  margin-left: auto;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2, #888);
+  font-weight: 600;
+}
+
+.ft-rel-desc {
+  color: var(--text-2, #aaa);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mini card (faction rapide dans la matrice) ─────────────────────────────── */
+
+.ft-mini-card {
+  border-left-width: 3px;
+  border-left-style: solid;
+}
+
+.ft-mini-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+}
+
+.ft-mini-card-nom {
+  font-size: 0.95rem;
+  display: block;
+}
+
+.ft-mini-card-style {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  display: block;
+  margin-top: 2px;
+}
+
+.ft-mini-card-close {
+  background: none;
+  border: none;
+  color: var(--text-2, #666);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ft-mini-card-close:hover { color: var(--text-1, #eee); }
+
+.ft-mini-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-2, #aaa);
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+
+.ft-mini-card-lieu {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.78rem;
+  margin-bottom: 0.5rem;
+}
+
+.ft-mini-card-lieu-label {
+  color: var(--text-2, #888);
+  flex-shrink: 0;
+}
+
+.ft-mini-card-lieu-nom {
+  color: var(--text-1, #ddd);
+}
+
+/* ── Thème pills ────────────────────────────────────────────────────────────── */
+
+.ft-themes-row,
+.ft-mini-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.5rem;
+}
+
+.ft-theme-pill {
+  font-size: 0.7rem;
+  padding: 2px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border, #333);
+  color: var(--text-2, #aaa);
+  background: var(--bg-2, #111);
+}
+
+/* ── FICHES ─────────────────────────────────────────────────────────────────── */
+
+.ft-fiches-view {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ft-fiche {
+  border: 1px solid var(--border, #2a2a2a);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-1, #0f0f0f);
+  transition: border-color 0.15s;
+}
+
+.ft-fiche--open {
+  border-color: var(--border-2, #3a3a3a);
+}
+
+/* Header de fiche */
+.ft-fiche-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.ft-fiche-head:hover {
+  background: var(--bg-2, #161616);
+}
+
+.ft-fiche-accent {
+  width: 4px;
+  border-radius: 2px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.ft-fiche-head-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ft-fiche-nom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-1, #eee);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ft-fiche-meta {
+  font-size: 0.72rem;
+  color: var(--text-2, #888);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.ft-fiche-count {
+  margin-left: auto;
+  color: var(--text-2, #666);
+}
+
+.ft-fiche-chevron {
+  font-size: 0.7rem;
+  color: var(--text-2, #666);
+  flex-shrink: 0;
+}
+
+/* Corps de fiche */
+.ft-fiche-body {
+  padding: 0 16px 16px 16px;
+  border-top: 1px solid var(--border, #1e1e1e);
+}
+
+.ft-fiche-desc {
+  font-size: 0.83rem;
+  color: var(--text-2, #aaa);
+  line-height: 1.6;
+  margin: 12px 0 10px;
+}
+
+/* Lieu */
+.ft-lieu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  padding: 6px 0;
+  border-top: 1px solid var(--border, #1e1e1e);
+  margin: 8px 0;
+}
+
+.ft-lieu-label {
+  color: var(--text-2, #666);
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ft-lieu-nom {
+  color: var(--text-1, #ddd);
+}
+
+/* Sections membres */
+.ft-membres-section {
+  margin-top: 12px;
+}
+
+.ft-membres-title {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2, #666);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.ft-membres-title--proches {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border, #2a2a2a);
+}
+
+.ft-membres-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ft-membre-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  transition: background 0.1s;
+}
+
+.ft-membre-row:hover {
+  background: var(--bg-2, #161616);
+}
+
+.ft-membre-row--leader {
+  background: var(--bg-2, #141414);
+}
+
+.ft-membre-row--proche {
+  opacity: 0.8;
+}
+
+/* Avatar */
+.ft-membre-av {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+
+.ft-membre-av--proche {
+  background: transparent !important;
+  border: 1.5px solid;
+  font-size: 8px;
+  color: var(--text-2, #888);
+}
+
+/* Infos membre */
+.ft-membre-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ft-membre-nom {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-1, #eee);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ft-leader-badge {
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold, #d4af37);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.ft-membre-role {
+  font-size: 0.72rem;
+  color: var(--text-2, #777);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.ft-membre-gen {
+  font-size: 0.7rem;
+  color: var(--text-2, #555);
+  flex-shrink: 0;
+}
+
+/* Badges statut */
+.ft-badge {
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.ft-badge-npc {
+  background: rgba(100, 100, 100, 0.15);
+  color: #777;
+  border: 1px solid #333;
+}
+
+.ft-badge-proche {
+  background: rgba(100, 100, 200, 0.1);
+  color: #8888cc;
+  border: 1px solid #334;
+}
+
+/* Lieu cliquable */
+.ft-lieu--btn,
+.ft-mini-card-lieu--btn {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+  border-radius: 5px;
+}
+
+.ft-lieu--btn:hover {
+  background: var(--bg-2, #1a1a1a);
+}
+
+.ft-mini-card-lieu--btn:hover {
+  background: var(--bg-2, #1a1a1a);
+}
+
+.ft-mini-card-lieu--btn .ft-mini-membre-arrow {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.ft-mini-card-lieu--btn:hover .ft-mini-membre-arrow {
+  opacity: 1;
+}
+
+.ft-lieu--btn .ft-membre-arrow {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.ft-lieu--btn:hover .ft-membre-arrow {
+  opacity: 1;
+}
+
+[data-theme="day"] .ft-lieu--btn:hover       { background: #f0ece0; }
+[data-theme="day"] .ft-mini-card-lieu--btn:hover { background: #f0ece0; }
+
+/* Membres cliquables (button reset) */
+.ft-membre-row--btn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ft-membre-arrow {
+  font-size: 0.85rem;
+  color: var(--text-2, #555);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.ft-membre-row:hover .ft-membre-arrow {
+  opacity: 1;
+}
+
+/* Badge proche */
+.ft-proche-badge {
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: rgba(100, 100, 200, 0.1);
+  color: #8888cc;
+  border: 1px solid #334;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* ── Mini card membres (dans la matrice) ──────────────────────────────────── */
+
+.ft-mini-membres {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--border, #2a2a2a);
+  padding-top: 0.6rem;
+}
+
+.ft-mini-membres-title {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2, #666);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.ft-mini-membre-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.ft-mini-membre-row:hover {
+  background: var(--bg-2, #1a1a1a);
+}
+
+.ft-mini-membre-row--proche {
+  opacity: 0.75;
+}
+
+.ft-mini-membre-av {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.ft-mini-membre-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ft-mini-membre-nom {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-1, #eee);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ft-mini-membre-role {
+  font-size: 0.68rem;
+  color: var(--text-2, #777);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.ft-mini-membre-gen {
+  font-size: 0.68rem;
+  color: var(--text-2, #555);
+  flex-shrink: 0;
+}
+
+.ft-mini-membre-arrow {
+  font-size: 0.8rem;
+  color: var(--text-2, #555);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.ft-mini-membre-row:hover .ft-mini-membre-arrow {
+  opacity: 1;
+}
+
+[data-theme="day"] .ft-mini-membres        { border-top-color: #ddd; }
+[data-theme="day"] .ft-mini-membre-row:hover { background: #f0ece0; }
+[data-theme="day"] .ft-mini-membre-nom     { color: #1a1408; }
+[data-theme="day"] .ft-mini-membre-role    { color: #888; }
+
+[data-theme="day"] .ft-header-title             { color: #9a7c18; }
+[data-theme="day"] .ft-header-eyebrow           { color: #888; }
+[data-theme="day"] .ft-header-sub               { color: #777; }
+[data-theme="day"] .ft-toggle-btn               { color: #555; border-color: #ccc; }
+[data-theme="day"] .ft-toggle-btn:hover         { background: #f0ece0; color: #1a1408; }
+[data-theme="day"] .ft-toggle-btn.active        { background: #9a7c18; color: #fff; border-color: #9a7c18; }
+[data-theme="day"] .ft-matrice-row-head         { color: #1a1408; border-bottom-color: #ddd; }
+[data-theme="day"] .ft-matrice-row-head:hover   { background: #f0ece0; }
+[data-theme="day"] .ft-matrice-cell             { border-color: #ddd; }
+[data-theme="day"] .ft-cell-self                { background: #e8e4d8; }
+[data-theme="day"] .ft-rel-drawer               { background: #f5f0e4; border-color: #ddd; }
+[data-theme="day"] .ft-rel-drawer--empty        { color: #888; }
+[data-theme="day"] .ft-rel-desc                 { color: #555; }
+[data-theme="day"] .ft-legend                   { color: #777; border-top-color: #ddd; }
+[data-theme="day"] .ft-theme-pill               { color: #666; border-color: #ccc; background: #ece8dc; }
+[data-theme="day"] .ft-fiche                    { background: #faf8f2; border-color: #ddd; }
+[data-theme="day"] .ft-fiche--open              { border-color: #bbb; }
+[data-theme="day"] .ft-fiche-head:hover         { background: #f0ece0; }
+[data-theme="day"] .ft-fiche-nom                { color: #1a1408; }
+[data-theme="day"] .ft-fiche-meta               { color: #777; }
+[data-theme="day"] .ft-fiche-body               { border-top-color: #ddd; }
+[data-theme="day"] .ft-fiche-desc               { color: #555; }
+[data-theme="day"] .ft-lieu                     { border-top-color: #ddd; }
+[data-theme="day"] .ft-lieu-nom                 { color: #333; }
+[data-theme="day"] .ft-membre-row:hover         { background: #f0ece0; }
+[data-theme="day"] .ft-membre-nom               { color: #1a1408; }
+[data-theme="day"] .ft-membre-role              { color: #888; }
+[data-theme="day"] .ft-membre-gen               { color: #aaa; }
+[data-theme="day"] .ft-leader-badge             { background: rgba(154,124,24,0.1); color: #9a7c18; border-color: rgba(154,124,24,0.3); }
+[data-theme="day"] .ft-mini-card-desc           { color: #555; }
+[data-theme="day"] .ft-mini-card-lieu-nom       { color: #333; }
+[data-theme="day"] .ft-membres-title--proches   { border-top-color: #ddd; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ft-header          { padding: 1.5rem 1rem 1rem; }
+  .ft-matrice-view    { padding: 1rem; }
+  .ft-fiches-view     { padding: 1rem; }
+  .ft-matrice-corner  { min-width: 120px; }
+  .ft-legend-tip      { display: none; }
+}

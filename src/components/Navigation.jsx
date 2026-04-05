@@ -61,16 +61,19 @@ function Navigation({ onNavigate, currentPage, mode, joueur = null, onLogout, on
     { id: 'personnages',  label: 'Personnages',  icon: '🦇' },
     { id: 'clans',        label: 'Clans',        icon: '⚜️' },
     { id: 'influences',   label: 'Influences',   icon: '🕸️', guestHidden: true },
+    { id: 'factions',     label: 'Factions',     icon: '🕵️', mjOnly: true },
     { id: 'chronologie',  label: 'Chronologie',  icon: '📜' },
     { id: 'lieux',        label: 'Lieux',        icon: '🏛️' },
     { id: 'bourgs',       label: 'Bourgs',       icon: '🗺️' },
     { id: 'carte',        label: 'Carte',        icon: '📍' },
   ];
 
-  // Filter out items hidden for guests
-  const visibleItems = isGuest(mode)
-    ? allItems.filter(item => !item.guestHidden)
-    : allItems;
+  // Filter out items hidden for guests or non-MJ
+  const visibleItems = allItems.filter(item => {
+    if (item.mjOnly && !isMJ(mode)) return false;
+    if (item.guestHidden && isGuest(mode)) return false;
+    return true;
+  });
 
   // Clan badge data — for campagne joueurs, read from joueur.clan_id
   const effectiveClan = mode === 'campagne' ? joueur?.clan_id : null;
